@@ -1,0 +1,27 @@
+﻿@model  SCR.Root.Models.CsvUploadModel
+
+@{
+    ViewBag.Title = "CsvUpload";
+}
+
+<h2>CsvUpload</h2>
+
+@using (Html.BeginForm("FileUpload", "CsvUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{ 
+ @Html.ValidationSummary();
+ <div>
+            <div>
+               
+                <input id="fupdCSVUpload" type="file" />
+                <br />
+                <br />
+            </div>
+            <div>
+
+               
+                <br />
+                <br />
+             
+            </div>
+        </div>
+      }

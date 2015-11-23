@@ -1,0 +1,230 @@
+﻿@model SCR.Root.Models.SyncRealtorsModel
+@{
+    ViewBag.Title = "Import Realtors";
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+<script type='text/javascript' src="~/js/plugins/pnotify/jquery.pnotify.min.js"></script>
+<script type='text/javascript' src="~/js/plugins.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Notifybox();
+    });
+
+    function Notifybox() {
+       
+        if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
+            debugger;
+            var message = '@TempData["error"]';
+            var Title = '@TempData["errtitle"]';
+            var ErrorType = '@TempData["errType"]';
+
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+
+            if (ErrorType == "" && ErrorType == null) {
+                ErrorType = "warning";
+            }
+
+            if (ErrorType == "success") {
+
+                notify_s(Title, message);
+            }
+            else if (ErrorType == "info") {
+                notify_i(Title, message);
+            }
+            else if (ErrorType == "error") {
+                notify_e(Title, message);
+            }
+            else {
+                notify(Title, message);
+            }
+        }
+        else {
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+            return true;
+        }
+    }
+</script>
+
+@* Geethanjali for Progress Bar *@
+
+<script type="text/javascript">
+
+
+    $(function () {
+
+        $("#btnUpload").click(function () {
+            debugger;
+            var filePath = $("#fUpload").val();
+
+            if (filePath == "")
+            {
+                notify("Import Realtors", "Please select a file");
+                return false;
+            }
+
+        })
+
+    });
+
+    $(function () {
+        $("#btnSync").click(function () {
+            debugger;
+            var filePath = $("#Hddn_filepath").val();
+            var boolIsMemberFile = $("#Hddn_BoolIsMemberFile").val();
+            //alert('filePath:' + filePath);
+            if (filePath != "") {
+                $.ajax({
+                    type: "GET",
+                    url: '/SyncRealtors/DataImportCSV',
+                    cache: false,
+                    data: { 'filePath': filePath, 'boolIsMemberFile': boolIsMemberFile },
+                    success: function (response) {
+                      
+                    }
+                });
+            }
+            // setInterval(function () { UpdateProgressBar() }, 5000); // 1000 ==> 1 second , 60000 ==> 1 minute
+
+            var interval = setInterval(function () {
+                UpdateProgressBar();
+                
+
+                if ($(".progbar").text().trim() == "Completed") {
+
+                    $(".progbar").css("background-color", "Green");
+                    notify("Import Realtors ", "Completed");
+                    clearInterval(interval);
+
+                }
+
+            }, 100);
+        });
+    });
+
+    function UpdateProgressBar() {
+        debugger;
+        var tran_total = $("#Hddn_TransactionTotal").val();
+        var tran_BatchNo = $("#Hddn_TransmittalBatchNumber").val();
+        var boolIsMemberFile = $("#Hddn_BoolIsMemberFile").val();
+        if (tran_total != 0 && tran_BatchNo != 0) {
+            $.ajax
+          ({
+              type: "GET",
+              url: '/SyncRealtors/UpdateProgress',
+              data: { 'TranTotal': tran_total, 'TranBatchNumber': tran_BatchNo, 'boolIsMemberFile': boolIsMemberFile },
+              cache: false,
+              success: function (response) {
+
+                  if (response < "3") { $('.progbar').width("3%"); }
+                  else { $('.progbar').width(response + "%"); }
+
+
+                  if (response == "100") { $(".progbar").text("Completed"); }
+                  else { $(".progbar").text(response + "%"); }
+
+              }
+          });
+        }
+    }
+</script>
+
+<script type="text/javascript" >
+
+    function JavascriptFunction() {
+        var url = '@Url.Action("", "")';
+        $("#divLoading").show();
+        $.post(url, null,
+                function (data) {
+                    $("#PID")[0].innerHTML = data;
+                    $("#divLoading").hide();
+                });
+    }
+</script>
+
+
+@using (Html.BeginForm("Sync", "SyncRealtors", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", @id = "validation" }))
+{
+        @Html.ValidationSummary()
+
+        @Html.Hidden("Hddn_TransactionTotal", Model.HddnTransactionTotal)
+        @Html.Hidden("Hddn_TransmittalBatchNumber", Model.HddnTransmittalBatchNumber)
+        @Html.Hidden("Hddn_filepath", Model.Hddnfilepath)
+         @Html.Hidden("Hddn_BoolIsMemberFile", Model.HddnBoolIsMemberFile )
+       
+       <div>
+        <div class="block-fluid without-head span9">
+            @if (Model.HddnTransactionTotal == 0 && Model.HddnTransmittalBatchNumber == 0)
+            {
+                <div class="row-form clearfix" id="divUpload" runat="server">
+                    <div class="span3">LLR CSV File</div>
+                    <div class="span9">
+                        <input type="file" name="fupdCSVUpload" id="fUpload" accept=".M00,.csv,.O00" />
+
+                    </div>
+                    @*   <div class="span3"></div>
+                  <div class="span9" id="progbar" style="display:none;">
+                    <div id="progressbar-2">
+                        <div class="elapsed"></div>
+                        <div class="percent"></div>
+                        <div class="pbar"></div>
+                    </div>
+                </div>*@
+
+                </div>
+            }
+            else
+            {
+                if (Model.HddnTransactionTotal != 0 && Model.HddnTransmittalBatchNumber != 0)
+                {
+                <div class="row-form clearfix" id="divImport" runat="server">
+                    <div class="span3">@Html.LabelFor(model => model.Filename, "File name", new { @id = "lblFilename" })
+                    </div>
+                    <div class="span9">@Html.TextBoxFor(model => model.Filename, new { id = "txtFilename", @readonly = "true", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;" })
+                    </div>
+
+                </div>
+                <div class="progbar" style=" background: #df6e1e;    border-radius:4px;    font-family:calibri;    color:black;    text-align: center; overflow: hidden;  "></div>
+                }
+            }
+        </div>
+        <div class="span9">
+           @* @if (Model.HddnTransactionTotal != null && Model.HddnTransmittalBatchNumber != null)
+            {
+                if (Model.HddnTransactionTotal != 0 && Model.HddnTransmittalBatchNumber != 0)
+                {                 
+                <input id="btnSync" type="button" value="Import" class="btn_cancel  btn upload-button"/>
+                
+                }
+                else
+                {
+               
+                <button id="btnUpload" class="btn" onclick="JavascriptFunction()" runat="server">
+                    Upload
+                 <i> <img src="~/img/Upload_icon.png" class="pull-left imagepadding" /></i>
+                </button>
+                }
+            } *@   
+            
+             <button id="btnUpload" class="btn" onclick="JavascriptFunction()" runat="server">
+                    Upload
+                 <i> <img src="~/img/Upload_icon.png" class="pull-left imagepadding" /></i>
+                </button>
+            
+                   
+            <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../SyncRealtors/Sync'" />               
+        </div>
+            <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+                  top: 0px; width: 100%; height: 100%; background-color: none; z-index: 30001;
+                opacity: .8; filter: alpha(opacity=70);display:none" >
+    <p style="position: absolute; top: 30%; left: 45%; ">
+         <img src="~/img/Loading.GIF" />
+    </p></div>
+    </div>
+    
+}
+

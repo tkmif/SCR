@@ -1,0 +1,75 @@
+﻿@model SCR.Root.Models.AddEditUserModel
+@{
+    ViewBag.Title = "Add";
+}
+<div style="width: 100%; height: auto; float: left">
+
+    <div>
+        <div id="Div5" runat="server" style="width: 50%; float: left; vertical-align: top; padding-left: 30px;">
+            <h1 style="align-items: center; text-decoration: underline;">Add New User
+            </h1>
+        </div>
+    </div>
+    <div style="float: left; width: 850px; height: auto">
+        <div style="max-width: 100%; margin-left: 8%; margin-top: 3%">
+            <div style="margin-top: 4%; float: left; margin-left: 8%; width: 100%">
+                <div style="margin-top: 4%; float: left; margin-left: 8%; width: 100%">
+                    <label id="lblFirstName" style="align-content: initial; color: #4F8E78;">First Name</label><span
+                        style="color: #FE2E2E"></span>
+                    <span id="spnFirstName" style="color: #4F8E78">*</span>
+                    <br />
+                    @Html.TextBoxFor(model => model.UserId, new { @style = "width:50%;height:50px;min-width:210px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150, })
+                </div>
+                <div style="margin-top: 4%; float: left; margin-left: 8%; width: 100%">
+                    <label id="lblLastName" style="align-content: initial; color: #4F8E78;">First Name</label><span
+                        style="color: #FE2E2E"></span>
+                    <span id="spnLastName" style="color: #4F8E78">*</span>
+                    <br />
+                    @Html.TextBoxFor(model => model.UserId, new { @style = "width:50%;height:50px;min-width:210px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150, })
+                </div>
+                <div style="margin-top: 4%; float: left; margin-left: 8%; width: 100%">
+                    <label id="lblOfficePhoneNumber" style="align-content: initial; color: #4F8E78;">Office Phone Number</label><span
+                        style="color: #FE2E2E"></span>
+                    <br />
+                    @Html.TextBoxFor(model => model.UserId, new { @style = "width:50%;height:50px;min-width:210px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150, })
+                </div>
+                <div style="margin-top: 4%; float: left; margin-left: 8%; width: 100%">
+                    <label id="lblMobilePhoneNumber" style="align-content: initial; color: #4F8E78;">Mobile Phone Number</label><span
+                        style="color: #FE2E2E"></span>
+                    <br />
+                    @Html.TextBoxFor(model => model.UserId, new { @style = "width:50%;height:50px;min-width:210px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150, })
+                </div>
+                <div style="margin-top: 4%; float: left; margin-left: 8%; width: 100%">
+                    <label id="lblEmailAddress" style="align-content: initial; color: #4F8E78;">Email Address</label><span
+                        style="color: #FE2E2E"></span>
+                    <span id="spnEmailAddress" style="color: #4F8E78">*</span>
+                    <br />
+                    @Html.TextBoxFor(model => model.UserId, new { @style = "width:50%;height:50px;min-width:210px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150, })
+                </div>
+                <div style="margin-top: 4%; float: left; margin-left: 8%; width: 100%">
+                    <label id="lblUserRole" style="align-content: initial; color: #4F8E78;">User Role</label><span
+                        style="color: #FE2E2E"></span>
+                    <span id="spnUserRole" style="color: #4F8E78">*</span>
+                    <br />
+                        @Html.DropDownListFor(model => model.RoleId, new SelectList(Model.UserRole, "RoleId", "RoleName"), new { @style = "margin-left:2.5%;" })
+                 @*   @Html.TextBoxFor(model => model.UserId, new { @style = "width:50%;height:50px;min-width:210px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150, })*@
+                </div>
+                <div id="Div1" runat="server" style="width: 350px; margin-left: 8%; margin-top: 3%; float: left">
+                    <div id="Div2" runat="server" style="margin-top: 4%; float: left; width: 100%; margin-left: 8%">
+                        <p style="font-size: 14px; color: #4F8E78;">Profile Photo</p>
+                        <img src="../Images/MyPortal/userPic.jpg" id="imgProfilePhoto" runat="server" style="width: 128px; height: 134px" />
+                    </div>
+                    <div id="Div3" runat="server" style="margin-top: 14.5%; float: right; width: 100%; margin-left: 8%">
+                        <input type="file" id="fleupProfilePhoto" accept="image/*" />
+                        <br />
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding-bottom: 16%; margin-left: 8%; float: left; width: 100%; cursor: pointer">
+                    <button id="btnSave" runat="server"> Create User </button>
+                    <span id="spnCreateUser"
+                        hidden="hidden" style="color: #FE2E2E">Please fix the required fields in order to create a new user</span>
+                </div>
+            </div>
+
+        </div>
+    </div>

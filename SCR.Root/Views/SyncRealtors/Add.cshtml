@@ -1,0 +1,25 @@
+﻿@model SCR.Root.Models.SyncRealtorsModel
+@{
+    ViewBag.Title = "Sync Realtors";
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+@using (Html.BeginForm("Add", "SyncRealtors", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary();
+    <div>
+        @Html.HiddenFor(model => model.LLRId)
+        <div class="block-fluid without-head span9">
+            <div class="row-form clearfix">
+                <div class="span3">LLR CSV File</div>
+                <div class="span9" style="width: 300px">
+                    <input id="fupdCSVUpload" type="file" accept="image/*"/>                   
+                </div>
+            </div>
+        </div>
+        <div class="span9">
+            <button id="btnSync" class="btn" runat="server">Sync</button>
+        </div>
+    </div>
+    
+}
+

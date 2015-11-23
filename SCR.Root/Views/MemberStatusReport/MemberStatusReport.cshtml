@@ -1,0 +1,181 @@
+﻿@model SCR.Root.Models.MemberStatusReportModel
+@{
+    ViewBag.Title = "Data Mismatch Report";
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+
+<script type='text/javascript' src="~/js/plugins/pnotify/jquery.pnotify.min.js"></script>
+<script type='text/javascript' src="~/js/plugins.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Notifybox();
+        $('#btnSearch').click(function () {
+            Search();
+        });
+    });
+
+    function Notifybox() {
+
+        if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
+
+            var message = '@TempData["error"]';
+            var Title = '@TempData["errtitle"]';
+            var ErrorType = '@TempData["errType"]';
+
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+
+            if (ErrorType == "" && ErrorType == null) {
+                ErrorType = "warning";
+            }
+
+            if (ErrorType == "success") {
+
+                notify_s(Title, message);
+            }
+            else if (ErrorType == "info") {
+                notify_i(Title, message);
+            }
+            else if (ErrorType == "error") {
+                notify_e(Title, message);
+            }
+            else {
+                notify(Title, message);
+            }
+        }
+        else {
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+            return true;
+        }
+    }
+    function Search() {
+
+
+        var filterval = "";
+        if ($('#chkMemberStatus').is(":checked")) {
+            filterval = "Active";
+        }
+        else {
+            filterval = "";
+        }
+        if (filterval != "") {
+            $.ajax
+           ({
+               type: "GET",
+               url: '/MemberStatusReport/ReportFilter',
+               data: { 'value1': filterval },
+               success: function (response) {
+                   window.location.href = response;
+               }
+           });
+        }
+        else {
+            notify("Member Status Report", "Please enter at least one item for searching.");
+        }
+    }
+</script>
+
+<link href="@Url.Content("~/css/Site.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/js/jquery-1.4.4.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/jquery.tablesorter.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/jquery.tablesorter.pager.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+        .tablesorterPager({ container: $("#pager"), size: $(".pagesize option:selected").val() });
+    });
+</script>
+
+
+@using (Html.BeginForm("MemberStatusReport", "MemberStatusReport", FormMethod.Post, new { @class = "form-horizontal", @id = "validation" }))
+{ 
+
+<div class="row-fluid">
+
+        <div class="span12">
+            <div class="head clearfix">
+                <div class="isw-grid"></div>
+              @*  <ul class="buttons">
+                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Active" name="Active" id="chkMemberStatus" /><span style="color:#fff;">Member Status</span>
+                    <li><a href="#" id="btnSearch" class="isw-zoom"></a></li>
+                    <li><a href="~/MemberStatusReport/Export" class="isw-download"></a></li>
+
+                </ul>*@
+            </div>
+            <div class="block-fluid">
+                <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                    <thead>
+                        <tr>
+                            <th class="headertablesorter">Member Id</th>
+                            <th class="headertablesorter">Last Name</th>
+                            <th class="headertablesorter">First Name</th>
+                            <th class="headertablesorter">LLR Status</th>
+                            <th class="headertablesorter">NRDS Status</th>
+                        </tr>
+                    </thead>
+
+                       
+                        <tbody>
+                            @if (Model.MemberStatusReportModelList != null)
+                            {
+                                if (Model.MemberStatusReportModelList.Count > 0)
+                                {
+                                    foreach (var item in Model.MemberStatusReportModelList)
+                                    {
+                 
+   
+                                <tr style="width: 20px; height: 50px">
+                                    <td>
+                                        @item.MemberId
+                                    </td>
+                                    <td>
+                                        @item.LastName
+
+                                    </td>
+                                    <td>
+                                        @item.FirstName
+
+                                    </td>
+                                    <td>
+                                         @item.LLRStatus
+                                    </td>
+                                    <td>
+                                        @item.NRDSStatus
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    <div id="pager" style="position: none; padding-top: 5px;">
+                        <form>
+                            <img src="@Url.Content("~/img/first.png")" class="first" />
+                            <img src="@Url.Content("~/img/prev.png")" class="prev" />
+                            <input type="text" class="pagedisplay" style="width: 50px; height: 30px;" readonly />
+                            <img src="@Url.Content("~/img/next.png")" class="next" />
+                            <img src="@Url.Content("~/img/last.png")" class="last" />
+                            <select class="pagesize" style="width: 55px; height: 30px;">
+                                <option selected="selected" value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                            </select>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    @*</div>*@
+}

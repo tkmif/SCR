@@ -1,0 +1,162 @@
+﻿@model SCR.Root.Models.AgentDetailsModel
+@{
+    ViewBag.Title = "Agent Details";
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnPrint').click(function () {
+            print();
+        });
+    });
+
+    function print() {
+        var mywindowold = window.open('', 'Agent Details');
+        mywindowold.close();
+        var mywindow = window.open('', 'Agent Details', 'height=600,width=600');
+        mywindow.document.write('<html>');
+        mywindow.document.write('<body>');
+        mywindow.document.write($('#hdnPrintHtmlContent').val());
+        mywindow.document.write('</br>')
+        mywindow.document.write('</body></html>');
+    }
+</script>
+
+@using (Html.BeginForm())
+{ 
+
+    <div class="info" style="width: 40%;" id="divInfo">
+        <ul class="rows">
+            <li class="heading">Agent's Details</li>
+            <li>
+                <div class="title">
+                    @Html.Label("Member Id")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.MemberId.ToString())
+                </div>
+            </li>
+
+            <li>
+                <div class="title">
+                    @Html.Label("Agent's Name")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.FirstName.ToString())
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Agent Type")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.AgentType.ToString())
+                </div>
+            </li>
+             <li>
+                <div class="title">
+                    @Html.Label("R/E License No")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.strRELicenseNumber.ToString())
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Agent's Status")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.AgentStatus.ToString())
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Office Id")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.OfficeId.ToString())
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Broker Id")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.BrokerId.ToString())
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    
+    <div class="info" style="width: 40%;">
+
+        <ul class="rows">
+            <li class="heading">Member Office</li>
+            <li>
+                <div class="title">
+                    @Html.Label(" Bussiness Name")
+                </div>
+                <div class="text">
+                 
+                    <label>@Model.OfficeName.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Office Address")
+                </div>
+                <div class="text">
+                   
+                    <label>@Model.OfficeAddress.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Email")
+                </div>
+                <div class="text">
+                   
+                    <label>@Model.Email.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("City")
+                </div>
+                <div class="text">
+                    
+                    <label>@Model.City.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("State")
+                </div>
+                <div class="text">
+                    
+                    <label>@Model.State.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Zipcode")
+                </div>
+                <div class="text">
+                   
+                    <label>@Model.Zipcode.ToString()</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <br />
+    <div class="span9">
+        <input type="button" id="btnPrint" value="Print" class="btn_prnt btn " />
+        <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="history.go(-1);" />
+        @Html.Hidden("hdnPrintHtmlContent", Model.PrintHtmlContent.ToString())
+    </div>
+
+}
+
+

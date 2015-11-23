@@ -1,0 +1,407 @@
+﻿@model SCR.Root.Models.MemberExpiryReportModel
+@{
+    ViewBag.Title = "Member Expiry Report";
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+
+<script type='text/javascript' src="~/js/plugins/pnotify/jquery.pnotify.min.js"></script>
+<script type='text/javascript' src="~/js/plugins.js"></script>
+  <script type="text/javascript">
+     $(document).ready(function () {
+
+         $("#chkExpired").click(function () {
+             if (this.checked) {                 
+                 $("#chkActive").prop("checked", false);
+                 $('#uniform-chkActive span').removeAttr("class", "");
+             }
+         });
+
+         $("#chkActive").click(function () {
+             if (this.checked) {
+                 $("#chkExpired").prop("checked", false);
+                 $('#uniform-chkExpired span').removeAttr("class", "");
+             }
+         });
+
+      });
+    </script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var deptsArray = $('#hdnStatusId').val();
+        if (deptsArray == "") {
+            $("#chkExpired").prop("checked", true);
+            $("#chkActive").prop("checked", false);
+            $("#chkExpired").parent().attr("class", "checked");
+        }
+        if (deptsArray == "InActive") {
+            $("#chkInActive").prop("checked", true);
+            $("#chkInActive").parent().attr("class", "checked");
+        }
+        if (deptsArray == "Active") {
+            $("#chkActive").prop("checked", true);
+            $("#chkActive").parent().attr("class", "checked");
+        }
+        if (deptsArray == "InActive+Active") {
+            $("#chkActive").prop("checked", true);
+            $("#chkInActive").prop("checked", true);
+            $("#chkActive").parent().attr("class", "checked");
+            $("#chkInActive").parent().attr("class", "checked");
+        }
+        
+        if (deptsArray == "NOInActive + NOActive") {
+            $("#chkActive").prop("checked", false);
+            $("#chkInActive").prop("checked", false);
+        }
+        Notifybox();
+        $('#btnSearch').click(function () {
+            Search();
+        });
+    });
+
+    function Notifybox() {
+
+        if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
+
+            var message = '@TempData["error"]';
+            var Title = '@TempData["errtitle"]';
+            var ErrorType = '@TempData["errType"]';
+
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+
+            if (ErrorType == "" && ErrorType == null) {
+                ErrorType = "warning";
+            }
+
+            if (ErrorType == "success") {
+
+                notify_s(Title, message);
+            }
+            else if (ErrorType == "info") {
+                notify_i(Title, message);
+            }
+            else if (ErrorType == "error") {
+                notify_e(Title, message);
+            }
+            else {
+                notify(Title, message);
+            }
+        }
+        else {
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+            return true;
+        }
+    }
+    function Search() {
+
+
+        var filterval = "";
+        if ($('#chkExpired').is(":checked")) {
+            filterval = "Expired";
+        }
+        else if ($('#chkActive').is(":checked")) {
+            filterval = "Active";
+        }
+        else {
+            filterval = "";
+        }
+        if (filterval != "") {
+            $.ajax
+           ({
+               type: "GET",
+               url: '/MemberExpiryReport/ReportFilter',
+               data: { 'value1': filterval },
+               success: function (response) {
+                   window.location.href = response;
+               }
+           });
+        }
+        else {
+            notify("Member Expiry Report", "Please enter at least one item for searching.");
+        }
+    }
+</script>
+
+<link href="@Url.Content("~/css/Site.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/js/jquery-1.4.4.min.js")" type="text/javascript"></script>
+@*<script src="@Url.Content("~/js/jquery.tablesorter.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/jquery.tablesorter.pager.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+        .tablesorterPager({ container: $("#pager"), size: $(".pagesize option:selected").val() });
+    });
+</script>*@
+
+
+@using (Html.BeginForm("MemberExpiryReport", "MemberExpiryReport", FormMethod.Post, new { @class = "form-horizontal", @id = "validation" }))
+{ 
+    @Html.HiddenFor(model => Model.hdnStatus, new { @id = "hdnStatusId" })
+   @*
+     <div class="row-fluid">
+        <div class="span12">
+            <div class="block-fluid without-head">
+                <div class="row-form clearfix">
+                    <table>
+                        <tr>
+                            <td style="width: 20%"></td>
+                            <td style="width: 20%"></td>
+                            <td style="width: 20%"></td>
+                            <td style="width: 20%"></td>
+                            <td style="width: 20%"></td>
+                            <td style="width: 20%">
+                                <button id="btnSearch" type="button" class="ibb-zoom"></button>
+                            </td>
+                            <td>
+                                <a href="~/MemberExpiryReport/Export">
+                                    <div class="ibb-donw_circle"></div>
+                                </a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div>
+        </div>
+
+    </div>
+    
+    <div class="row-fluid">
+        <div class="span12">
+        
+            <div class="block-fluid without-head">
+                <div class="row-form clearfix">*@ 
+@*  <table class="table images tablesorter" style="width: 100%; border-radius: 3px; border: 1px solid #ccc">*@
+    <div class="row-fluid">
+
+        <div class="span12">
+            <div class="head clearfix">
+                <div class="isw-grid" title="Member Expiry Report"></div>
+                <ul class="buttons">
+                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Expired" name="Expired" id="chkExpired" title="Expired Members" /><span style="color:#fff;">Expired Members</span></li>
+                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Active" name="Active" id="chkActive" title="Active Members"/><span style="color:#fff">Active Members</span></li>
+                    <li><a href="#" id="btnSearch" class="isw-zoom" title="Search"></a></li>
+                    <li><a href="~/MemberExpiryReport/Export" class="isw-download" title="Export to Excel"></a></li>
+
+                </ul>
+            </div>
+            <div class="block-fluid">
+                <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                    <thead>
+                        <tr>
+                              <th class="headertablesorter" id="Member_Id">Member Id</th>
+                            <th class="headertablesorter" id="Last_Name">Last Name</th>
+                            <th class="headertablesorter" id="First_Name">First Name</th>
+                            <th class="headertablesorter" id="Member_Type">Member Type</th>
+                            <th class="headertablesorter" id="Status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.MemberExpiryReportModelList != null)
+                        {
+                            if (Model.MemberExpiryReportModelList.Count > 0)
+                            {
+                                 //foreach (var item in Model.MemberExpiryReportModelList)
+                                
+                                int start=Convert.ToInt32( TempData["start"]);
+                                int count = Convert.ToInt32(TempData["pagesize"]);
+
+                                for (var i = start; i < start+count; i++)
+                                   {   
+                            <tr>
+                                <td>
+                                  @Model.MemberExpiryReportModelList[i].MemberId
+                                </td>
+                                <td>
+                                    @Model.MemberExpiryReportModelList[i].LastName
+
+                                </td>
+                                <td>
+                                    @Model.MemberExpiryReportModelList[i].FirstName
+
+                                </td>
+                                <td>
+                                    @Model.MemberExpiryReportModelList[i].MemberType
+                                </td>
+                                <td>
+                                    @Model.MemberExpiryReportModelList[i].Status
+                                </td>
+                            </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+
+                <div id="pager" style="position: none; padding-top: 5px;">
+                    <form>
+                        <img src="@Url.Content("~/img/first.png")" class="first" title="First" id="first"/>
+                        <img src="@Url.Content("~/img/prev.png")" class="prev" title="Previous" id="prev"/>
+                        <input type="text" class="pagedisplay" style="width: 70px; height: 20px;text-align:center;" title="Current Page" id="Current" readonly />
+                        <img src="@Url.Content("~/img/next.png")" class="next" title="Next" id="next"/>
+                        <img src="@Url.Content("~/img/last.png")" class="last" title="Last" id="last"/>
+                        <select id="pagesize" class="pagesize" style="width: 55px; height: 30px;" title="Records per page">
+                            <option selected="selected" value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>@*
+
+    </div>*@
+}
+
+
+<script>
+    function setpage() {
+
+        debugger;
+        var count = '@TempData["count1"]';
+        var pagesize = '@TempData["pagesize"]';
+        var start = '@TempData["start"]';
+        var pages = Math.ceil(parseInt(count) / parseInt(pagesize));
+        var currentPage;
+
+        currentPage = Math.ceil(parseInt(start) / parseInt(pagesize));
+
+
+        $("#Current").val((parseInt(currentPage) + parseInt(1)) + '/' + pages);
+    };
+
+    function order(order) {
+        debugger;
+        var start = '@TempData["start"]';
+        var count = '@TempData["count1"]';
+
+        var pagesize = $("#pagesize option:selected").text();
+
+        var url = "/MemberExpiryReport/MemberExpiryReport?start=" + start + " &&pagesize=" + pagesize + "&&order=" + order + "";
+        window.location.href = url;
+    }
+    $(document).ready(function () {
+        debugger;
+        $("#pagesize").val('@TempData["pagesize"]');
+
+        setpage();
+@*################################################################################################################################## *@
+        $("#pagesize").change(function () {
+            debugger;
+            var start = '@TempData["start"]';
+            var count = '@TempData["count1"]';
+            var order = '@TempData["order"]';
+            var pagesize = $("#pagesize option:selected").text();
+            var total = parseInt(start) + parseInt(pagesize);
+            if (total >= parseInt(count)) {
+               // start = parseInt(start) + ((parseInt(start) + parseInt(pagesize)) - parseInt(count));
+                start = parseInt(count) - parseInt(pagesize)
+            } else {
+                start = parseInt(start);
+            }
+
+            var url = "/MemberExpiryReport/MemberExpiryReport?start=" + start + " &&pagesize=" + pagesize + "&&order=" + order + "";
+            window.location.href = url;
+        });
+@* ########################### SORTING ####################################################################################################### *@
+        $("#Last_Name").click(function () {
+            order(' [LastName] ');
+        });
+
+        $("#Member_Id").click(function () {
+
+            order(' [MemberId] ');
+        });
+        $("#First_Name").click(function () {
+
+            order(' [FirstName] ');
+        });
+        $("#Member_Type").click(function () {
+
+            order(' [MemberType]  ');
+        });
+        $("#Status").click(function () {
+
+            order('[Status]  ');
+        });
+
+
+
+ @*################################################################################################################################## *@
+        $("#next").click(function () {
+            debugger;
+            var start = '@TempData["start"]';
+            var count = '@TempData["count1"]';
+            var order = '@TempData["order"]';
+            var pagesize = $("#pagesize option:selected").text();
+            var total = parseInt(start) + parseInt(pagesize);
+            if (total >= parseInt(count)) {
+               // start = parseInt(start) + ((parseInt(start) + parseInt(pagesize)) - parseInt(count));
+                //   pagesize = parseInt(count) - parseInt(start)
+                start = parseInt(count) - parseInt(pagesize)
+            } else {
+                start = parseInt(start) + parseInt(pagesize);
+            }
+
+            var url = "/MemberExpiryReport/MemberExpiryReport?start=" + start + " &&pagesize=" + pagesize + "&&order=" + order + "";
+            window.location.href = url;
+
+        });
+
+        $("#prev").click(function () {
+            debugger;
+            var start = '@TempData["start"]';
+            var count = '@TempData["count1"]';
+            var order = '@TempData["order"]';
+            var pagesize = $("#pagesize option:selected").text();
+            if ((parseInt(start) - parseInt(pagesize)) < parseInt(0)) {
+                start = 0;
+
+            } else {
+                start = parseInt(start) - parseInt(pagesize);
+            }
+
+            var url = "/MemberExpiryReport/MemberExpiryReport?start=" + start + " &&pagesize=" + pagesize + "&&order=" + order + "";
+            window.location.href = url;
+        });
+        $("#first").click(function () {
+            debugger;
+            var start = '@TempData["start"]';
+            var count = '@TempData["count1"]';
+            var order = '@TempData["order"]';
+            var pagesize = $("#pagesize option:selected").text();
+            start = 0;
+
+            var url = "/MemberExpiryReport/MemberExpiryReport?start=" + start + " &&pagesize=" + pagesize + "&&order=" + order + "";
+            window.location.href = url;
+        });
+        $("#last").click(function () {
+            debugger;
+            var start = '@TempData["start"]';
+            var count = '@TempData["count1"]';
+            var order = '@TempData["order"]';
+            var pagesize = $("#pagesize option:selected").text();
+
+            start = parseInt(count) - parseInt(pagesize);
+            var url = "/MemberExpiryReport/MemberExpiryReport?start=" + start + " &&pagesize=" + pagesize + "&&order=" + order + "";
+            window.location.href = url;
+        });
+
+    });
+    @* ################################################################################################################################## *@
+</script>

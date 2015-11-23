@@ -1,0 +1,196 @@
+﻿@model SCR.Root.Models.LocalBoardModel
+@{
+    if (ViewData["types"] == "edit")
+    {
+        ViewBag.Title = "Edit Local Board";
+    }
+    else
+    {
+        ViewBag.Title = "Add Local Board";
+    }
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+
+<script type='text/javascript' src="~/js/plugins/pnotify/jquery.pnotify.min.js"></script>
+<script type='text/javascript' src="~/js/plugins.js"></script>
+<script type="text/javascript">
+    var editting;
+    $(document).ready(function () {
+        var editting = '@ViewData["types"]';
+         if (editting != "edit" && editting != null) {
+             $("#chkActive").prop("checked", true);
+             $("#chkActive").parent().attr("class", "checked");
+         }
+         $("#chkInactive").click(function () {
+             if (this.checked) {
+                 $("#chkActive").prop("checked", false);
+                 $("#chkActive").parent().attr("class", "");
+             }
+         });
+
+         $("#chkActive").click(function () {
+             if (this.checked) {
+                 $("#chkInactive").prop("checked", false);
+                 $("#chkInactive").parent().attr("class", "");
+             }
+         });
+
+     });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Notifybox();    
+        $("#txtAssociationId").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && e.which != 40 && e.which != 41 &&  e.which != 91 && e.which != 93 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                //  $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+    function Notifybox() {
+
+        if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
+
+            var message = '@TempData["error"]';
+            var Title = '@TempData["errtitle"]';
+            var ErrorType = '@TempData["errType"]';
+
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+
+            if (ErrorType == "" && ErrorType == null) {
+                ErrorType = "warning";
+            }
+
+            if (ErrorType == "success") {
+
+                notify_s(Title, message);
+            }
+            else if (ErrorType == "info") {
+                notify_i(Title, message);
+            }
+            else if (ErrorType == "error") {
+                notify_e(Title, message);
+            }
+            else {
+                notify(Title, message);
+            }
+        }
+        else {
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+            return true;
+        }
+    }
+</script>
+@using (Html.BeginForm("Add", "LocalBoard", FormMethod.Post, new { @class = "form-horizontal", @id = "validation" }))
+{   
+    @Html.ValidationSummary();   
+   
+    @Html.HiddenFor(model => model.StatusEdit)
+    <div>
+        @*@Html.HiddenFor(model => model.LoginId)*@
+        @*@Html.HiddenFor(model => model.AssocID, new { id = "hdnAssocId" })*@
+        <div class="block-fluid without-head span9">
+            <div class="toolbar nopadding-toolbar clearfix">
+                <h4>Local Board Details</h4>
+            </div>
+            <div class="row-form clearfix">
+                <div class="span3">@Html.LabelFor(model => model.AssocID, "Association Id", new { @id = "lblAssocID" })
+                </div>  
+                 <div class="span9">            
+              @if (ViewData["types"] == "edit")
+            {
+              @Html.TextBoxFor(model => model.AssocID, new { id = "txtAssociationId", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 15, @class = "validate[required]" ,@readonly="readonly"})
+                  
+            }
+            else
+            {
+                    
+              @Html.TextBoxFor(model => model.AssocID, new { id = "txtAssociationId", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 15, @class = "validate[required]"})
+                  
+                  
+            }                     
+                  </div>
+            </div>
+            <div class="row-form clearfix">
+                <div class="span3">@Html.LabelFor(model => model.AssociationName, "Association Name", new { @id = "lblAssociationName" })
+                </div>
+                <div class="span9">@Html.TextBoxFor(model => model.AssociationName, new { id = "txtAssociationName", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 100, @class = "validate[required]" })
+                </div>
+            </div>
+            <div class="row-form clearfix">
+                @*   <div class="span3">@Html.LabelFor(model => model.Status , "Status")
+                </div>
+                <div class="span9">
+                    @Html.TextBoxFor(model => model.Status , new { id = "txtStatus ", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 15, @class = "validate[required]" })
+                </div>*@
+                <div class="span3">@Html.LabelFor(model => model.Status, "Status")
+                </div>
+                <div class="span9 ism">
+                    @Html.CheckBoxFor(model => model.Active, new { @id = "chkActive", @checked = "checked" })
+                    @Html.LabelFor(model => model.Active)
+                    @Html.CheckBoxFor(model => model.InActive, new { @id = "chkInactive"})
+                    @Html.LabelFor(model => model.InActive)
+                </div>
+
+            </div>
+
+            <div class="row-form clearfix">
+                <div class="span3">
+                    @Html.LabelFor(model => model.City, "City ", new { @id = "lblCity " })
+                </div>
+                <div class="span9">
+                    @Html.TextBoxFor(model => model.City, new { id = "txtCity ", @style = "width:40%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 50, @class = "validate[required]" })
+                </div>
+            </div>
+
+            <div class="row-form clearfix">
+                <div class="span3">@Html.LabelFor(model => model.State, "State", new { @id = "lblState" })
+                </div>
+              @*  <div class="span9">@Html.TextBoxFor(model => model.State, new { id = "txtState", @style = "width:40%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 20, @class = "validate[required]" }) </div>*@
+                <div class="span9">@Html.DropDownListFor(model => model.State, new SelectListItem[]{
+                new SelectListItem() {Text = "--Select--", Value="0"},
+                new SelectListItem() {Text = "SC", Value="SC"},
+                new SelectListItem() {Text = "NC", Value="NC"},
+                new SelectListItem() {Text = "GA", Value="GA"}}, new { @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 50, @class = "validate[required]" })</div>
+            </div>
+            <div class="row-form clearfix">
+                <div class="span3">@Html.LabelFor(model => model.Phone, "Phone", new { @id = "lblPhone" })
+                </div>
+                <div class="span9">@Html.TextBoxFor(model => model.Phone, new { id = "txtPhone", @style = "width:40%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 50, @class = "validate[required]" }) </div>
+            </div>
+
+
+        </div>
+        <div class="span9">
+            @*  <button id="btnSave" class="btn" style="width: 10%" runat="server" >Save</button>*@
+            <button id="btnSave1" class="btn" runat="server">
+                Save 
+             <i>
+                 <img src="~/img/tick.png" class="pull-left imagepadding" /></i>
+            </button>
+
+
+            @if (ViewData["types"] == "edit")
+            {
+                <span><i>
+                    <img src="~/img/cross.png" />
+                    <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../List'" />
+                </i></span>
+            }
+            else
+            {
+                    
+                <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../LocalBoard/List'" />
+                  
+            }
+
+        </div>
+    </div>
+}

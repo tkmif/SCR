@@ -1,0 +1,253 @@
+﻿@model SCR.Root.Models.BrokerDetailsModel
+
+@{
+    ViewBag.Title = "Broker Details";
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnPrint').click(function () {
+            print();
+        });
+    });
+
+    function print() {
+        var mywindowold = window.open('', 'Broker Details');
+        mywindowold.close();
+        var mywindow = window.open('', 'Broker Details', 'height=800,width=600');
+        mywindow.document.write('<html>');
+        mywindow.document.write('<body>');
+
+        if ($("#chkAgentsListRequireInPrint").is(':checked')) {
+            mywindow.document.write($('#hdnPrintHtmlContent').val().replace("{AgentDetails}", $('#hdnPrintHtmlContentAgentList').val()));
+        }
+        else
+            mywindow.document.write($('#hdnPrintHtmlContent').val().replace("{AgentDetails}", ""));
+
+        mywindow.document.write('</br>')
+        mywindow.document.write('</body></html>');
+        //window.print();
+        //window.close();
+    }
+</script>
+<script src="@Url.Content("~/js/jquery.tablesorter.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/jquery.tablesorter.pager.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+        .tablesorterPager({ container: $("#pager"), size: $(".pagesize option:selected").val() });
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <div id="dvContents">
+
+        <div class="info" style="width: 30%; float: left">
+            <ul class="rows">
+                <li class="heading">Broker's Details</li>
+                <li>
+                    <div class="title">
+                        @Html.Label("Member Id")
+                    </div>
+                    <div class="text">
+                        @Html.Label(Model.MemberId.ToString())
+                    </div>
+                </li>
+
+                <li>
+                    <div class="title">
+                        @Html.Label("Agent's Name")
+                    </div>
+                    <div class="text">
+                        @Html.Label(Model.FirstName.ToString())
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        @Html.Label("Agent Type")
+                    </div>
+                    <div class="text">
+                        @Html.Label(Model.AgentType.ToString())
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        @Html.Label("R/E License No")
+                    </div>
+                    <div class="text">
+                        @Html.Label(Model.RELicenseNumber.ToString())
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        @Html.Label("Agent's Status")
+                    </div>
+                    <div class="text">
+                        @Html.Label(Model.AgentStatus.ToString())
+                    </div>
+                </li>
+
+
+
+                <li>
+                    <div class="title">
+                        @Html.Label("Office Id")
+                    </div>
+                    <div class="text">
+                        @Html.Label(Model.OfficeId.ToString())
+                    </div>
+                </li>
+                @*   <li>
+                    <div class="title">
+                        @Html.Label("Broker Id")
+                    </div>
+                    <div class="text">
+                        @Html.Label(Model.BrokerId.ToString())
+                    </div>
+                </li>*@
+            </ul>
+
+            <ul class="rows">
+                <li class="heading">Member Office</li>
+                <li>
+                    <div class="title">
+                        @Html.Label(" Bussiness Name")
+                    </div>
+                    <div class="text">
+
+                        <label>@Model.OfficeName.ToString()</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        @Html.Label("Office Address")
+                    </div>
+                    <div class="text">
+
+                        <label>@Model.OfficeAddress.ToString()</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        @Html.Label("Email")
+                    </div>
+                    <div class="text">
+                        <label>@Model.Email.ToString()</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        @Html.Label("City")
+                    </div>
+                    <div class="text">
+
+                        <label>@Model.City.ToString()</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        @Html.Label("State")
+                    </div>
+                    <div class="text">
+
+                        <label>@Model.State.ToString()</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        @Html.Label("Zipcode")
+                    </div>
+                    <div class="text">
+
+                        <label>@Model.Zipcode.ToString()</label>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="row-fluid" style="width: 68%; float: right">
+            <div class="span12">
+                <div class="head clearfix">
+                    <div class="isw-grid"></div>
+                    <h1>Agents under Broker - @Model.FirstName.ToString()</h1>
+                    <ul class="buttons">
+                        @* <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Active" name="Active" id="chkMemberStatus" /><span style="color:#fff;">Member Status</span>
+                    <li><a href="#" id="btnSearch" class="isw-zoom"></a></li>*@
+                        @* <li><a href="~/AgentsList/Export" class="isw-download"></a></li>*@
+
+                    </ul>
+                </div>
+                <div class="block-fluid">
+                    <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                        <thead>
+                            <tr>
+                                <th class="headertablesorter">Member Id</th>
+                                <th class="headertablesorter">Last Name</th>
+                                <th class="headertablesorter">First Name</th>
+
+                                <th class="headertablesorter">Office Id</th>
+                                <th class="headertablesorter">Member Type</th>
+                                <th class="headertablesorter">View</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @if (Model.AgentsModelList != null)
+                            {
+                                if (Model.AgentsModelList.Count > 0)
+                                {
+                                    foreach (var item in Model.AgentsModelList)
+                                    {   
+                                <tr style="width: 20px; height: 50px">
+                                    <td>@item.MemberId </td>
+                                    <td>@item.LastName</td>
+                                    <td>@item.FirstName</td>
+
+                                    <td>@item.OfficeId</td>
+                                    <td>@item.MemberType</td>
+                                    <td title="View Broker's Details">
+                                        <a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = item.MemberId })">
+                                            <img src="" class="icon-eye-open" />
+                                        </a>
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                    <div id="pager" style="position: none; padding-top: 5px;">
+                        <form>
+                            <img src="@Url.Content("~/img/first.png")" class="first"  title="First"/>
+                            <img src="@Url.Content("~/img/prev.png")" class="prev" title="Previous" />
+                            <input type="text" class="pagedisplay" title="Current Page" style="width: 50px; height: 30px;" readonly />
+                            <img src="@Url.Content("~/img/next.png")" class="next" title="Next"/>
+                            <img src="@Url.Content("~/img/last.png")" class="last" title="Last"/>
+                            <select class="pagesize" style="width: 55px; height: 30px;">
+                                <option selected="selected" value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <input type="checkbox" id="chkAgentsListRequireInPrint" checked="checked" />Agents list require in print ?
+        </div>
+    </div>
+    
+    <div class="span9">
+        <br />
+        <input type="button" id="btnPrint" value="Print" class=" btn btn_prnt" />
+        <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="history.go(-1);" />
+        @Html.Hidden("hdnPrintHtmlContent", Model.PrintHtmlContent.ToString())
+        @Html.Hidden("hdnPrintHtmlContentAgentList", Model.PrintHtmlContentAgentList.ToString())
+    </div>
+}

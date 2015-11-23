@@ -1,0 +1,167 @@
+﻿@model SCR.Root.Models.LocalOfficeModel
+@{
+    ViewBag.Title = "Local Offices";
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+
+<script type='text/javascript' src="~/js/plugins/pnotify/jquery.pnotify.min.js"></script>
+<script type='text/javascript' src="~/js/plugins.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Notifybox();
+
+    });
+
+    function Notifybox() {
+
+        if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
+
+            var message = '@TempData["error"]';
+            var Title = '@TempData["errtitle"]';
+            var ErrorType = '@TempData["errType"]';
+
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+
+            if (ErrorType == "" && ErrorType == null) {
+                ErrorType = "warning";
+            }
+
+            if (ErrorType == "success") {
+
+                notify_s(Title, message);
+            }
+            else if (ErrorType == "info") {
+                notify_i(Title, message);
+            }
+            else if (ErrorType == "error") {
+                notify_e(Title, message);
+            }
+            else {
+                notify(Title, message);
+            }
+        }
+        else {
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+            return true;
+        }
+    }
+
+
+</script>
+
+<link href="@Url.Content("~/css/Site.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/js/jquery-1.4.4.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/jquery.tablesorter.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/js/jquery.tablesorter.pager.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    /*Author ; Geethanjali for change add button postion in List pages only
+    Name only "Add" for Add page views*/
+    $(function () {
+        $("#lnkbtnAdd").show();
+    });
+    /*Author ; Geethanjali for table sorting and paging */
+    $(function () {
+        $("table.tablesorter").tablesorter({ widthFixed: true, sortList: [[0, 0]] })
+        .tablesorterPager({ container: $("#pager"), size: $(".pagesize option:selected").val() });
+    });
+    
+</script>
+
+
+@using (Html.BeginForm("List", "LocalOffice", FormMethod.Post, new { @class = "form-horizontal", @id = "validation" }))
+{  
+    
+@*     <div class="row-fluid">
+    <div class="span12">
+        <div class="block-fluid without-head">
+            <div class="row-form clearfix">
+               
+              <table class="table images tablesorter" style="border-radius: 3px; border: 1px solid #ccc">*@
+<div class="row-fluid">
+
+    <div class="span12">
+        <div class="head clearfix">
+            <div class="isw-grid" title="Local Office List"></div>            
+        </div>
+        <div class="block-fluid">
+            <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
+                <thead>
+                    <tr>
+                        <th class="headertablesorter">Registered Number
+                        </th>
+                        <th class="headertablesorter">Local Office Name</th>
+                        <th class="headertablesorter">Local Office Address</th>
+                        <th class="headertablesorter">Office Phone Number</th>
+                       @* <th class="headertablesorter">Email Address</th>*@
+                        <th class="headertablesorter" style="width:50px;">Edit</th>
+                        <th class="headertablesorter" style="width:50px;">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.LocalOfficeModelList != null)
+                    {
+                        if (Model.LocalOfficeModelList.Count > 0)
+                        {
+                            foreach (var item in Model.LocalOfficeModelList)
+                            {
+                                var loid = @item.LocalOfficeId;
+   
+                        <tr style="width: 20%; height: 50%">
+                            <td>
+                                @item.RegisteredNumber
+                            </td>
+                            <td>
+                                @item.LocalOfficeName
+
+                            </td>
+                            <td>
+                                @item.LocalOfficeAddress
+
+                            </td>
+                            <td>
+                                @item.OfficePhoneNo
+                            </td>
+                            @*<td>
+                                @item.Email
+                            </td>*@
+                            <td style="padding-left:30px;">@Html.ActionLink("Edit", "Add", new { id = item.LocalOfficeId }, new { @class="isb-edit",@style="text-indent: -9999px;"})</td>
+                            <td style="padding-left:30px;">
+                                @Html.ActionLink("Delete", "List", new { id = item.LocalOfficeId },
+            new { onclick = "return ShowConfirm('Are you sure you wish to delete this item?','Local Office','/../LocalOffice/List/" + item.LocalOfficeId + "');" , @class = "isb-delete",@style="text-indent: -9999px;"  })
+
+                            </td>
+                        </tr>
+   
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+
+                   <div id="pager" style="position: none; padding-top: 5px;">
+                    <form>
+                        <img src="@Url.Content("~/img/first.png")" class="first" title="first"/>
+                        <img src="@Url.Content("~/img/prev.png")" class="prev" title="prev"/>
+                        <input type="text" class="pagedisplay" style="width: 40px; height: 20px;" title="Current Page" readonly />
+                        <img src="@Url.Content("~/img/next.png")" class="next" title="next"/>
+                        <img src="@Url.Content("~/img/last.png")" class="last" title="last"/>
+                        <select class="pagesize" style="width: 55px; height: 30px;" title="Records per page">
+                            <option selected="selected" value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+@*</div>*@
+}

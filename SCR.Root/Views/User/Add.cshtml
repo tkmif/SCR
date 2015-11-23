@@ -1,0 +1,154 @@
+﻿@model SCR.Root.Models.UserModel
+@{   
+    if (ViewData["type1"] == "edit")
+    {
+        ViewBag.Title = "Edit User";
+    }
+    else
+    {
+        ViewBag.Title = "New User";
+    }
+    Layout = "~/Views/Shared/_SCRLayout.cshtml";
+}
+<script type='text/javascript' src="~/js/plugins/pnotify/jquery.pnotify.min.js"></script>
+<script type='text/javascript' src="~/js/plugins.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#divLO").hide();
+        Notifybox();
+        if ($('#RoleId').find('option:selected').val() == '1') {
+            $("#divLO").hide();
+        }
+        if ($('#RoleId').find('option:selected').val() == '2') {
+            $("#divLO").show();
+        }
+        if ($('#RoleId').find('option:selected').val() == '2') {
+            if ($('#LocalOfficeId').find('option:selected').val() == '0') {
+                $("#divLocalOffice").show();
+            }
+        }       
+        $('#RoleId').change(function () {
+            if ($('#RoleId').find('option:selected').val() == '1') {
+                $("#divLO").hide();
+            }
+            if ($('#RoleId').find('option:selected').val() == '2') {
+                $("#divLO").show();
+            }
+        });       
+    });
+    function Notifybox() {
+
+        if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
+
+            var message = '@TempData["error"]';
+            var Title = '@TempData["errtitle"]';
+            var ErrorType = '@TempData["errType"]';
+
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+
+            if (ErrorType == "" && ErrorType == null) {
+                ErrorType = "warning";
+            }
+
+            if (ErrorType == "success") {
+
+                notify_s(Title, message);
+            }
+            else if (ErrorType == "info") {
+                notify_i(Title, message);
+            }
+            else if (ErrorType == "error") {
+                notify_e(Title, message);
+            }
+            else {
+                notify(Title, message);
+            }
+        }
+        else {
+            var errors = '@TempData.Remove("error")';
+            var errtitles = '@TempData.Remove("errtitle")';
+            var errTypes = '@TempData.Remove("errType")';
+            return true;
+        }
+    }
+
+
+</script>
+@using (Html.BeginForm("Add", "User", FormMethod.Post, new { @class = "form-horizontal", @id = "validation" }))
+{   
+    @Html.ValidationSummary();   
+    @Html.HiddenFor(model => model.LoginId, new { id = "hdnLoginId" })
+    <div>
+        <div class="block-fluid without-head span9">
+            <div class="row-form clearfix">
+                <div class="span3">@Html.LabelFor(model => model.FirstName, "First Name", new { @id = "lblFirstName" })
+                </div>
+                <div class="span9">@Html.TextBoxFor(model => model.FirstName, new { id = "txtFirstName", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 150, @class = "validate[required]" })
+                </div>
+            </div>
+
+            <div class="row-form clearfix">
+                <div class="span3">@Html.LabelFor(model => model.LastName, "Last Name")
+                </div>
+                <div class="span9">
+                    @Html.TextBoxFor(model => model.LastName, new { id = "txtLastName", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 150, @class = "validate[required]" })
+                </div>
+            </div>
+            <div class="row-form clearfix">
+                <div class="span3">@Html.LabelFor(model => model.Email, "Email")
+                </div>
+                <div class="span9">
+                    @if (ViewData["type1"] == "edit")
+                    {
+                        @Html.TextBoxFor(model => model.Email, new { id = "txtEmail", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 150, @class = "validate[required]", @readonly = "readonly" })
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(model => model.Email, new { id = "txtEmail", @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 150, @class = "validate[required]" })
+                    }
+                </div>
+            </div>
+            <div class="row-form clearfix">
+                <div class="span3">
+                    @Html.LabelFor(model => model.RoleId, "Role", new { @id = "lblRoleId" })
+                </div>
+                <div class="span9">
+                    @Html.DropDownListFor(model => model.RoleId, new SelectList(Model.UserRole, "RoleId", "RoleName"), new { @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 150, @class = "validate[required]" })
+                </div>
+            </div>
+            <div id="divLO" class="row-form clearfix">
+                <div class="span3">
+                    @Html.LabelFor(model => model.AssocID, "Local Office", new { @id = "lblLO" })
+                </div>
+                <div class="span9">
+                    @Html.DropDownListFor(model => model.AssocID, new SelectList(Model.LocalBoard, "AssocId", "AssociationName"), new { @style = "width:40%;height:30px;margin-top:15px;margin:1% 2.5%;resize:none;", maxlength = 150, @class = "validate[required]" })   
+                </div>
+            </div>
+        </div>
+        <div class="span9">
+
+            <button id="btnSave" class="btn" runat="server">
+                Save 
+             <i>
+                 <img src="~/img/tick.png" class="pull-left imagepadding" /></i>
+            </button>
+
+            @if (ViewData["type1"] == "edit")
+            {
+                <span><i>
+                    <img src="~/img/cross.png" />
+                    <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../List'" />
+                </i></span>
+            }
+            else
+            {
+              
+                   <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../User/List'" />               
+            }                    
+        </div>
+    </div>
+}

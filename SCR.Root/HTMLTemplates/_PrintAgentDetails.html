@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Print Broker Details</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!--[if gt IE 8]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <![endif]-->
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <link href="../css/stylesheets.css" rel="stylesheet" type="text/css">
+    <!--[if lt IE 8]>
+        <link href="/css/ie7.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <script type='text/javascript' src="../js/plugins/jquery/jquery-1.10.2.min.js"></script>
+    <script src="../js/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript">
+        function PrintPage() {
+            $("button").hide();
+            $("#btnCancel").hide();
+           
+            if ($.browser.chrome) {
+                window.print();
+                window.close();
+              
+            }
+            else if ($.browser.mozilla) {
+                var isIE11 = !!navigator.userAgent.match(/Trident.*rv\:11\./);
+                if (isIE11 != true) {
+                    window.close();
+                    window.print();
+                   
+                }
+                else {
+                    window.print();
+                    //  window.close();
+                    
+                }
+
+            } else if ($.browser.msie) {
+
+                window.focus();
+                window.print();
+
+            }
+            else {
+
+                window.print();
+                window.close();
+            }
+
+        }
+
+        function ClosePage() {
+            window.close();
+        }
+    </script>
+    <style type="text/css">
+        .evenrow {
+            border: 1px solid #000;
+        }
+
+        .oddrow {
+            border: 1px solid #000;
+            background-color: #F2F2F2;
+        }
+    </style>
+</head>
+<body>
+    <table width="100%">
+        <tr class="evenrow">
+            <td colspan="2">
+                <h4>Agent's Details</h4>
+            </td>
+        </tr>
+        <tr class="oddrow">
+            <td width="35%">Member Id</td>
+            <td>: {MemberId}</td>
+        </tr>
+        <tr class="evenrow">
+            <td width="35%">Agent's Name</td>
+            <td>: {AgentName}</td>
+        </tr>
+        <tr class="oddrow">
+            <td width="35%">Agent Type</td>
+            <td>: {AgentType}</td>
+        </tr>
+        <tr class="evenrow">
+            <td width="35%">R/E License Number</td>
+            <td>: {RELicenseNo}</td>
+        </tr>
+         <tr class="evenrow">
+            <td width="35%">Agent's Status</td>
+            <td>: {AgentStatus}</td>
+        </tr>
+        <tr class="oddrow">
+            <td width="35%">Office Id</td>
+            <td>: {OfficeId}</td>
+        </tr>
+        <tr class="evenrow">
+            <td width="35%">Broker Id</td>
+            <td>: {BrokerId}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <h4>Member Office</h4>
+            </td>
+        </tr>
+        <tr class="oddrow">
+            <td width="35%">Bussiness Name
+            </td>
+            <td>: {BussinessName}
+            </td>
+        </tr>
+         <tr class="evenrow">
+            <td width="35%">Office Address
+            </td>
+            <td>: {OfficeAddress}
+            </td>
+        </tr>
+        <tr class="oddrow">
+            <td width="35%">Email
+            </td>
+            <td>: {Email}
+            </td>
+        </tr>
+        <tr class="evenrow">
+            <td width="35%">City
+            </td>
+            <td>: {City}
+            </td>
+        </tr>
+        <tr class="oddrow">
+            <td width="35%">State
+            </td>
+            <td>: {State}
+            </td>
+        </tr>
+        <tr class="evenrow">
+            <td width="35%">Zipcode
+            </td>
+            <td>: {Zipcode}
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div align="center">
+                    <button id="btnPrint" class="btn_prnt btn" onclick="PrintPage()">Print</button>
+                      <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="ClosePage()"/>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
