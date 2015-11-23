@@ -4,8 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCR.Root", "SCR.Root.csproj", "{B237E615-FABF-4AB1-8FA3-AC8989863617}"
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
+	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://14.141.33.194:9034/tfs/screaltors
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = SCR.Root.csproj
 		SccLocalPath1 = .
