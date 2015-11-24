@@ -138,10 +138,7 @@ namespace SCR.Root.Controllers
 
                             foreach (AgentsModel agentsModel in brokerDetailModel.AgentsModelList)
                                 {
-                                    //MemberStatusReportModel memberStatusReportModel = new MemberStatusReportModel();
-                                    //memberStatusReportModel.MemberId = Convert.ToInt32(drloff["MemberId"]);
-                                    //memberStatusReportModel.LastName = Convert.ToString(drloff["LastName"]);
-                                    //memberStatusReportModel.FirstName = Convert.ToString(drloff["FirstName"]);
+                                    
                                     /*'A', 'I', 'T', 'P', 'X', S' is "- Active, Inactive, Terminated, Provisional, and S is suspended*/
                                     string strLLRStatus = Convert.ToString(agentsModel.LLRStatus);
                                     if (strLLRStatus == "A")
@@ -194,7 +191,7 @@ namespace SCR.Root.Controllers
                                         agentsModel.NRDSStatus = "Suspended";
                                     }
 
-                                    //lstMemberStatusReportModel.Add(memberStatusReportModel);
+                                    
                                 }
                             
                         }
