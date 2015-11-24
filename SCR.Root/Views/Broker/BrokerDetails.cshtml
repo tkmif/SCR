@@ -10,8 +10,36 @@
         $('#btnPrint').click(function () {
             print();
         });
+       
     });
+    function ActiveClick(check) {
+        debugger;
+        if (check == 'Active') {
+            if ($('#chkActive:checkbox').prop('checked')) {
 
+                $('#chkExpired:checkbox').prop('checked', false);
+                $('#uniform-chkExpired span').removeAttr("class", "");
+            }
+            else {
+                $('#chkExpired:checkbox').prop('checked', true);
+                $('#uniform-chkExpired span').addClass("checked");
+            }
+           // $('#chkActive:checkbox').prop('checked')
+           // $('#chkExpired:checkbox').prop('checked', 'true')
+        }
+        if (check == 'Inactive') {
+            if ($('#chkExpired:checkbox').prop('checked')) {
+                $('#chkActive:checkbox').prop('checked', false);
+                $('#uniform-chkActive span').removeAttr("class", "");
+            }
+            else {
+                $('#chkActive:checkbox').prop('checked', true);
+                $('#uniform-chkActive span').addClass("checked");
+            }
+        }
+       
+   
+    }
     function print() {
         var mywindowold = window.open('', 'Broker Details');
         mywindowold.close();
@@ -30,6 +58,108 @@
         //window.print();
         //window.close();
     }
+    
+  
+
+        $(document).ready(function () {
+            var deptsArray = $('#hdnStatusId').val();
+            if (deptsArray == "") {
+                $("#chkExpired:checkbox").prop("checked", true);
+                $("#chkActive:checkbox").prop("checked", false);
+                $("#chkExpired").parent().attr("class", "checked");
+            }
+            if (deptsArray == "InActive") {
+                $("#chkExpired:checkbox").prop("checked", true);
+                $("#chkExpired").parent().attr("class", "checked");
+            }
+            if (deptsArray == "Active") {
+                $("#chkActive:checkbox").prop("checked", true);
+                $("#chkActive").parent().attr("class", "checked");
+            }
+            if (deptsArray == "InActive+Active") {
+                $("#chkActive:checkbox").prop("checked", true);
+                $("#chkInActive:checkbox").prop("checked", true);
+                $("#chkActive").parent().attr("class", "checked");
+                $("#chkInActive").parent().attr("class", "checked");
+            }
+        
+            if (deptsArray == "NOInActive + NOActive") {
+                $("#chkActive:checkbox").prop("checked", false);
+                $("#chkInActive:checkbox").prop("checked", false);
+            }
+            Notifybox();
+            $('#btnSearch').click(function () {
+                Search();
+            });
+        });
+
+        function Notifybox() {
+
+            if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
+
+                var message = '@TempData["error"]';
+                var Title = '@TempData["errtitle"]';
+                var ErrorType = '@TempData["errType"]';
+
+                var errors = '@TempData.Remove("error")';
+                var errtitles = '@TempData.Remove("errtitle")';
+                var errTypes = '@TempData.Remove("errType")';
+
+                if (ErrorType == "" && ErrorType == null) {
+                    ErrorType = "warning";
+                }
+
+                if (ErrorType == "success") {
+
+                    notify_s(Title, message);
+                }
+                else if (ErrorType == "info") {
+                    notify_i(Title, message);
+                }
+                else if (ErrorType == "error") {
+                    notify_e(Title, message);
+                }
+                else {
+                    notify(Title, message);
+                }
+            }
+            else {
+                var errors = '@TempData.Remove("error")';
+                var errtitles = '@TempData.Remove("errtitle")';
+                var errTypes = '@TempData.Remove("errType")';
+                return true;
+            }
+        }
+        function Search(BrokerID) {
+            debugger;
+            //BrokerID
+            //var BrokerID = $('#BrokerID').val();
+            var filterval = "";
+            if ($('#chkExpired').is(":checked")) {
+                filterval = "Expired";
+            }
+            else if ($('#chkActive').is(":checked")) {
+                filterval = "Active";
+            }
+            else {
+                filterval = "";
+            }
+            if (filterval != "") {
+                $.ajax
+               ({
+                   type: "GET",
+                   url: '/Broker/AgentsFilter?BrokerID=' + BrokerID,
+                   data: { 'value1': filterval },
+                   success: function (response) {
+                       window.location.href = response;
+                   }
+               });
+            }
+            else {
+                notify("Member Expiry Report", "Please enter at least one item for searching.");
+            }
+        }
+
 </script>
 <script src="@Url.Content("~/js/jquery.tablesorter.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/js/jquery.tablesorter.pager.js")" type="text/javascript"></script>
@@ -41,6 +171,8 @@
 </script>
 @using (Html.BeginForm())
 {
+    
+    <input type="hidden" id="hdnStatusId" value="@ViewBag.Filter" />
     <div id="dvContents">
 
         <div class="info" style="width: 30%; float: left">
@@ -50,7 +182,7 @@
                     <div class="title">
                         @Html.Label("Member Id")
                     </div>
-                    <div class="text">
+                    <div class="text" id="BrokerID">
                         @Html.Label(Model.MemberId.ToString())
                     </div>
                 </li>
@@ -173,13 +305,22 @@
                 <div class="head clearfix">
                     <div class="isw-grid"></div>
                     <h1>Agents under Broker - @Model.FirstName.ToString()</h1>
-                    <ul class="buttons">
-                        @* <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                   @*   <ul class="buttons">
+                       <li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Active" name="Active" id="chkMemberStatus" /><span style="color:#fff;">Member Status</span>
                     <li><a href="#" id="btnSearch" class="isw-zoom"></a></li>*@
-                        @* <li><a href="~/AgentsList/Export" class="isw-download"></a></li>*@
+                        @* <li><a href="~/AgentsList/Export" class="isw-download"></a></li>
 
-                    </ul>
+                    </ul>*@
+                    <ul class="buttons">
+                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Expired" name="Expired" id="chkExpired"  onclick="ActiveClick('Inactive');" title="Inactive agents in LLR or NRDS" /><span style="color:#fff;">Inactive Agents</span></li>
+                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Active" name="Active" onclick="ActiveClick('Active');" id="chkActive" title="Active agents in LLR and NRDS"/><span style="color:#fff">Active Agents</span></li>
+                    <li><a href="#" id="btnSearch" class="isw-zoom" title="Search" onclick="Search('@Model.MemberId');"></a></li>
+                 
+                       
+                </ul>
                 </div>
                 <div class="block-fluid">
                     <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
@@ -191,7 +332,12 @@
 
                                 <th class="headertablesorter">Office Id</th>
                                 <th class="headertablesorter">Member Type</th>
+
+                                 <th class="headertablesorter">LLR Status</th>
+                                 <th class="headertablesorter">NRDS Status</th>
                                 <th class="headertablesorter">View</th>
+
+
                             </tr>
                         </thead>
 
@@ -209,6 +355,8 @@
 
                                     <td>@item.OfficeId</td>
                                     <td>@item.MemberType</td>
+                                     <td>@item.LLRStatus</td>
+                                     <td>@item.NRDSStatus</td>
                                     <td title="View Broker's Details">
                                         <a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = item.MemberId })">
                                             <img src="" class="icon-eye-open" />

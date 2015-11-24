@@ -40,7 +40,9 @@ namespace SCR.Root.Models
 
         public string strRELicenseNumber { get; set; }
 
-
+        public string LLRStatus { get; set; }	
+        public string NRDSStatus { get; set; }
+       // public string hdnStatus { get; set; }
         public List<AgentsModel> AgentsModelList { get; set; }
     }
     public class AgentDetailsModel
@@ -172,6 +174,10 @@ namespace SCR.Root.Models
                             agentsModel.MemberType = Convert.ToString(drAgents["MemberType"]);
                             agentsModel.OfficeContactDR = Convert.ToInt32(drAgents["OfficeContactDR"]);
                             agentsModel.OfficeBusinessName = Convert.ToString(drAgents["OfficeBusinessName"]);
+                            agentsModel.LLRStatus = Convert.ToString(drAgents["LLRStatus"]);
+                            agentsModel.NRDSStatus = Convert.ToString(drAgents["NRDSStatus"]);
+                            
+                                
                             if (drAgents["BrokerId"] != null)
                             {
                                 agentsModel.BrokerId = Convert.ToInt32(drAgents["BrokerId"]);

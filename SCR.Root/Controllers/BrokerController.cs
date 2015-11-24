@@ -95,6 +95,8 @@ namespace SCR.Root.Controllers
             BrokerDAL BrokerDAL = new BrokerDAL();
             AgentsDAL agentsDAL = new AgentsDAL();
             int broker_Id = 0;
+            string filterOption = "";
+            
             string filter1 = string.Empty;
             if (userSession.Exists)
             {
@@ -109,14 +111,101 @@ namespace SCR.Root.Controllers
                             brokerDetailModel = BrokerDAL.getBrokerDetails(broker_Id, reader.ReadToEnd());
                             TempData["BrokerList"] = brokerDetailModel.AgentsModelList;
                         }
+                        List<AgentsModel> AllAgents = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + "", "");
+                        brokerDetailModel.AgentsModelList = AllAgents.Where(c => c.LLRStatus == "A" && c.NRDSStatus == "A").ToList<AgentsModel>();
+                        filterOption = "Active";
+                        if (Session["filter1"] != null)
+                        {
 
-                        brokerDetailModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + "", "");
+                            filter1 = Session["filter1"].ToString();
+                        }
+                        if (filter1 != null && filter1 != "")
+                        {
+                            if (filter1 == "Active")
+                            {
+                                brokerDetailModel.AgentsModelList =AllAgents.Where(c => c.LLRStatus == "A" && c.NRDSStatus == "A").ToList<AgentsModel>();
+                                filterOption = "Active";
+                            }
+                            else
+                            {
+                                brokerDetailModel.AgentsModelList = AllAgents.Where(c => c.LLRStatus == "I" && c.NRDSStatus == "I").ToList<AgentsModel>();
+                                filterOption = "InActive";
+                            }
+                        }
+                        ViewBag.Filter = filterOption;
+                        if (brokerDetailModel.AgentsModelList.Count > 0)
+                        {
+
+                            foreach (AgentsModel agentsModel in brokerDetailModel.AgentsModelList)
+                                {
+                                    //MemberStatusReportModel memberStatusReportModel = new MemberStatusReportModel();
+                                    //memberStatusReportModel.MemberId = Convert.ToInt32(drloff["MemberId"]);
+                                    //memberStatusReportModel.LastName = Convert.ToString(drloff["LastName"]);
+                                    //memberStatusReportModel.FirstName = Convert.ToString(drloff["FirstName"]);
+                                    /*'A', 'I', 'T', 'P', 'X', S' is "- Active, Inactive, Terminated, Provisional, and S is suspended*/
+                                    string strLLRStatus = Convert.ToString(agentsModel.LLRStatus);
+                                    if (strLLRStatus == "A")
+                                    {
+                                        agentsModel.LLRStatus = "Active";
+                                    }
+                                    else if (strLLRStatus == "I")
+                                    {
+                                        agentsModel.LLRStatus = "Inactive";
+                                    }
+                                    else if (strLLRStatus == "T")
+                                    {
+                                        agentsModel.LLRStatus = "Terminated";
+                                    }
+                                    else if (strLLRStatus == "P")
+                                    {
+                                        agentsModel.LLRStatus = "Provisional";
+                                    }
+                                    else if (strLLRStatus == "X")
+                                    {
+                                        agentsModel.LLRStatus = "Lifetime Member";
+                                    }
+                                    else if (strLLRStatus == "S")
+                                    {
+                                        agentsModel.LLRStatus = "Suspended";
+                                    }
+                                    string strNRDSStatus = Convert.ToString(agentsModel.NRDSStatus);
+                                    if (strNRDSStatus == "A")
+                                    {
+                                        agentsModel.NRDSStatus = "Active";
+                                    }
+                                    else if (strNRDSStatus == "I")
+                                    {
+                                        agentsModel.NRDSStatus = "Inactive";
+                                    }
+                                    else if (strNRDSStatus == "T")
+                                    {
+                                        agentsModel.NRDSStatus = "Terminated";
+                                    }
+                                    else if (strNRDSStatus == "P")
+                                    {
+                                        agentsModel.NRDSStatus = "Provisional";
+                                    }
+                                    else if (strNRDSStatus == "X")
+                                    {
+                                        agentsModel.NRDSStatus = "Lifetime Member";
+                                    }
+                                    else if (strNRDSStatus == "S")
+                                    {
+                                        agentsModel.NRDSStatus = "Suspended";
+                                    }
+
+                                    //lstMemberStatusReportModel.Add(memberStatusReportModel);
+                                }
+                            
+                        }
+
+
                         StringBuilder sbPrintHtmlContentAgentsList = new StringBuilder();
                         if (brokerDetailModel.AgentsModelList.Count > 0)
                         {
                             sbPrintHtmlContentAgentsList.Append("<tr> <td colspan='2'><h4>Agents's Details</h4></td></tr>");
 
-                            sbPrintHtmlContentAgentsList.Append("<tr> <td colspan='2'><table width=100%><tr class='evenrow'><td><b>Member Id</b></td><td><b>First Name</b></td><td><b>Last Name</b></td><td><b>Office Id</b></td><td><b>Member Type</b></td></tr>");
+                            sbPrintHtmlContentAgentsList.Append("<tr> <td colspan='2'><table width=100%><tr class='evenrow'><td><b>Member Id</b></td><td><b>First Name</b></td><td><b>Last Name</b></td><td><b>Office Id</b></td><td><b>Member Type</b></td><td><b>LLR Status</b></td><td><b>NRDS Status</b></td></tr>");
 
                             bool isOdd = true;
                             foreach (AgentsModel agentsModel in brokerDetailModel.AgentsModelList)
@@ -131,7 +220,7 @@ namespace SCR.Root.Controllers
                                     sbPrintHtmlContentAgentsList.Append("<tr class='evenrow'>");
                                     isOdd = true;
                                 }
-                                sbPrintHtmlContentAgentsList.Append("<td>" + agentsModel.MemberId + "</td><td>" + agentsModel.FirstName + "</td><td>" + agentsModel.LastName + "</td><td>" + agentsModel.OfficeId + "</td><td>" + agentsModel.MemberType + "</td></tr>");
+                                sbPrintHtmlContentAgentsList.Append("<td>" + agentsModel.MemberId + "</td><td>" + agentsModel.FirstName + "</td><td>" + agentsModel.LastName + "</td><td>" + agentsModel.OfficeId + "</td><td>" + agentsModel.MemberType + "</td><td>" + agentsModel.LLRStatus + "</td><td>" + agentsModel.NRDSStatus + "</td></tr>");
                             }
                             sbPrintHtmlContentAgentsList.Append("</table></td></tr>");
                         }
@@ -155,7 +244,186 @@ namespace SCR.Root.Controllers
 
             return View(brokerDetailModel);
         }
+        //AgentsFilter
+        //public ActionResult AgentsFilter(int BrokerID)
+        //{
+        //    string value1 = "";
+        //    if (!String.IsNullOrEmpty(Convert.ToString(Request.QueryString["value1"])))
+        //    {
+        //        if (Convert.ToString(Request.QueryString["value1"]) == "")
+        //        {
+        //            value1 = null;
+        //        }
+        //        else
+        //        {
+        //            value1 = Convert.ToString(Convert.ToString(Request.QueryString["value1"]));
+        //        }
+        //    }
 
+        //    UserSession userSession = new UserSession();
+        //    BrokerDetailsModel brokerDetailModel = new BrokerDetailsModel();
+        //    BrokerDAL BrokerDAL = new BrokerDAL();
+        //    AgentsDAL agentsDAL = new AgentsDAL();
+        //    int broker_Id = 0;
+        //    string filter1 = string.Empty;
+        //    if (userSession.Exists)
+        //    {
+
+        //        try
+        //        {
+        //            if (BrokerID >0)
+        //            {
+        //                broker_Id = BrokerID;
+                       
+        //                using (StreamReader reader = new StreamReader(Server.MapPath("~/HTMLTemplates/_PrintBrokerDetails.html")))
+        //                {
+        //                    brokerDetailModel = BrokerDAL.getBrokerDetails(broker_Id, reader.ReadToEnd());
+        //                    TempData["BrokerList"] = brokerDetailModel.AgentsModelList;
+        //                }
+
+        //                brokerDetailModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + "", "");
+        //                if (value1 =="Active")
+        //                brokerDetailModel.AgentsModelList = brokerDetailModel.AgentsModelList.Where(c=>c.LLRStatus=="A"&&c.NRDSStatus=="A").ToList<AgentsModel>();
+        //                else
+        //                    brokerDetailModel.AgentsModelList = brokerDetailModel.AgentsModelList.Where(c => c.LLRStatus == "I" && c.NRDSStatus == "I").ToList<AgentsModel>();
+        //                if (brokerDetailModel.AgentsModelList.Count > 0)
+        //                {
+
+        //                    foreach (AgentsModel agentsModel in brokerDetailModel.AgentsModelList)
+        //                    {
+        //                        //MemberStatusReportModel memberStatusReportModel = new MemberStatusReportModel();
+        //                        //memberStatusReportModel.MemberId = Convert.ToInt32(drloff["MemberId"]);
+        //                        //memberStatusReportModel.LastName = Convert.ToString(drloff["LastName"]);
+        //                        //memberStatusReportModel.FirstName = Convert.ToString(drloff["FirstName"]);
+        //                        /*'A', 'I', 'T', 'P', 'X', S' is "- Active, Inactive, Terminated, Provisional, and S is suspended*/
+        //                        string strLLRStatus = Convert.ToString(agentsModel.LLRStatus);
+        //                        if (strLLRStatus == "A")
+        //                        {
+        //                            agentsModel.LLRStatus = "Active";
+        //                        }
+        //                        else if (strLLRStatus == "I")
+        //                        {
+        //                            agentsModel.LLRStatus = "Inactive";
+        //                        }
+        //                        else if (strLLRStatus == "T")
+        //                        {
+        //                            agentsModel.LLRStatus = "Terminated";
+        //                        }
+        //                        else if (strLLRStatus == "P")
+        //                        {
+        //                            agentsModel.LLRStatus = "Provisional";
+        //                        }
+        //                        else if (strLLRStatus == "X")
+        //                        {
+        //                            agentsModel.LLRStatus = "Lifetime Member";
+        //                        }
+        //                        else if (strLLRStatus == "S")
+        //                        {
+        //                            agentsModel.LLRStatus = "Suspended";
+        //                        }
+        //                        string strNRDSStatus = Convert.ToString(agentsModel.NRDSStatus);
+        //                        if (strNRDSStatus == "A")
+        //                        {
+        //                            agentsModel.NRDSStatus = "Active";
+        //                        }
+        //                        else if (strNRDSStatus == "I")
+        //                        {
+        //                            agentsModel.NRDSStatus = "Inactive";
+        //                        }
+        //                        else if (strNRDSStatus == "T")
+        //                        {
+        //                            agentsModel.NRDSStatus = "Terminated";
+        //                        }
+        //                        else if (strNRDSStatus == "P")
+        //                        {
+        //                            agentsModel.NRDSStatus = "Provisional";
+        //                        }
+        //                        else if (strNRDSStatus == "X")
+        //                        {
+        //                            agentsModel.NRDSStatus = "Lifetime Member";
+        //                        }
+        //                        else if (strNRDSStatus == "S")
+        //                        {
+        //                            agentsModel.NRDSStatus = "Suspended";
+        //                        }
+
+        //                        //lstMemberStatusReportModel.Add(memberStatusReportModel);
+        //                    }
+
+        //                }
+
+
+        //                StringBuilder sbPrintHtmlContentAgentsList = new StringBuilder();
+        //                if (brokerDetailModel.AgentsModelList.Count > 0)
+        //                {
+        //                    sbPrintHtmlContentAgentsList.Append("<tr> <td colspan='2'><h4>Agents's Details</h4></td></tr>");
+
+        //                    sbPrintHtmlContentAgentsList.Append("<tr> <td colspan='2'><table width=100%><tr class='evenrow'><td><b>Member Id</b></td><td><b>First Name</b></td><td><b>Last Name</b></td><td><b>Office Id</b></td><td><b>Member Type</b></td><td><b>LLR Status</b></td><td><b>NRDS Status</b></td></tr>");
+
+        //                    bool isOdd = true;
+        //                    foreach (AgentsModel agentsModel in brokerDetailModel.AgentsModelList)
+        //                    {
+        //                        if (isOdd)
+        //                        {
+        //                            sbPrintHtmlContentAgentsList.Append("<tr class='oddrow'>");
+        //                            isOdd = false;
+        //                        }
+        //                        else
+        //                        {
+        //                            sbPrintHtmlContentAgentsList.Append("<tr class='evenrow'>");
+        //                            isOdd = true;
+        //                        }
+        //                        sbPrintHtmlContentAgentsList.Append("<td>" + agentsModel.MemberId + "</td><td>" + agentsModel.FirstName + "</td><td>" + agentsModel.LastName + "</td><td>" + agentsModel.OfficeId + "</td><td>" + agentsModel.MemberType + "</td><td>" + agentsModel.LLRStatus + "</td><td>" + agentsModel.NRDSStatus + "</td></tr>");
+        //                    }
+        //                    sbPrintHtmlContentAgentsList.Append("</table></td></tr>");
+        //                }
+        //                //brokerDetailModel.PrintHtmlContent = brokerDetailModel.PrintHtmlContent.Replace("{AgentDetails}", sbPrintHtmlContentAgentsList.ToString());
+        //                brokerDetailModel.PrintHtmlContentAgentList = sbPrintHtmlContentAgentsList.ToString();
+        //                return View("BrokerDetails", brokerDetailModel);
+        //            }
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            BrokerDAL = null;
+        //            GC.Collect();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        TempData["expires"] = "true";
+        //        return RedirectToAction("Users", "Login");
+        //    }
+
+        //    return View("BrokerDetails",brokerDetailModel);
+        //}
+
+        public ActionResult AgentsFilter(int BrokerID)
+        {
+            string value1 = "";
+            string value2 = "";
+            if (!String.IsNullOrEmpty(Convert.ToString(Request.QueryString["value1"])))
+            {
+                if (Convert.ToString(Request.QueryString["value1"]) == "")
+                {
+                    value1 = null;
+                }
+                else
+                {
+                    value1 = Convert.ToString(Convert.ToString(Request.QueryString["value1"]));
+                }
+            }
+
+
+
+            Session["filter1"] = value1;
+            return new JsonResult
+            {
+
+                Data = Url.Action("BrokerDetails", "Broker", new { MemberId=BrokerID }),
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         public ActionResult Export()
         {
             UserSession userSession = new UserSession();
