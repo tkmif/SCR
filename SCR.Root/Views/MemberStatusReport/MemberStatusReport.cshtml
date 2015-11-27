@@ -132,9 +132,14 @@
                  
    
                                 <tr style="width: 20px; height: 50px">
-                                    <td>
+                                   @* <td>
                                         @item.MemberId
-                                    </td>
+                                    </td>*@
+                              <td>
+                                     <a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = item.MemberId })">
+                                                @item.MemberId
+                                            </a>
+                                </td>
                                     <td>
                                         @item.LastName
 
