@@ -352,25 +352,25 @@ namespace SCR.Root.Controllers
                 }
                 else
                 {
-                    string memtype = Convert.ToString(Convert.ToString(Request.QueryString["membertype"]));
+                    string memtype = Convert.ToString(Convert.ToString(Request.QueryString["membertype"])).ToLower();
                     switch (memtype)
                     {
-                            case "Realtor":
+                            case "realtor":
                             membertype = "R";
                             break;
-                            case "Affiliate":
+                            case "affiliate":
                             membertype = "AFF";
                             break;
-                            case "Non-member":
+                            case "non-member":
                             membertype = "N";
                             break;
-                            case "Staff":
+                            case "staff":
                             membertype = "S";
                             break;
-                            case "Institute Affiliate Member":
+                            case "institute affiliate member":
                             membertype = "I";
                             break;
-                            case "RARealtor Associate":
+                            case "rarealtor associate":
                             membertype = "RA";
                             break;
                             
