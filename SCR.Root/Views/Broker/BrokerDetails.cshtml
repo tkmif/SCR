@@ -1,4 +1,4 @@
-﻿@model SCR.Root.Models.BrokerDetailsModel
+﻿    @model SCR.Root.Models.BrokerDetailsModel
 
 @{
     ViewBag.Title = "Broker Details";
@@ -10,7 +10,7 @@
         $('#btnPrint').click(function () {
             print();
         });
-       
+
     });
     function ActiveClick(check) {
         debugger;
@@ -24,8 +24,8 @@
                 $('#chkExpired:checkbox').prop('checked', true);
                 $('#uniform-chkExpired span').addClass("checked");
             }
-           // $('#chkActive:checkbox').prop('checked')
-           // $('#chkExpired:checkbox').prop('checked', 'true')
+            // $('#chkActive:checkbox').prop('checked')
+            // $('#chkExpired:checkbox').prop('checked', 'true')
         }
         if (check == 'Inactive') {
             if ($('#chkExpired:checkbox').prop('checked')) {
@@ -37,8 +37,8 @@
                 $('#uniform-chkActive span').addClass("checked");
             }
         }
-       
-   
+
+
     }
     function print() {
         var mywindowold = window.open('', 'Broker Details');
@@ -58,44 +58,44 @@
         //window.print();
         //window.close();
     }
-    
-  
 
-        $(document).ready(function () {
-            var deptsArray = $('#hdnStatusId').val();
-            if (deptsArray == "") {
-                $("#chkExpired:checkbox").prop("checked", true);
-                $("#chkActive:checkbox").prop("checked", false);
-                $("#chkExpired").parent().attr("class", "checked");
-            }
-            if (deptsArray == "InActive") {
-                $("#chkExpired:checkbox").prop("checked", true);
-                $("#chkExpired").parent().attr("class", "checked");
-            }
-            if (deptsArray == "Active") {
-                $("#chkActive:checkbox").prop("checked", true);
-                $("#chkActive").parent().attr("class", "checked");
-            }
-            if (deptsArray == "InActive+Active") {
-                $("#chkActive:checkbox").prop("checked", true);
-                $("#chkInActive:checkbox").prop("checked", true);
-                $("#chkActive").parent().attr("class", "checked");
-                $("#chkInActive").parent().attr("class", "checked");
-            }
-        
-            if (deptsArray == "NOInActive + NOActive") {
-                $("#chkActive:checkbox").prop("checked", false);
-                $("#chkInActive:checkbox").prop("checked", false);
-            }
-            Notifybox();
-            $('#btnSearch').click(function () {
-                Search();
-            });
+
+
+    $(document).ready(function () {
+        var deptsArray = $('#hdnStatusId').val();
+        if (deptsArray == "") {
+            $("#chkExpired:checkbox").prop("checked", true);
+            $("#chkActive:checkbox").prop("checked", false);
+            $("#chkExpired").parent().attr("class", "checked");
+        }
+        if (deptsArray == "InActive") {
+            $("#chkExpired:checkbox").prop("checked", true);
+            $("#chkExpired").parent().attr("class", "checked");
+        }
+        if (deptsArray == "Active") {
+            $("#chkActive:checkbox").prop("checked", true);
+            $("#chkActive").parent().attr("class", "checked");
+        }
+        if (deptsArray == "InActive+Active") {
+            $("#chkActive:checkbox").prop("checked", true);
+            $("#chkInActive:checkbox").prop("checked", true);
+            $("#chkActive").parent().attr("class", "checked");
+            $("#chkInActive").parent().attr("class", "checked");
+        }
+
+        if (deptsArray == "NOInActive + NOActive") {
+            $("#chkActive:checkbox").prop("checked", false);
+            $("#chkInActive:checkbox").prop("checked", false);
+        }
+        Notifybox();
+        $('#btnSearch').click(function () {
+            Search();
         });
+    });
 
-        function Notifybox() {
+    function Notifybox() {
 
-            if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
+        if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
 
                 var message = '@TempData["error"]';
                 var Title = '@TempData["errtitle"]';
@@ -314,7 +314,7 @@
                     </ul>*@
                     <ul class="buttons">
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
-                        <input type="checkbox" value="Expired" name="Expired" id="chkExpired"  onclick="ActiveClick('Inactive');" title="Inactive agents in LLR or NRDS" /><span style="color:#fff;">Inactive Agents</span></li>
+                        <input type="checkbox" value="Expired" name="Expired" id="chkExpired"  onclick="ActiveClick('Inactive');" title="Inactive agents in LLR or NRDS" /><span style="color:#fff;">Expired Agents</span></li>
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Active" name="Active" onclick="ActiveClick('Active');" id="chkActive" title="Active agents in LLR and NRDS"/><span style="color:#fff">Active Agents</span></li>
                     <li><a href="#" id="btnSearch" class="isw-zoom" title="Search" onclick="Search('@Model.MemberId');"></a></li>

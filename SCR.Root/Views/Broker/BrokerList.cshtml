@@ -17,13 +17,28 @@
         $("#chkInActive").click(function () {
             if (this.checked) {
                 $("#chkActive").prop("checked", false);
+                $("#chkDelinquent").prop("checked", false);
                 $('#uniform-chkActive span').removeAttr("class", "fL");
+                $('#uniform-chkDelinquent span').removeAttr("class", "fL");
             }
         });
         $("#chkActive").click(function () {
             if (this.checked) {
                 $("#chkInActive").prop("checked", false);
+                $("#chkDelinquent").prop("checked", false);
                 $('#uniform-chkInActive span').removeAttr("class", "fL");
+                $('#uniform-chkDelinquent span').removeAttr("class", "fL");
+            }
+        });
+
+        $("#chkDelinquent").click(function () {
+            if (this.checked) {
+
+                $('#uniform-chkDelinquent span').addClass("checked");
+                $("#chkInActive:checked").prop("checked", false);
+                $("#chkActive:checked").prop("checked", false);
+                $('#uniform-chkInActive span').removeAttr("class", "fL");
+                $('#uniform-chkActive span').removeAttr("class", "fL");
             }
         });
         Notifybox();
@@ -43,7 +58,7 @@
             $("#chkInActive").prop("checked", true);
             $("#chkActive").parent().attr("class", "checked");
             $("#chkInActive").parent().attr("class", "checked");
-        } 
+        }
         if (deptsArray == "") {
             $("#chkActive").prop("checked", true);
             $("#chkInActive").prop("checked", false);
@@ -52,7 +67,7 @@
         }
         if (deptsArray == "NOInActive + NOActive") {
             $("#chkActive").prop("checked", false);
-            $("#chkInActive").prop("checked", false);       
+            $("#chkInActive").prop("checked", false);
         }
     });
     function Notifybox() {
@@ -100,6 +115,9 @@
         else if ($('#chkActive').is(":checked")) {
             filterval = "Active";
         }
+        else if ($('#chkDelinquent').is(":checked")) {
+            filterval = "Delinquent";
+        }
         else if ($('#chkActive').is(":checked")) {
             if ($('#chkInActive').is(":checked")) {
                 filterval = "InActive+Active";
@@ -146,6 +164,8 @@
                         <input type="checkbox" value="Expired" id="chkActive" title="Active" name="Active"/><span style="color:#fff;">Active Brokers</span></li>
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Active" id="chkInActive" title="InActive" name="InActive"/><span style="color:#fff">InActive Brokers</span></li>
+                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Delinquent" id="chkDelinquent" title="Brokers with Delinquent Agents" name="Delinquent"/><span style="color:#fff;">Brokers with Delinquent Agents</span></li>
                     <li><a href="#" id="btnSearch" class="isw-zoom" title="Search"></a></li>
                    
 
