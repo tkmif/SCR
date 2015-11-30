@@ -53,6 +53,11 @@
             $("#chkActive").prop("checked", true);
             $("#chkActive").parent().attr("class", "checked");
         }
+        
+        if (deptsArray == "Delinquent") {
+            $("#chkDelinquent").prop("checked", true);
+            $("#chkDelinquent").parent().attr("class", "checked");
+        }
         if (deptsArray == "InActive+Active") {
             $("#chkActive").prop("checked", true);
             $("#chkInActive").prop("checked", true);
@@ -206,7 +211,7 @@
                                 <td>@item.Status</td>
 
                                 <td>
-                                    <a href="@Url.Action("BrokerDetails", "Broker", new { MemberId = item.MemberId })" title="View Broker's Details">
+                                    <a href="@Url.Action("BrokerDetails", "Broker", new { MemberId = item.MemberId ,Status=Model.hdnStatus})" title="View Broker's Details">
                                         <img src="" class="icon-eye-open" />
                                     </a>
                                 </td>

@@ -173,7 +173,7 @@ namespace SCR.Root.Models
             return lstBrokerModel;
         }
         //getBrokerWithDelinquentAgents
-        public List<BrokerModel> getBrokerWithDelinquentAgents()
+        public List<BrokerModel> getBrokerWithDelinquentAgents(string constrain)
         {
 
             IDBManager dbManager = new DBManager(base.GetProvider(), ConfigurationManager.AppSettings["DbConnection"].ToString());
@@ -182,53 +182,53 @@ namespace SCR.Root.Models
             try
             {
 
-                //DataSet dsBrokerList = new DataSet();
-                //dbManager.Open();
-                //dbManager.CreateParameters(1);
-                //dbManager.AddParameters(0, "@Constrain", " AND " + constrain);
+                DataSet dsBrokerList = new DataSet();
+                dbManager.Open();
+                dbManager.CreateParameters(1);
+                dbManager.AddParameters(0, "@Constrain", " AND " + constrain);
 
-                //dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "Active__Broker__Select_Proc");
-                //if (dsBrokerList.Tables.Count > 0)
-                //{
-                //    if (dsBrokerList.Tables[0].Rows.Count > 0)
-                //    {
-                //        foreach (DataRow drAgents in dsBrokerList.Tables[0].Rows)
-                //        {
-                //            BrokerModel agentsModel = new BrokerModel();
-                //            agentsModel.MemberId = Convert.ToInt32(drAgents["MemberId"]);
-                //            agentsModel.LastName = Convert.ToString(drAgents["LastName"]);
-                //            agentsModel.FirstName = Convert.ToString(drAgents["FirstName"]);
-                //            agentsModel.OfficeId = Convert.ToInt32(drAgents["OfficeId"]);
-                //            agentsModel.MemberType = Convert.ToString(drAgents["MemberType"]);
-                //            string strStatus = Convert.ToString(drAgents["Status"]);
-                //            if (strStatus == "A")
-                //            {
-                //                agentsModel.Status = "Active";
-                //            }
-                //            else if (strStatus == "I")
-                //            {
-                //                agentsModel.Status = "Inactive";
-                //            }
-                //            else if (strStatus == "T")
-                //            {
-                //                agentsModel.Status = "Terminated";
-                //            }
-                //            else if (strStatus == "P")
-                //            {
-                //                agentsModel.Status = "Provisional";
-                //            }
-                //            else if (strStatus == "X")
-                //            {
-                //                agentsModel.Status = "Lifetime Member";
-                //            }
-                //            else if (strStatus == "S")
-                //            {
-                //                agentsModel.Status = "Suspended";
-                //            }
-                //            lstBrokerModel.Add(agentsModel);
-                //        }
-                //    }
-                //}
+                dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "Active_Brokers_with_Delinquent_Agents");
+                if (dsBrokerList.Tables.Count > 0)
+                {
+                    if (dsBrokerList.Tables[0].Rows.Count > 0)
+                    {
+                        foreach (DataRow drAgents in dsBrokerList.Tables[0].Rows)
+                        {
+                            BrokerModel agentsModel = new BrokerModel();
+                            agentsModel.MemberId = Convert.ToInt32(drAgents["MemberId"]);
+                            agentsModel.LastName = Convert.ToString(drAgents["LastName"]);
+                            agentsModel.FirstName = Convert.ToString(drAgents["FirstName"]);
+                            agentsModel.OfficeId = Convert.ToInt32(drAgents["OfficeId"]);
+                            agentsModel.MemberType = Convert.ToString(drAgents["MemberType"]);
+                            string strStatus = Convert.ToString(drAgents["Status"]);
+                            if (strStatus == "A")
+                            {
+                                agentsModel.Status = "Active";
+                            }
+                            else if (strStatus == "I")
+                            {
+                                agentsModel.Status = "Inactive";
+                            }
+                            else if (strStatus == "T")
+                            {
+                                agentsModel.Status = "Terminated";
+                            }
+                            else if (strStatus == "P")
+                            {
+                                agentsModel.Status = "Provisional";
+                            }
+                            else if (strStatus == "X")
+                            {
+                                agentsModel.Status = "Lifetime Member";
+                            }
+                            else if (strStatus == "S")
+                            {
+                                agentsModel.Status = "Suspended";
+                            }
+                            lstBrokerModel.Add(agentsModel);
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

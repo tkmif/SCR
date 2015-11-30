@@ -45,7 +45,10 @@ namespace SCR.Root.Controllers
                         BrokerDetailModel.hdnStatus = filter1;
                         if (filter1 == "Delinquent")
                         {
-                            BrokerDetailModel.BrokerModelList = BrokerDAL.getBrokerWithDelinquentAgents();
+                            constrian = getCondition(filter1);
+                            BrokerDetailModel.BrokerModelList = BrokerDAL.getBrokerWithDelinquentAgents(constrian);
+                            TempData["BrokerList"] = BrokerDetailModel.BrokerModelList;
+                            ViewData["ChkStatus"] = filter1;
                         }
                         else
                         {
@@ -113,6 +116,7 @@ namespace SCR.Root.Controllers
                     if (Request.QueryString["MemberId"] != null)
                     {
                         broker_Id = Convert.ToInt32(Request.QueryString["MemberId"].ToString());
+                        
                         using (StreamReader reader = new StreamReader(Server.MapPath("~/HTMLTemplates/_PrintBrokerDetails.html")))
                         {
                             brokerDetailModel = BrokerDAL.getBrokerDetails(broker_Id, reader.ReadToEnd());
@@ -123,8 +127,8 @@ namespace SCR.Root.Controllers
                         filterOption = "Active";
                         if (Session["filter1"] != null)
                         {
-
                             filter1 = Session["filter1"].ToString();
+                            
                         }
                         if (filter1 != null && filter1 != "")
                         {
@@ -139,6 +143,7 @@ namespace SCR.Root.Controllers
                                 filterOption = "InActive";
                             }
                         }
+                        if (Request.QueryString["Status"] == "Delinquent") { filter1 = Request.QueryString["Status"].ToString(); filterOption = "InActive"; brokerDetailModel.AgentsModelList = AllAgents.Where(c => (c.LLRStatus == "I" || c.LLRStatus == "T") && (c.NRDSStatus == "I" || c.NRDSStatus == "T")).ToList<AgentsModel>(); }
                         ViewBag.Filter = filterOption;
                         if (brokerDetailModel.AgentsModelList.Count > 0)
                         {
