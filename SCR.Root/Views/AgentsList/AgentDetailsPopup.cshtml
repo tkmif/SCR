@@ -1,0 +1,143 @@
+﻿@model SCR.Root.Models.AgentDetailsModel
+@{
+    Layout = "~/Views/Shared/_SCRPopupLayout.cshtml"; 
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Agent Details</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+{ 
+
+    <div class="info" style="width: 90%;" id="divInfo">
+        <ul class="rows">
+            <li class="heading">Agent's Details</li>
+            <li>
+                <div class="title">
+                    @Html.Label("Member Id")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.MemberId.ToString())
+                </div>
+            </li>
+
+            <li>
+                <div class="title">
+                    @Html.Label("Agent's Name")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.FirstName.ToString())
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Agent Type")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.AgentType.ToString())
+                </div>
+            </li>
+             <li>
+                <div class="title">
+                    @Html.Label("R/E License No")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.strRELicenseNumber.ToString())
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Agent's Status")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.AgentStatus.ToString())
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Office Id")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.OfficeId.ToString())
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Broker Id")
+                </div>
+                <div class="text">
+                    @Html.Label(Model.BrokerId.ToString())
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    
+    <div class="info" style="width: 90%;">
+
+        <ul class="rows">
+            <li class="heading">Member Office</li>
+            <li>
+                <div class="title">
+                    @Html.Label(" Bussiness Name")
+                </div>
+                <div class="text">
+                 
+                    <label>@Model.OfficeName.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Office Address")
+                </div>
+                <div class="text">
+                   
+                    <label>@Model.OfficeAddress.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Email")
+                </div>
+                <div class="text">
+                   
+                    <label>@Model.Email.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("City")
+                </div>
+                <div class="text">
+                    
+                    <label>@Model.City.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("State")
+                </div>
+                <div class="text">
+                    
+                    <label>@Model.State.ToString()</label>
+                </div>
+            </li>
+            <li>
+                <div class="title">
+                    @Html.Label("Zipcode")
+                </div>
+                <div class="text">
+                   
+                    <label>@Model.Zipcode.ToString()</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+}
+</body>
+</html>

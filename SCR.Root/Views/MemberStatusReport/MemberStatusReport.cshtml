@@ -53,6 +53,7 @@
             return true;
         }
     }
+
     function Search() {
 
 
@@ -78,6 +79,17 @@
             notify("Member Status Report", "Please enter at least one item for searching.");
         }
     }
+
+    function ShowAgentDetails(MemberId)
+    {
+        //var mywindowold = window.open('', 'Agent Details');
+        //mywindowold.close();
+        var w = 600;
+        var h = 680;
+        var left = (screen.width / 2) - (w / 2);
+        var top = (screen.height / 2) - (h / 2);
+        var mywindow = window.open('/AgentsList/AgentDetailsPopup?MemberId=' + MemberId, 'Agent Details', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+    }
 </script>
 
 <link href="@Url.Content("~/css/Site.css")" rel="stylesheet" type="text/css" />
@@ -96,12 +108,12 @@
 @using (Html.BeginForm("MemberStatusReport", "MemberStatusReport", FormMethod.Post, new { @class = "form-horizontal", @id = "validation" }))
 { 
 
-<div class="row-fluid">
+    <div class="row-fluid">
 
         <div class="span12">
             <div class="head clearfix">
                 <div class="isw-grid"></div>
-              @*  <ul class="buttons">
+                @*  <ul class="buttons">
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Active" name="Active" id="chkMemberStatus" /><span style="color:#fff;">Member Status</span>
                     <li><a href="#" id="btnSearch" class="isw-zoom"></a></li>
@@ -121,66 +133,68 @@
                         </tr>
                     </thead>
 
-                       
-                        <tbody>
-                            @if (Model.MemberStatusReportModelList != null)
+
+                    <tbody>
+                        @if (Model.MemberStatusReportModelList != null)
+                        {
+                            if (Model.MemberStatusReportModelList.Count > 0)
                             {
-                                if (Model.MemberStatusReportModelList.Count > 0)
-                                {
-                                    foreach (var item in Model.MemberStatusReportModelList)
-                                    {
-                 
+                                foreach (var item in Model.MemberStatusReportModelList)
+                                {                 
    
-                                <tr style="width: 20px; height: 50px">
-                                   @* <td>
+                            <tr style="width: 20px; height: 50px">
+                                @* <td>
                                         @item.MemberId
                                     </td>*@
-                                    <td>
-                                    <a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = item.MemberId })">
+                                <td>
+                                    @*<a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = item.MemberId })">
                                                 @item.MemberId
-                                            </a>
-                                    </td>
-                                    <td>
-                                        @item.LastName
+                                            </a>*@
+                                    <a href="#" onclick="ShowAgentDetails('@item.MemberId')">
+                                        @item.MemberId
+                                    </a>
+                                </td>
+                                <td>
+                                    @item.LastName
 
-                                    </td>
-                                    <td>
-                                        @item.FirstName
+                                </td>
+                                <td>
+                                    @item.FirstName
 
-                                    </td>
-                                    <td>
-                                         @item.LLRStatus
-                                    </td>
-                                    <td>
-                                        @item.NRDSStatus
-                                    </td>
-                                </tr>
-                                    }
+                                </td>
+                                <td>
+                                    @item.LLRStatus
+                                </td>
+                                <td>
+                                    @item.NRDSStatus
+                                </td>
+                            </tr>
                                 }
                             }
-                        </tbody>
-                    </table>
+                        }
+                    </tbody>
+                </table>
 
-                    <div id="pager" style="position: none; padding-top: 5px;">
-                        <form>
-                            <img src="@Url.Content("~/img/first.png")" class="first" />
-                            <img src="@Url.Content("~/img/prev.png")" class="prev" />
-                            <input type="text" class="pagedisplay" style="width: 50px; height: 30px;" readonly />
-                            <img src="@Url.Content("~/img/next.png")" class="next" />
-                            <img src="@Url.Content("~/img/last.png")" class="last" />
-                            <select class="pagesize" style="width: 55px; height: 30px;">
-                                <option selected="selected" value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="40">40</option>
-                            </select>
-                        </form>
-                    </div>
-
+                <div id="pager" style="position: none; padding-top: 5px;">
+                    <form>
+                        <img src="@Url.Content("~/img/first.png")" class="first" />
+                        <img src="@Url.Content("~/img/prev.png")" class="prev" />
+                        <input type="text" class="pagedisplay" style="width: 50px; height: 30px;" readonly />
+                        <img src="@Url.Content("~/img/next.png")" class="next" />
+                        <img src="@Url.Content("~/img/last.png")" class="last" />
+                        <select class="pagesize" style="width: 55px; height: 30px;">
+                            <option selected="selected" value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
                 </div>
+
             </div>
         </div>
+    </div>
 
-    @*</div>*@
+@*</div>*@
 }

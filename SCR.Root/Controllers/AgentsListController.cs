@@ -355,27 +355,27 @@ namespace SCR.Root.Controllers
                     string memtype = Convert.ToString(Convert.ToString(Request.QueryString["membertype"])).ToLower();
                     switch (memtype)
                     {
-                            case "realtor":
+                        case "realtor":
                             membertype = "R";
                             break;
-                            case "affiliate":
+                        case "affiliate":
                             membertype = "AFF";
                             break;
-                            case "non-member":
+                        case "non-member":
                             membertype = "N";
                             break;
-                            case "staff":
+                        case "staff":
                             membertype = "S";
                             break;
-                            case "institute affiliate member":
+                        case "institute affiliate member":
                             membertype = "I";
                             break;
-                            case "rarealtor associate":
+                        case "rarealtor associate":
                             membertype = "RA";
                             break;
-                            
+
                     }
-                    
+
                 }
             }
             else { membertype = null; }
@@ -391,7 +391,7 @@ namespace SCR.Root.Controllers
             TempData["agentfname"] = agentfname;
             TempData["agentlname"] = agentLname;
             TempData["memid"] = memberid;
-            
+
             switch (membertype)
             {
                 case "R":
@@ -634,6 +634,37 @@ namespace SCR.Root.Controllers
         }
 
         public ActionResult AgentDetails()
+        {
+            AgentDetailsModel agentDetailModel = new AgentDetailsModel();
+            AgentsDAL agentsDAL = new AgentsDAL();
+            UserSession userSession = new UserSession();
+            int broker_Id = 0;
+            string filter1 = string.Empty;
+            try
+            {
+                if (Request.QueryString["MemberId"] != null)
+                {
+                    broker_Id = Convert.ToInt32(Request.QueryString["MemberId"].ToString());
+
+                    using (StreamReader reader = new StreamReader(Server.MapPath("~/HTMLTemplates/_PrintAgentDetails.html")))
+                    {
+                        agentDetailModel = agentsDAL.getAgentDetails(broker_Id, reader.ReadToEnd());
+                    }
+
+                    TempData["AgentsList"] = agentDetailModel.dt;
+                    return View(agentDetailModel);
+                }
+            }
+            catch
+            {
+                agentsDAL = null;
+                GC.Collect();
+            }
+
+            return View(agentDetailModel);
+        }
+
+        public ActionResult AgentDetailsPopup()
         {
             AgentDetailsModel agentDetailModel = new AgentDetailsModel();
             AgentsDAL agentsDAL = new AgentsDAL();
