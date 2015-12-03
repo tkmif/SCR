@@ -394,7 +394,8 @@
     <div class="span9">
         <br />
         <input type="button" id="btnPrint" value="Print" class=" btn btn_prnt" />
-        <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="history.go(-1);" />
+       @* <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="history.go(-1);" />*@
+        <button type="button" class="btn_cancel btn image-button" onclick="location.href='@Url.Action("BrokerList", "Broker")'" >Cancel</button>
         @Html.Hidden("hdnPrintHtmlContent", Model.PrintHtmlContent.ToString())
         @Html.Hidden("hdnPrintHtmlContentAgentList", Model.PrintHtmlContentAgentList.ToString())
     </div>
