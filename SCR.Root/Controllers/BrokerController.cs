@@ -98,14 +98,14 @@ namespace SCR.Root.Controllers
 
         }
 
-        public ActionResult BrokerDetails()
+        public ActionResult BrokerDetails(bool filterOption = false)
         {
             UserSession userSession = new UserSession();
             BrokerDetailsModel brokerDetailModel = new BrokerDetailsModel();
             BrokerDAL BrokerDAL = new BrokerDAL();
             AgentsDAL agentsDAL = new AgentsDAL();
             int broker_Id = 0;
-            string filterOption = "";
+            
 
             string filter1 = string.Empty;
             if (userSession.Exists)
@@ -122,28 +122,41 @@ namespace SCR.Root.Controllers
                             brokerDetailModel = BrokerDAL.getBrokerDetails(broker_Id, reader.ReadToEnd());
                             TempData["BrokerList"] = brokerDetailModel.AgentsModelList;
                         }
-                        List<AgentsModel> AllAgents = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + "", "");
-                        brokerDetailModel.AgentsModelList = AllAgents.Where(c => c.LLRStatus == "A" && c.NRDSStatus == "A").ToList<AgentsModel>();
-                        filterOption = "Active";
-                        if (Session["filter1"] != null)
+                        string LLR="";
+                        if (Session["LLR"] != null ) { LLR = Session["LLR"].ToString(); }
+                        string NRDS="";
+                        if (Session["NRDS"] != null ) { NRDS = Session["NRDS"].ToString(); }
+                        string condition = "";
+                        if (filterOption == true)
                         {
-                            filter1 = Session["filter1"].ToString();
+                            if (LLR != "" && LLR != "Select") { condition += " and L.[Status]='" + LLR + "'"; }
+                            if (NRDS != "" && NRDS != "Select") { condition += " and NRDS.[MemberStatusVal]='" + NRDS + "'"; }
+                            ViewBag.LLR = LLR;
+                            ViewBag.NRDS = NRDS;
+                        }
+                        brokerDetailModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + condition, "");
+                        //List<AgentsModel> AllAgents = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + "", "");
+                        //brokerDetailModel.AgentsModelList = AllAgents.Where(c => c.LLRStatus == "A" && c.NRDSStatus == "A").ToList<AgentsModel>();
+                        //filterOption = "Active";
+                        //if (Session["filter1"] != null)
+                        //{
+                        //    filter1 = Session["filter1"].ToString();
                             
-                        }
-                        if (filter1 != null && filter1 != "")
-                        {
-                            if (filter1 == "Active")
-                            {
-                                brokerDetailModel.AgentsModelList = AllAgents.Where(c => c.LLRStatus == "A" && c.NRDSStatus == "A").ToList<AgentsModel>();
-                                filterOption = "Active";
-                            }
-                            else
-                            {
-                                brokerDetailModel.AgentsModelList = AllAgents.Where(c => (c.LLRStatus == "I" || c.LLRStatus == "T") && (c.NRDSStatus == "I" || c.NRDSStatus == "T")).ToList<AgentsModel>();
-                                filterOption = "InActive";
-                            }
-                        }
-                        if (Request.QueryString["Status"] == "Delinquent") { filter1 = Request.QueryString["Status"].ToString(); filterOption = "InActive"; brokerDetailModel.AgentsModelList = AllAgents.Where(c => (c.LLRStatus == "I" || c.LLRStatus == "T") && (c.NRDSStatus == "I" || c.NRDSStatus == "T")).ToList<AgentsModel>(); }
+                        //}
+                        //if (filter1 != null && filter1 != "")
+                        //{
+                        //    if (filter1 == "Active")
+                        //    {
+                        //        brokerDetailModel.AgentsModelList = AllAgents.Where(c => c.LLRStatus == "A" && c.NRDSStatus == "A").ToList<AgentsModel>();
+                        //        filterOption = "Active";
+                        //    }
+                        //    else
+                        //    {
+                        //        brokerDetailModel.AgentsModelList = AllAgents.Where(c => (c.LLRStatus == "I" || c.LLRStatus == "T") && (c.NRDSStatus == "I" || c.NRDSStatus == "T")).ToList<AgentsModel>();
+                        //        filterOption = "InActive";
+                        //    }
+                        //}
+                        //if (Request.QueryString["Status"] == "Delinquent") { filter1 = Request.QueryString["Status"].ToString(); filterOption = "InActive"; brokerDetailModel.AgentsModelList = AllAgents.Where(c => (c.LLRStatus == "I" || c.LLRStatus == "T") && (c.NRDSStatus == "I" || c.NRDSStatus == "T")).ToList<AgentsModel>(); }
                         ViewBag.Filter = filterOption;
                         if (brokerDetailModel.AgentsModelList.Count > 0)
                         {
@@ -409,27 +422,24 @@ namespace SCR.Root.Controllers
 
         public ActionResult AgentsFilter(int BrokerID)
         {
-            string value1 = "";
-            string value2 = "";
-            if (!String.IsNullOrEmpty(Convert.ToString(Request.QueryString["value1"])))
+            bool filter = true;
+            string LLR = "";
+            string NRDS = "";
+            // LLRStatusFilter, NRDSStatusFilter,Inactive, Active
+            if (!String.IsNullOrEmpty(Convert.ToString(Request.QueryString["LLRStatusFilter"])))
             {
-                if (Convert.ToString(Request.QueryString["value1"]) == "")
-                {
-                    value1 = null;
-                }
-                else
-                {
-                    value1 = Convert.ToString(Convert.ToString(Request.QueryString["value1"]));
-                }
+                LLR=Convert.ToString(Request.QueryString["LLRStatusFilter"]);
+            }
+            if (!String.IsNullOrEmpty(Convert.ToString(Request.QueryString["NRDSStatusFilter"])))
+            {
+                NRDS = Convert.ToString(Request.QueryString["NRDSStatusFilter"]);
             }
 
-
-
-            Session["filter1"] = value1;
+            Session["LLR"] = LLR;
+            Session["NRDS"] = NRDS;
             return new JsonResult
             {
-
-                Data = Url.Action("BrokerDetails", "Broker", new { MemberId = BrokerID }),
+                Data = Url.Action("BrokerDetails", "Broker", new { MemberId = BrokerID, filterOption = filter }),
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }

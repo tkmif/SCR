@@ -23,7 +23,7 @@ namespace SCR.Root.Controllers
         //
         // GET: /MemberStatusReport/
 
-        public ActionResult MemberStatusReport()
+        public ActionResult MemberStatusReport(bool filterOption=false)
         {
             MemberStatusReportModel memberStatusReportModel = new MemberStatusReportModel();
             MemberStatusReportDAL memberStatusReportDAL = new MemberStatusReportDAL();
@@ -41,6 +41,20 @@ namespace SCR.Root.Controllers
                         Session["filter1"] = null;
                     }
                     constrian = getCondition(filter1);
+                    if (filterOption == true)
+                    { 
+                  
+                        string LLR = "";
+                        if (Session["LLR"] != null) { LLR = Session["LLR"].ToString(); }
+                        string NRDS = "";
+                        if (Session["NRDS"] != null) { NRDS = Session["NRDS"].ToString(); }
+
+                        if (LLR != "" && LLR != "Select") { constrian = " LLR.[Status]='" + LLR + "'"; }
+                        if (NRDS != "" && NRDS != "Select") { constrian += " and NRDS.[MemberStatusVal]='" + NRDS + "'"; }
+                        ViewBag.LLR = LLR;
+                        ViewBag.NRDS = NRDS;
+                       
+                    }
                     memberStatusReportModel.MemberStatusReportModelList = memberStatusReportDAL.getMemberStatusReportList(constrian);
                     TempData["MemberStatusReportModelList"] = memberStatusReportModel.MemberStatusReportModelList;
                     if (memberStatusReportModel.MemberStatusReportModelList.Count == 0)
@@ -145,7 +159,29 @@ namespace SCR.Root.Controllers
             };
 
         }
+        public ActionResult DataFilter(int BrokerID)
+        {
+            bool filter = true;
+            string LLR = "";
+            string NRDS = "";
+            // LLRStatusFilter, NRDSStatusFilter,Inactive, Active
+            if (!String.IsNullOrEmpty(Convert.ToString(Request.QueryString["LLRStatusFilter"])))
+            {
+                LLR = Convert.ToString(Request.QueryString["LLRStatusFilter"]);
+            }
+            if (!String.IsNullOrEmpty(Convert.ToString(Request.QueryString["NRDSStatusFilter"])))
+            {
+                NRDS = Convert.ToString(Request.QueryString["NRDSStatusFilter"]);
+            }
 
+            Session["LLR"] = LLR;
+            Session["NRDS"] = NRDS;
+            return new JsonResult
+            {
+                Data = Url.Action("MemberStatusReport", "MemberStatusReport", new { MemberId = BrokerID, filterOption = filter }),
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
         /// <summary>
         /// 
         /// </summary>

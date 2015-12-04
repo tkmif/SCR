@@ -62,6 +62,23 @@
 
 
     $(document).ready(function () {
+  //     hdnLLR
+        //     hdnNRDS
+        debugger;
+        var LLRval = $('#hdnLLR').val();
+        var NRDSval = $('#hdnNRDS').val();
+        //if (LLRval = 'A') { LLRval = 'Active' }
+        //if (LLRval = 'I') { LLRval = 'Inactive' }
+        //if (NRDSval = 'A') { NRDSval = 'Active' }
+        //if (NRDSval = 'I') { NRDSval = 'Inactive' }
+        if (LLRval != "")
+        {
+            $('#LLRStatusFilter').val(LLRval);
+        }
+        if (NRDSval != "") {
+            $('#NRDSStatusFilter').val(NRDSval);
+        }
+
         var deptsArray = $('#hdnStatusId').val();
         if (deptsArray == "") {
             $("#chkExpired:checkbox").prop("checked", true);
@@ -132,32 +149,20 @@
         }
         function Search(BrokerID) {
             debugger;
-            //BrokerID
-            //var BrokerID = $('#BrokerID').val();
-            var filterval = "";
-            if ($('#chkExpired').is(":checked")) {
-                filterval = "Expired";
-            }
-            else if ($('#chkActive').is(":checked")) {
-                filterval = "Active";
-            }
-            else {
-                filterval = "";
-            }
-            if (filterval != "") {
-                $.ajax
+           
+            var LLRStatusFilter = $('#LLRStatusFilter option:selected').val();
+            var NRDSStatusFilter = $('#NRDSStatusFilter option:selected').val();
+            // LLRStatusFilter, NRDSStatusFilter,Inactive, Active
+             $.ajax
                ({
                    type: "GET",
                    url: '/Broker/AgentsFilter?BrokerID=' + BrokerID,
-                   data: { 'value1': filterval },
+                   data: { 'LLRStatusFilter': LLRStatusFilter, 'NRDSStatusFilter': NRDSStatusFilter },
                    success: function (response) {
                        window.location.href = response;
                    }
                });
-            }
-            else {
-                notify("Member Expiry Report", "Please enter at least one item for searching.");
-            }
+            
         }
 
 </script>
@@ -172,6 +177,8 @@
 @using (Html.BeginForm())
 {
     
+    <input type="hidden" id="hdnLLR" value="@ViewBag.LLR" />
+    <input type="hidden" id="hdnNRDS" value="@ViewBag.NRDS" />
     <input type="hidden" id="hdnStatusId" value="@ViewBag.Filter" />
     <div id="dvContents">
 
@@ -312,15 +319,21 @@
                         @* <li><a href="~/AgentsList/Export" class="isw-download"></a></li>
 
                     </ul>*@
-                    <ul class="buttons">
+             @*       <ul class="buttons">
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Expired" name="Expired" id="chkExpired"  onclick="ActiveClick('Inactive');" title="Inactive agents in LLR or NRDS" /><span style="color:#fff;">Expired Agents</span></li>
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Active" name="Active" onclick="ActiveClick('Active');" id="chkActive" title="Active agents in LLR and NRDS"/><span style="color:#fff">Active Agents</span></li>
                     <li><a href="#" id="btnSearch" class="isw-zoom" title="Search" onclick="Search('@Model.MemberId');"></a></li>
-                 
-                       
-                </ul>
+                    </ul>*@
+                    <ul class="buttons">
+                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <span style="color:#fff;">LLR Status</span><select id="LLRStatusFilter" style="width: 100px;margin-bottom:0;"><option value="Select">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
+                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <span style="color:#fff">NRDS Status</span><select id="NRDSStatusFilter" style="width: 100px;margin-bottom:0"><option value="Select">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
+                    <li><a href="#" id="btnSearch" class="isw-zoom" title="Search" onclick="Search('@Model.MemberId');"></a></li>
+                    </ul>
+                   
                 </div>
                 <div class="block-fluid">
                     <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
