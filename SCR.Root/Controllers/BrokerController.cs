@@ -156,8 +156,9 @@ namespace SCR.Root.Controllers
                         //        filterOption = "InActive";
                         //    }
                         //}
-                        //if (Request.QueryString["Status"] == "Delinquent") { filter1 = Request.QueryString["Status"].ToString(); filterOption = "InActive"; brokerDetailModel.AgentsModelList = AllAgents.Where(c => (c.LLRStatus == "I" || c.LLRStatus == "T") && (c.NRDSStatus == "I" || c.NRDSStatus == "T")).ToList<AgentsModel>(); }
+                        if (Request.QueryString["Status"] == "Delinquent") { filter1 = Request.QueryString["Status"].ToString(); filterOption = false; brokerDetailModel.AgentsModelList = brokerDetailModel.AgentsModelList.Where(c => (c.LLRStatus == "A" ) && (c.NRDSStatus == "I" )).ToList<AgentsModel>(); }
                         ViewBag.Filter = filterOption;
+                        ViewBag.Delinq = filter1;
                         if (brokerDetailModel.AgentsModelList.Count > 0)
                         {
 

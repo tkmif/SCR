@@ -67,10 +67,13 @@
         debugger;
         var LLRval = $('#hdnLLR').val();
         var NRDSval = $('#hdnNRDS').val();
+        var Delinqval = $('#hdndelinq').val();
+        // Delinqval
         //if (LLRval = 'A') { LLRval = 'Active' }
         //if (LLRval = 'I') { LLRval = 'Inactive' }
         //if (NRDSval = 'A') { NRDSval = 'Active' }
         //if (NRDSval = 'I') { NRDSval = 'Inactive' }
+        if (Delinqval == 'Delinquent') { LLRval = 'A'; NRDSval = 'I';}
         if (LLRval != "")
         {
             $('#LLRStatusFilter').val(LLRval);
@@ -78,6 +81,7 @@
         if (NRDSval != "") {
             $('#NRDSStatusFilter').val(NRDSval);
         }
+
 
         var deptsArray = $('#hdnStatusId').val();
         if (deptsArray == "") {
@@ -177,6 +181,7 @@
 @using (Html.BeginForm())
 {
     
+        <input type="hidden" id="hdndelinq" value="@ViewBag.Delinq" />
     <input type="hidden" id="hdnLLR" value="@ViewBag.LLR" />
     <input type="hidden" id="hdnNRDS" value="@ViewBag.NRDS" />
     <input type="hidden" id="hdnStatusId" value="@ViewBag.Filter" />
