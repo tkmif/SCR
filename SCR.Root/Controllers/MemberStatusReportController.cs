@@ -56,6 +56,7 @@ namespace SCR.Root.Controllers
                        
                     }
                     memberStatusReportModel.MemberStatusReportModelList = memberStatusReportDAL.getMemberStatusReportList(constrian);
+                    List<MemberStatusReportModel> MemberExpiryR = memberStatusReportModel.MemberStatusReportModelList.Where(c => c.FirstName == "Steven" && c.LastName == "Crossland").ToList<MemberStatusReportModel>();
                     TempData["MemberStatusReportModelList"] = memberStatusReportModel.MemberStatusReportModelList;
                     if (memberStatusReportModel.MemberStatusReportModelList.Count == 0)
                     {

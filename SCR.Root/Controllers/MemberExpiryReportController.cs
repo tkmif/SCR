@@ -48,6 +48,7 @@ namespace SCR.Root.Controllers
                     constrian = getCondition(filter1, order);
 
                     memberExpiryReportModel.MemberExpiryReportModelList = memberExpiryReportDAL.getMemberExpiryReportList(constrian, 0);
+                   
                     TempData["MemberExpiryReportModelList"] = memberExpiryReportModel.MemberExpiryReportModelList;
                     if (memberExpiryReportModel.MemberExpiryReportModelList.Count == 0)
                     {
