@@ -206,7 +206,7 @@ namespace SCR.Root.Models
                     body += "Thank you, \n SCR \n";
                     msg.Body = body;
                     msg.From = new MailAddress(System.Configuration.ConfigurationManager.AppSettings["FromAddress"].ToString());
-                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                    SmtpClient client = new SmtpClient(System.Configuration.ConfigurationManager.AppSettings["MailServer"].ToString(), Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SMTPPort"].ToString()));
                     client.Credentials = cred;
                     client.EnableSsl = true;
                     client.Send(msg);
