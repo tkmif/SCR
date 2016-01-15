@@ -8,6 +8,7 @@ using System.Web;
 using System.Net;
 using System.Net.Mail;
 using TkmDataAccess;
+using SCR.Root.App_Code;
 
 namespace SCR.Root.Models
 {
@@ -185,14 +186,10 @@ namespace SCR.Root.Models
                 if (returnVal > 0)
                 {
                     returnValue = true;
-                    NetworkCredential cred = new NetworkCredential(System.Configuration.ConfigurationManager.AppSettings["FromAddress"].ToString(), System.Configuration.ConfigurationManager.AppSettings["FromPassword"].ToString());
-                    MailMessage msg = new MailMessage();
-                    msg.To.Add(userModel.Email);
-                    msg.Subject = "User Credentials";
+
+                    #region Create Mail Body
                     string body = "Hi " + userModel.FirstName + ",\n\n";
-
                     body += "Welcome to SCR! \n";
-
                     if (!string.IsNullOrEmpty(userModel.Password))
                     {
                         string mail_url = System.Configuration.ConfigurationManager.AppSettings["MailUrl"].ToString();
@@ -204,23 +201,17 @@ namespace SCR.Root.Models
                     }
                     body += "\n";
                     body += "Thank you, \n SCR \n";
-                    msg.Body = body;
-                    msg.From = new MailAddress(System.Configuration.ConfigurationManager.AppSettings["FromAddress"].ToString());
-                    SmtpClient client = new SmtpClient(System.Configuration.ConfigurationManager.AppSettings["MailServer"].ToString(), Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["SMTPPort"].ToString()));
-                    client.Credentials = cred;
-                    client.EnableSsl = true;
-                    client.Send(msg);
+                    #endregion
+
+                    SendMail(userModel.Email, body);
                 }
                 else
                 {
                     returnValue = false;
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -230,6 +221,47 @@ namespace SCR.Root.Models
             return returnValue;
 
         }
+
+        public void SendMail(string tomailaddress, string body)
+        {
+            try
+            {
+                string fromAddress = ConfigurationManager.AppSettings["FromAddress"].ToString();
+                string fromPassord = ConfigurationManager.AppSettings["FromPassword"].ToString();
+                string mailServer = ConfigurationManager.AppSettings["MailServer"].ToString();
+                string SMTPUser = ConfigurationManager.AppSettings["SMTPUser"].ToString();
+                string SMTPPassword = ConfigurationManager.AppSettings["SMTPPassword"].ToString();
+                string SMTPPort = ConfigurationManager.AppSettings["SMTPPort"].ToString();
+                string FromDisplay = ConfigurationManager.AppSettings["DisplayFrom"].ToString();
+                string subject = ConfigurationManager.AppSettings["FromSubject"];
+
+                MailMessage mailObj = new MailMessage();
+                MailAddress fromMail = new MailAddress(fromAddress, FromDisplay);
+                MailAddress ToMail = new MailAddress(tomailaddress);
+
+                System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
+                smtp.Credentials = new System.Net.NetworkCredential(SMTPUser, SMTPPassword);
+                smtp.Host = mailServer;
+                smtp.Port = int.Parse(SMTPPort);
+                // smtp.EnableSsl = true;
+                smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+                smtp.Timeout = 20000;
+                using (var message = new MailMessage(fromMail, ToMail)
+                {
+                    Subject = subject,
+                    Body = body,
+                })
+                {
+                   // message.IsBodyHtml = true;
+                    smtp.Send(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// Delete User
         /// </summary>
