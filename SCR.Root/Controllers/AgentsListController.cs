@@ -26,7 +26,7 @@ namespace SCR.Root.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult AgentsList(int start = 0, int pagesize = 10,string order = "  [MemberId] ")
+        public ActionResult AgentsList(int start = 0, int pagesize = 10, string order = "  [MemberId] ")
         {
             AgentsModel agentsModel = new AgentsModel();
             AgentsDAL agentsDAL = new AgentsDAL();
@@ -39,10 +39,8 @@ namespace SCR.Root.Controllers
             {
                 try
                 {
-
                     if (Session["BrokerId"] != null)
                     {
-
                         broker_Id = Convert.ToInt32(Session["BrokerId"]);
                     }
 
@@ -54,14 +52,13 @@ namespace SCR.Root.Controllers
 
                     if (Session["condition"] != null)
                     {
-
                         condition = Session["condition"].ToString().TrimStart().TrimEnd();
                     }
                     else
                     {
                         var uSession = userSession.GetUser;
                         if (uSession.AssocID != 0)
-                        { 
+                        {
                             condition = " AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by  " + order;
                         }
                     }
@@ -92,7 +89,6 @@ namespace SCR.Root.Controllers
                         TempData["lname"] = "";
                     }
 
-
                     agentsModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, office_Id, condition);
                     TempData["AgentsList"] = agentsModel.AgentsModelList;
 
@@ -120,9 +116,8 @@ namespace SCR.Root.Controllers
                         TempData["reset"] = 0;
                     }
                     return View(agentsModel);
-
                 }
-                catch (Exception ex)
+                catch
                 {
                     Session["OfficeId"] = null;
                     Session["BrokerId"] = null;
@@ -133,7 +128,6 @@ namespace SCR.Root.Controllers
                     agentsDAL = null;
                     GC.Collect();
                 }
-
                 return View(agentsModel);
             }
             else
@@ -371,13 +365,10 @@ namespace SCR.Root.Controllers
                         case "rarealtor associate":
                             membertype = "RA";
                             break;
-
                     }
-
                 }
             }
             else { membertype = null; }
-
 
             TempData["value1"] = value1;
             TempData["type"] = type;
@@ -410,9 +401,7 @@ namespace SCR.Root.Controllers
                 case "RA":
                     TempData["memtype"] = "RARealtor Associate";
                     break;
-
             }
-
 
             if (userSession.Exists)
             {
@@ -426,35 +415,28 @@ namespace SCR.Root.Controllers
                         if (value1 != null && name != null)
                         {
                             Session["condition"] = " AND L.[OfficeId]=" + value1 + " and O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + " ";
-
                         }
                         else if (name != null && value1 == null)
                         {
-
                             Session["condition"] = " AND O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
                         }
                         else
                         {
-
                             Session["condition"] = "AND L.[OfficeId]=" + value1 + "  AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
                         }
                     }
                     else
                     {
-
                         if (value1 != null && name != null)
                         {
                             Session["condition"] = " AND L.[OfficeId]=" + value1 + " and O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%'  order by " + order + " ";
-
                         }
                         else if (name != null && value1 == null)
                         {
-
                             Session["condition"] = " AND O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%' order by " + order + "";
                         }
                         else
                         {
-
                             Session["condition"] = "AND L.[OfficeId]=" + value1 + " order by " + order + "";
                         }
                     }
@@ -467,26 +449,21 @@ namespace SCR.Root.Controllers
                         if (value1 != null && name != null && lname != null)
                         {
                             Session["condition"] = " AND L.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [office_details] WHERE [OfficeContactDR]= " + value1 + " ) and L1.[FirstName] like '%" + name.TrimStart().TrimEnd() + "%' And L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
-
                         }
                         else if (name != null && lname != null && value1 == null)
                         {
                             Session["condition"] = "  and L1.[FirstName] like '%" + name.TrimStart().TrimEnd() + "%' And L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "  ";
-
                         }
                         else if (name != null && lname == null && value1 == null)
                         {
                             Session["condition"] = " AND  L1.[FirstName]   like '%" + name.TrimStart().TrimEnd() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
-
                         }
                         else if (name == null && lname != null && value1 == null)
                         {
                             Session["condition"] = " AND L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%'AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + " ";
-
                         }
                         else
                         {
-
                             Session["condition"] = "AND L.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [office_details] WHERE [OfficeContactDR]= " + value1 + " ) AND L.[PrimaryAssociationID] = " + uSession.AssocID + "  order by " + order + "";
                         }
                     }
@@ -522,61 +499,38 @@ namespace SCR.Root.Controllers
                 }
                 if (type == "3")
                 {
-                    //memberid, agentfname, agentLname, membertype
                     Session["OfficeId"] = type;
+
+                    string qry = "";
+                    if (memberid != null)
+                    {
+                        qry += " and L.[MemberId] like '%" + memberid.TrimEnd().TrimStart() + "%'";
+                    }
+                    if (agentfname != null)
+                    {
+                        qry += " and L.[FirstName] like '%" + agentfname.TrimEnd().TrimStart() + "%'";
+                    }
+                    if (agentLname != null)
+                    {
+                        qry += " and L.[LastName] like '%" + agentLname.TrimEnd().TrimStart() + "%'";
+                    }
+                    if (membertype != null)
+                    {
+                        qry += " and L.[MemberType] = '" + membertype.TrimEnd().TrimStart() + "'";
+                    }
+
                     if (uSession.AssocID != 0)
                     {
-                        string qry = "";
-                        if (memberid != null)
-                        {
-                            qry += " and L.[MemberId]=" + memberid.TrimEnd().TrimStart();
-                        }
-                        if (agentfname != null)
-                        {
-                            qry += " and L.[FirstName]=" + agentfname.TrimEnd().TrimStart();
-                        }
-                        if (agentLname != null)
-                        {
-                            qry += " and L.[LastName]=" + agentLname.TrimEnd().TrimStart();
-                        }
-                        if (membertype != null)
-                        {
-                            qry += " and L.[MemberType]=" + membertype.TrimEnd().TrimStart();
-                        }
-
-
                         qry += "  AND L.[PrimaryAssociationID] = " + uSession.AssocID + "  order by " + order + "";
                         Session["condition"] = qry;
-
                     }
                     else
                     {
-                        string qry = "";
-                        if (memberid != null)
-                        {
-                            qry += " and L.[MemberId]=" + memberid.TrimEnd().TrimStart();
-                        }
-                        if (agentfname != null)
-                        {
-                            qry += " and L.[FirstName]='" + agentfname.TrimEnd().TrimStart() + "'";
-                        }
-                        if (agentLname != null)
-                        {
-                            qry += " and L.[LastName]='" + agentLname.TrimEnd().TrimStart() + "'";
-                        }
-                        if (membertype != null)
-                        {
-                            qry += " and L.[MemberType]='" + membertype.TrimEnd().TrimStart() + "'";
-                        }
-
-
-                        // qry += " order by " + order + "";
+                        qry += "  order by " + order + "";
                         Session["condition"] = qry;
-
                     }
                 }
             }
-
 
             return new JsonResult
             {
@@ -693,4 +647,4 @@ namespace SCR.Root.Controllers
             return View(agentDetailModel);
         }
     }
-}
+}//675
