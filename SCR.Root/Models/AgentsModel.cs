@@ -142,7 +142,7 @@ namespace SCR.Root.Models
         /// </summary>
         /// <param name="constrain"></param>
         /// <returns></returns>
-        public List<AgentsModel> getAgentsList(int brokerId, int officeId, string condition,string order)
+        public List<AgentsModel> getAgentsList(int brokerId, int officeId, string condition)
         {
 
             IDBManager dbManager = new DBManager(base.GetProvider(), ConfigurationManager.AppSettings["DbConnection"].ToString());
@@ -153,11 +153,10 @@ namespace SCR.Root.Models
 
                 DataSet dsAgentsList = new DataSet();
                 dbManager.Open();
-                dbManager.CreateParameters(4);
+                dbManager.CreateParameters(3);
                 dbManager.AddParameters(0, "@BrokerId", brokerId);
                 dbManager.AddParameters(1, "@OfficeId", officeId);
                 dbManager.AddParameters(2, "@condition", condition);
-                dbManager.AddParameters(3, "@order", order);
                 
                 dsAgentsList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "agents_lists_Select_Proc");
                 if (dsAgentsList.Tables.Count > 0)

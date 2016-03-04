@@ -58,13 +58,10 @@ namespace SCR.Root.Models
 
         public List<BrokerModel> getBrokerList(int AssociationId)
         {
-
             IDBManager dbManager = new DBManager(base.GetProvider(), ConfigurationManager.AppSettings["DbConnection"].ToString());
-
             List<BrokerModel> lstBrokerModel = new List<BrokerModel>();
             try
             {
-
                 DataSet dsBrokerList = new DataSet();
                 dbManager.Open();
                 dbManager.CreateParameters(1);
@@ -94,7 +91,6 @@ namespace SCR.Root.Models
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally
@@ -106,13 +102,10 @@ namespace SCR.Root.Models
 
         public List<BrokerModel> getBrokerListConstrain(string constrain)
         {
-
             IDBManager dbManager = new DBManager(base.GetProvider(), ConfigurationManager.AppSettings["DbConnection"].ToString());
-
             List<BrokerModel> lstBrokerModel = new List<BrokerModel>();
             try
             {
-
                 DataSet dsBrokerList = new DataSet();
                 dbManager.Open();
                 dbManager.CreateParameters(1);
@@ -173,20 +166,17 @@ namespace SCR.Root.Models
             return lstBrokerModel;
         }
         //getBrokerWithDelinquentAgents
-        public List<BrokerModel> getBrokerWithDelinquentAgents(string constrain)
+        public List<BrokerModel> getBrokerWithDelinquentAgents(string constrain, int AssociationId)
         {
-
             IDBManager dbManager = new DBManager(base.GetProvider(), ConfigurationManager.AppSettings["DbConnection"].ToString());
-
             List<BrokerModel> lstBrokerModel = new List<BrokerModel>();
             try
             {
-
                 DataSet dsBrokerList = new DataSet();
                 dbManager.Open();
-                dbManager.CreateParameters(1);
+                dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@Constrain", " AND " + constrain);
-
+                dbManager.AddParameters(1, "@PrimaryAssociationId", AssociationId.ToString());
                 dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "Active_Brokers_with_Delinquent_Agents");
                 if (dsBrokerList.Tables.Count > 0)
                 {
@@ -243,13 +233,10 @@ namespace SCR.Root.Models
         }
         public BrokerDetailsModel getBrokerDetails(int agentid, string printHtmlTemplete)
         {
-
             IDBManager dbManager = new DBManager(base.GetProvider(), ConfigurationManager.AppSettings["DbConnection"].ToString());
-
             BrokerDetailsModel brokerDetailsModel = new BrokerDetailsModel();
             try
             {
-
                 DataSet dsBrokerdetails = new DataSet();
                 dbManager.Open();
                 dbManager.CreateParameters(1);
@@ -263,7 +250,6 @@ namespace SCR.Root.Models
                         foreach (DataRow drAgents in dsBrokerdetails.Tables[0].Rows)
                         {
                             AgentDetailsModel agentsModel = new AgentDetailsModel();
-
                             brokerDetailsModel.MemberId = Convert.ToInt32(drAgents["MemberId"]);
                             brokerDetailsModel.LastName = Convert.ToString(drAgents["Name"]);
                             brokerDetailsModel.FirstName = Convert.ToString(drAgents["Name"]);
@@ -278,7 +264,6 @@ namespace SCR.Root.Models
                             brokerDetailsModel.State = Convert.ToString(drAgents["StreetState"]);
                             brokerDetailsModel.Zipcode = Convert.ToString(drAgents["StreetZIP"]);
                             brokerDetailsModel.RELicenseNumber = Convert.ToString(drAgents["RELicenseNo"]);
-
                             printHtmlTemplete = printHtmlTemplete.Replace("{MemberId}", Convert.ToString(brokerDetailsModel.MemberId));
                             printHtmlTemplete = printHtmlTemplete.Replace("{AgentName}", brokerDetailsModel.FirstName);
                             printHtmlTemplete = printHtmlTemplete.Replace("{AgentType}", brokerDetailsModel.AgentType);

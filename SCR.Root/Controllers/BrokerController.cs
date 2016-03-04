@@ -45,8 +45,9 @@ namespace SCR.Root.Controllers
                         BrokerDetailModel.hdnStatus = filter1;
                         if (filter1 == "Delinquent")
                         {
-                            constrian = getCondition(filter1);
-                            BrokerDetailModel.BrokerModelList = BrokerDAL.getBrokerWithDelinquentAgents(constrian);
+                            //constrian = getCondition(filter1);
+                            var uSession = userSession.GetUser;
+                            BrokerDetailModel.BrokerModelList = BrokerDAL.getBrokerWithDelinquentAgents(constrian, uSession.AssocID);
                             TempData["BrokerList"] = BrokerDetailModel.BrokerModelList;
                             ViewData["ChkStatus"] = filter1;
                         }
@@ -134,7 +135,7 @@ namespace SCR.Root.Controllers
                             ViewBag.LLR = LLR;
                             ViewBag.NRDS = NRDS;
                         }
-                        brokerDetailModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + condition, "");
+                        brokerDetailModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + condition);
                         //List<AgentsModel> AllAgents = agentsDAL.getAgentsList(broker_Id, 0, "and [OfficeContactDR]= " + broker_Id + "", "");
                         //brokerDetailModel.AgentsModelList = AllAgents.Where(c => c.LLRStatus == "A" && c.NRDSStatus == "A").ToList<AgentsModel>();
                         //filterOption = "Active";

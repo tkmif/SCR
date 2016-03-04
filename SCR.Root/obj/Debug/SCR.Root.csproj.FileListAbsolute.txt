@@ -52,3 +52,4 @@ D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\bin\System.Web.WebPages.Dep
 D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\bin\System.Web.WebPages.Razor.xml
 D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\obj\Debug\SCR.Root.dll
 D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\obj\Debug\SCR.Root.pdb
+D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\obj\Debug\SCR.Root.csprojResolveAssemblyReference.cache

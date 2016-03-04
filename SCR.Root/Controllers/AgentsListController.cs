@@ -26,7 +26,7 @@ namespace SCR.Root.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult AgentsList(int start = 0, int pagesize = 10, string order = "  [MemberId] ")
+        public ActionResult AgentsList(int start = 0, int pagesize = 10,string order = "  [MemberId] ")
         {
             AgentsModel agentsModel = new AgentsModel();
             AgentsDAL agentsDAL = new AgentsDAL();
@@ -61,8 +61,8 @@ namespace SCR.Root.Controllers
                     {
                         var uSession = userSession.GetUser;
                         if (uSession.AssocID != 0)
-                        {
-                            condition = " AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                        { 
+                            condition = " AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by  " + order;
                         }
                     }
 
@@ -73,8 +73,6 @@ namespace SCR.Root.Controllers
                         Session["BrokerId"] = null;
                         Session["condition"] = null;
                     }
-
-
 
                     if (TempData["value1"] == null)
                     {
@@ -95,7 +93,7 @@ namespace SCR.Root.Controllers
                     }
 
 
-                    agentsModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, office_Id, condition, " order by  " + order);
+                    agentsModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, office_Id, condition);
                     TempData["AgentsList"] = agentsModel.AgentsModelList;
 
                     //  TempData["count"] = Convert.ToString(agentsModel.AgentsModelList.Count);
