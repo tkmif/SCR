@@ -227,7 +227,7 @@
 
     });
 
-    
+
     function Notifybox() {
 
         if (('@TempData["error"]' != null && '@TempData["error"]' != "") && ('@TempData["errtitle"]' != "" && '@TempData["errtitle"]' != null)) {
@@ -391,7 +391,7 @@
 { 
     <div class="row-fluid">
         <div class="span12">
-            <div class="head clearfix" >
+            <div class="head clearfix">
                 <div class="isw-zoom"></div>
                 @* <ul class="buttons">
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
@@ -403,137 +403,144 @@
             </div>
             <div class="block-fluid without-head">
                 <div class="row-form clearfix">
-                    <div class="span3" style="width:15%;">
-                      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   &nbsp;    <input type="radio" name="filter" id="rdbtnOffice" value="office">Under Office
-                        </div>
-                        <div class="span9" style="width:10%;">
+                    <div class="span3" style="width: 15%; white-space: nowrap;">
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   &nbsp;   
+                        <input type="radio" name="filter" id="rdbtnOffice" value="office">Under Office
+                    </div>
+                    <div class="span9" style="width: 10%; white-space: nowrap;">
                         <input type="radio" name="filter" id="rdbtnBroker" value="broker">Under Broker
                             
                            
                     </div>
-                    <div class="span9" style="width:60%;">
-                         <input type="radio" name="filter" id="rdbtnAgent" value="agent">Agent Details
+                    <div class="span9" style="width: 60%; white-space: nowrap;">
+                        <input type="radio" name="filter" id="rdbtnAgent" value="agent">Agent Details
                     </div>
                     <div class="block-fluid without-head span9" id="divOffice" style="display: none;">
-                   <div class="row-form clearfix">
+                        <div class="row-form clearfix">
                             <div class="span3">
-                            @Html.LabelFor(model => model.OfficeId, "Office Id", new { @id = "lblOffice" })
-                                
-                                </div>
-                            <div class="span9">
-                        <div style="float:left;width:30%">    @Html.TextBoxFor(model => model.strOfficeId, new { id = "txtOfficeId", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
-                        <div style="float:left;padding-left:10px;width:50%">                              
-                            <label id="lblerroroffice" style="color:red;"> Only numericals allowed</label></div>
-                                 </div></div>
-                                <div class="row-form clearfix">
-                          <div class="span3">
-                            @Html.LabelFor(model => model.OfficeId, "Office Name", new { @id = "lblOffice" })
+                                @Html.LabelFor(model => model.OfficeId, "Office Id", new { @id = "lblOffice" })
 
-                          </div>
-                              <div class="span9">
-                         <div style="float:left;width:30%">     @Html.TextBoxFor(model => model.OfficeBusinessName, new { id = "txtOffice", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
-                          <div style="float:left;padding-left:10px;width:50%">    @Html.HiddenFor(model => model.OfficeId, new { @id = "hdnOfficeId" })</div>
-                                  </div>
+                            </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">@Html.TextBoxFor(model => model.strOfficeId, new { id = "txtOfficeId", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
+                                <div style="float: left; padding-left: 10px; width: 50%">
+                                    <label id="lblerroroffice" style="color: red;">Only numericals allowed</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form clearfix">
+                            <div class="span3">
+                                @Html.LabelFor(model => model.OfficeId, "Office Name", new { @id = "lblOffice" })
+
+                            </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">@Html.TextBoxFor(model => model.OfficeBusinessName, new { id = "txtOffice", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
+                                <div style="float: left; padding-left: 10px; width: 50%">@Html.HiddenFor(model => model.OfficeId, new { @id = "hdnOfficeId" })</div>
+                            </div>
                         </div>
                     </div>
                     <div class="block-fluid without-head span9" id="divBroker" style="display: none;">
                         <div class="row-form clearfix">
-                              <div class="span3">
-                            @Html.LabelFor(model => model.BrokerId, "Broker Id", new { @id = "lblMember" })
-                                 
-                                  </div>
-                                    <div class="span9">
-                           <div style="float:left;width:30%">     @Html.TextBoxFor(model => model.strBrokerId, new { id = "txtBrokerId", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
-                              <div style="float:left;padding-left:10px;width:50%">     <label id="lblerrorbroker" style="color:red"> Only numericals allowed</label>
-                                  </div>
-                                    </div></div>
+                            <div class="span3">
+                                @Html.LabelFor(model => model.BrokerId, "Broker Id", new { @id = "lblMember" })
+
+                            </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">@Html.TextBoxFor(model => model.strBrokerId, new { id = "txtBrokerId", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
+                                <div style="float: left; padding-left: 10px; width: 50%">
+                                    <label id="lblerrorbroker" style="color: red">Only numericals allowed</label>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row-form clearfix">
-                              <div class="span3">
-                            @Html.LabelFor(model => model.BrokerId, "Broker's First Name", new { @id = "lblMemberFirstName" })
-                                  </div>
-                              <div class="span9">
-                           <div style="float:left;width:30%">   @Html.TextBoxFor(model => model.BrokersFirstName, new { id = "txtBroker", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
-                           <div style="float:left;padding-left:10px;width:50%">  @Html.HiddenFor(model => model.BrokerId, new { @id = "hdnBrokerId" })</div>
-                                  </div>
+                            <div class="span3">
+                                @Html.LabelFor(model => model.BrokerId, "Broker's First Name", new { @id = "lblMemberFirstName" })
+                            </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">@Html.TextBoxFor(model => model.BrokersFirstName, new { id = "txtBroker", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
+                                <div style="float: left; padding-left: 10px; width: 50%">@Html.HiddenFor(model => model.BrokerId, new { @id = "hdnBrokerId" })</div>
+                            </div>
                         </div>
-                        
+
                         <div class="row-form clearfix">
-                              <div class="span3">
-                            @Html.LabelFor(model => model.BrokerId, "Broker's Last Name", new { @id = "lblMemberLastName" })
-                                  </div>
-                              <div class="span9">
-                           <div style="float:left;width:30%">   @Html.TextBoxFor(model => model.BrokersLastName, new { id = "txtBrokerLastName", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
-                           <div style="float:left;padding-left:10px;width:50%">  @Html.HiddenFor(model => model.BrokerId, new { @id = "hdnBrokerId" })</div>
-                                  </div>
+                            <div class="span3">
+                                @Html.LabelFor(model => model.BrokerId, "Broker's Last Name", new { @id = "lblMemberLastName" })
+                            </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">@Html.TextBoxFor(model => model.BrokersLastName, new { id = "txtBrokerLastName", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
+                                <div style="float: left; padding-left: 10px; width: 50%">@Html.HiddenFor(model => model.BrokerId, new { @id = "hdnBrokerId" })</div>
+                            </div>
                         </div>
 
                     </div>
-               
+
                     <div class="block-fluid without-head span9" id="divAgent" style="display: none;">
                         <div class="row-form clearfix">
-                              <div class="span3">
-                            @Html.LabelFor(model => model.FirstName, "Member's First Name", new { @id = "lblAgentFN" })
-                                 
-                                  </div>
-                                    <div class="span9">
-                           <div style="float:left;width:30%">     @Html.TextBoxFor(model => model.FirstName, new { id = "txtAgentFirstName", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
-                             </div>
-                               
+                            <div class="span3">
+                                @Html.LabelFor(model => model.FirstName, "Member's First Name", new { @id = "lblAgentFN" })
+
                             </div>
-                        <div class="row-form clearfix">
-                              <div class="span3">
-                            @Html.LabelFor(model => model.LastName, "Member's Last Name", new { @id = "lblAgentLN" })
-                                  </div>
-                              <div class="span9">
-                           <div style="float:left;width:30%">   @Html.TextBoxFor(model => model.BrokersFirstName, new { id = "txtAgentLastName", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
-                           
-                                  </div>
-                        </div>
-                        
-                        <div class="row-form clearfix">
-                              <div class="span3">
-                            @Html.LabelFor(model => model.MemberId, "Member Id", new { @id = "lblMemberId" })
-                                  </div>
-                              <div class="span9">
-                           <div style="float:left;width:30%">   @Html.TextBoxFor(model => model.MemberId, new { id = "txtMemberId", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })
-                           </div>
-                         @*  Realtor,Affiliate,Non-member,Staff,Institute Affiliate Member, RARealtor Associate*@
-                                  </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">@Html.TextBoxFor(model => model.FirstName, new { id = "txtAgentFirstName", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
+                            </div>
+
                         </div>
                         <div class="row-form clearfix">
-                              <div class="span3">
-                            @Html.LabelFor(model => model.MemberType, "Member Type", new { @id = "lblMemberType" })
-                                  </div>
-                              <div class="span9">
-                           <div style="float:left;width:30%">   @*@Html.TextBoxFor(model => model.MemberType, new { id = "txtMemberType", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })*@
-                                <select id="txtMemberType" style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;">
-                                   <option value="" >Select</option>
-                                   <option value="Realtor" >Realtor</option>
-                                   <option value="Affiliate" selected>Affiliate</option>
-                                   <option value="Non-member">Non-member</option>
-                                   <option value="Staff">Staff</option>
-                                   <option value="Institute Affiliate Member">Institute Affiliate Member</option>
-                                   <option value="RARealtor Associate">RARealtor Associate</option>
-                               </select>
-                           </div>
-                           
-                                  </div>
+                            <div class="span3">
+                                @Html.LabelFor(model => model.LastName, "Member's Last Name", new { @id = "lblAgentLN" })
+                            </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">@Html.TextBoxFor(model => model.BrokersFirstName, new { id = "txtAgentLastName", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })</div>
+
+                            </div>
+                        </div>
+
+                        <div class="row-form clearfix">
+                            <div class="span3">
+                                @Html.LabelFor(model => model.MemberId, "Member Id", new { @id = "lblMemberId" })
+                            </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">
+                                    @Html.TextBoxFor(model => model.MemberId, new { id = "txtMemberId", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })
+                                </div>
+                                @*  Realtor,Affiliate,Non-member,Staff,Institute Affiliate Member, RARealtor Associate*@
+                            </div>
+                        </div>
+                        <div class="row-form clearfix">
+                            <div class="span3">
+                                @Html.LabelFor(model => model.MemberType, "Member Type", new { @id = "lblMemberType" })
+                            </div>
+                            <div class="span9">
+                                <div style="float: left; width: 30%">
+                                    @*@Html.TextBoxFor(model => model.MemberType, new { id = "txtMemberType", @style = "width:100%;height:30px;margin-top: 15px; margin:1% 2.5%;resize:none;", maxlength = 150 })*@
+                                    <select id="txtMemberType" style="width: 100%; height: 30px; margin-top: 15px; margin: 1% 2.5%; resize: none;">
+                                        <option value="">Select</option>
+                                        <option value="Realtor">Realtor</option>
+                                        <option value="Affiliate" selected>Affiliate</option>
+                                        <option value="Non-member">Non-member</option>
+                                        <option value="Staff">Staff</option>
+                                        <option value="Institute Affiliate Member">Institute Affiliate Member</option>
+                                        <option value="RARealtor Associate">RARealtor Associate</option>
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="span9" style="width:60%;">
-                         <input type="button" id="btnSearch" value="Search" style="width: 80px; height: 35px;float:left;" />
+                    <div class="span9" style="width: 60%;">
+                        <input type="button" id="btnSearch" value="Search" style="width: 80px; height: 35px; float: left;" />
                     </div>
 
                 </div>
             </div>
 
-                   @* <div class="span9" style="width:60%;">
+            @* <div class="span9" style="width:60%;">
                          <input type="button" id="btnSearch" value="Search" style="width: 80px; height: 35px;float:left;" />
                     </div>*@
 
-                </div>
-            </div>
+        </div>
+    </div>
        
   
     <div class="row-fluid">
@@ -559,9 +566,9 @@
                             <th class="headertablesorter" id="Office_Id">Office Id</th>
                             <th class="headertablesorter" id="Office_Name">Office Name</th>
                             <th class="headertablesorter" id="Member_Type">Member Type</th>
-                          @*  <th colspan="2">sddsd</th>*@
+                            @*  <th colspan="2">sddsd</th>*@
                             <th class="headertablesorter" id="Brokers_Id">Broker's Id</th>
-                             <th class="headertablesorter" id="Brokers_FirstName">Broker's First Name</th>
+                            <th class="headertablesorter" id="Brokers_FirstName">Broker's First Name</th>
                             <th class="headertablesorter" id="Brokers_LastName">Broker's Last Name</th>
                             <th class="headertablesorter">View</th>
                         </tr>
@@ -587,15 +594,15 @@
                                 <td>@Model.AgentsModelList[i].LastName</td>
                                 <td>@Model.AgentsModelList[i].FirstName</td>
                                 <td>@Model.AgentsModelList[i].OfficeId</td>
-                                 <td>@Model.AgentsModelList[i].OfficeBusinessName</td>
+                                <td>@Model.AgentsModelList[i].OfficeBusinessName</td>
                                 <td>@Model.AgentsModelList[i].MemberType</td>
                                 <td>@Model.AgentsModelList[i].OfficeContactDR</td>
-                                 <td>@Model.AgentsModelList[i].BrokersFirstName</td>
-                                 <td>@Model.AgentsModelList[i].BrokersLastName</td>
-                                  <td>
-                                     <a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = @Model.AgentsModelList[i].MemberId })">
-                                                <img src="" class="icon-eye-open" />
-                                            </a>
+                                <td>@Model.AgentsModelList[i].BrokersFirstName</td>
+                                <td>@Model.AgentsModelList[i].BrokersLastName</td>
+                                <td>
+                                    <a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = @Model.AgentsModelList[i].MemberId })">
+                                        <img src="" class="icon-eye-open" />
+                                    </a>
                                 </td>
                             </tr>
                                 }
@@ -608,7 +615,7 @@
                     <form>
                         <img src="@Url.Content("~/img/first.png")" class="first" title="First" id="first"/>
                         <img src="@Url.Content("~/img/prev.png")" class="prev" title="Previous" id="prev"/>
-                        <input type="text" class="pagedisplay" style="width: 70px; height: 20px;text-align:center;" title="Current Page" id="Current" readonly />
+                        <input type="text" class="pagedisplay" style="width: 70px; height: 20px; text-align: center;" title="Current Page" id="Current" readonly />
                         <img src="@Url.Content("~/img/next.png")" class="next" title="Next" id="next"/>
                         <img src="@Url.Content("~/img/last.png")" class="last" title="Last" id="last"/>
                         <select id="pagesize" class="pagesize" style="width: 55px; height: 30px;" title="Records per page">
