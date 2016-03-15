@@ -49,14 +49,34 @@ namespace SCR.Root.Controllers
                         string NRDS = "";
                         if (Session["NRDS"] != null) { NRDS = Session["NRDS"].ToString(); }
 
-                        if (LLR != "" && LLR != "Select") { constrian = " LLR.[Status]='" + LLR + "'"; }
-                        if (NRDS != "" && NRDS != "Select") { constrian += " and NRDS.[MemberStatusVal]='" + NRDS + "'"; }
+                        if (LLR != "" && LLR != "Select") 
+                        {
+                            if (constrian == "")
+                            {
+                                constrian = " LLR.[Status]='" + LLR + "'";
+                            }
+                            else
+                            {
+                                constrian += " AND LLR.[Status]='" + LLR + "'";
+                            }
+                        }
+                        if (NRDS != "" && NRDS != "Select") 
+                        {
+                            if (constrian == "")
+                            {
+                                constrian = " NRDS.[MemberStatusVal]='" + NRDS + "'";
+                            }
+                            else
+                            {
+                                constrian += " and NRDS.[MemberStatusVal]='" + NRDS + "'";
+                            }
+                        }
                         ViewBag.LLR = LLR;
                         ViewBag.NRDS = NRDS;
                        
                     }
                     memberStatusReportModel.MemberStatusReportModelList = memberStatusReportDAL.getMemberStatusReportList(constrian);
-                    List<MemberStatusReportModel> MemberExpiryR = memberStatusReportModel.MemberStatusReportModelList.Where(c => c.FirstName == "Steven" && c.LastName == "Crossland").ToList<MemberStatusReportModel>();
+                    //List<MemberStatusReportModel> MemberExpiryR = memberStatusReportModel.MemberStatusReportModelList.Where(c => c.FirstName == "Steven" && c.LastName == "Crossland").ToList<MemberStatusReportModel>();
                     TempData["MemberStatusReportModelList"] = memberStatusReportModel.MemberStatusReportModelList;
                     if (memberStatusReportModel.MemberStatusReportModelList.Count == 0)
                     {

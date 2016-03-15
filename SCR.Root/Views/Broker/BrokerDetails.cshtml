@@ -225,15 +225,20 @@
                 </li>
                 <li>
                     <div class="title">
-                        @Html.Label("Agent's Status")
+                        @Html.Label("LLR Status")
                     </div>
                     <div class="text">
-                        @Html.Label(Model.AgentStatus.ToString())
+                        @Html.Label(Model.LLRStatus.ToString())
                     </div>
                 </li>
-
-
-
+                 <li>
+                    <div class="title">
+                        @Html.Label("NRDS Status")
+                    </div>
+                    <div class="text">
+                        @Html.Label(Model.NRDSStatus.ToString())
+                    </div>
+                </li>
                 <li>
                     <div class="title">
                         @Html.Label("Office Id")

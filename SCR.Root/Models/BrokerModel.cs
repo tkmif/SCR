@@ -36,7 +36,8 @@ namespace SCR.Root.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string AgentType { get; set; }
-        public string AgentStatus { get; set; }
+        public string LLRStatus { get; set; }
+        public string NRDSStatus { get; set; }
         public string BrokerId { get; set; }
         public string OfficeId { get; set; }
         public string OfficeName { get; set; }
@@ -254,7 +255,8 @@ namespace SCR.Root.Models
                             brokerDetailsModel.LastName = Convert.ToString(drAgents["Name"]);
                             brokerDetailsModel.FirstName = Convert.ToString(drAgents["Name"]);
                             brokerDetailsModel.AgentType = Convert.ToString(drAgents["MemberType"]);
-                            brokerDetailsModel.AgentStatus = Convert.ToString(drAgents["Status"]);
+                            brokerDetailsModel.LLRStatus = Convert.ToString(drAgents["LLRStatus"]);
+                            brokerDetailsModel.NRDSStatus = Convert.ToString(drAgents["NRDSStatus"]);
                             brokerDetailsModel.BrokerId = Convert.ToString(drAgents["brokerId"]);
                             brokerDetailsModel.OfficeId = Convert.ToString(drAgents["OfficeId"]);
                             brokerDetailsModel.OfficeName = Convert.ToString(drAgents["OfficeBusinessName"]);
@@ -268,7 +270,8 @@ namespace SCR.Root.Models
                             printHtmlTemplete = printHtmlTemplete.Replace("{AgentName}", brokerDetailsModel.FirstName);
                             printHtmlTemplete = printHtmlTemplete.Replace("{AgentType}", brokerDetailsModel.AgentType);
                             printHtmlTemplete = printHtmlTemplete.Replace("{RELicenseNumber}", brokerDetailsModel.RELicenseNumber);
-                            printHtmlTemplete = printHtmlTemplete.Replace("{AgentStatus}", brokerDetailsModel.AgentStatus);
+                            printHtmlTemplete = printHtmlTemplete.Replace("{LLRStatus}", brokerDetailsModel.LLRStatus);
+                            printHtmlTemplete = printHtmlTemplete.Replace("{NRDSStatus}", brokerDetailsModel.NRDSStatus);
                             printHtmlTemplete = printHtmlTemplete.Replace("{OfficeId}", brokerDetailsModel.OfficeId);
                             // printHtmlTemplete = printHtmlTemplete.Replace("{BrokerId}", brokerDetailsModel.BrokerId);
                             printHtmlTemplete = printHtmlTemplete.Replace("{BussinessName}", brokerDetailsModel.OfficeName);

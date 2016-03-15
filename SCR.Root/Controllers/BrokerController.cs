@@ -165,7 +165,6 @@ namespace SCR.Root.Controllers
 
                             foreach (AgentsModel agentsModel in brokerDetailModel.AgentsModelList)
                             {
-
                                 /*'A', 'I', 'T', 'P', 'X', S' is "- Active, Inactive, Terminated, Provisional, and S is suspended*/
                                 string strLLRStatus = Convert.ToString(agentsModel.LLRStatus);
                                 if (strLLRStatus == "A")
@@ -192,6 +191,7 @@ namespace SCR.Root.Controllers
                                 {
                                     agentsModel.LLRStatus = "Suspended";
                                 }
+                                
                                 string strNRDSStatus = Convert.ToString(agentsModel.NRDSStatus);
                                 if (strNRDSStatus == "A")
                                 {
@@ -217,12 +217,8 @@ namespace SCR.Root.Controllers
                                 {
                                     agentsModel.NRDSStatus = "Suspended";
                                 }
-
-
                             }
-
                         }
-
 
                         StringBuilder sbPrintHtmlContentAgentsList = new StringBuilder();
                         if (brokerDetailModel.AgentsModelList.Count > 0)
