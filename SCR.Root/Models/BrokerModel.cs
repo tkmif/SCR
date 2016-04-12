@@ -14,16 +14,14 @@ namespace SCR.Root.Models
     {
         public int MemberId { get; set; }
         public int OfficeId { get; set; }
-
-
+        
         public string MemberType { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Status { get; set; }
-
+        public string LLRStatus { get; set; }
+        public string NRDSStatus { get; set; }
         public string hdnStatus { get; set; }
-
-
 
         public List<BrokerModel> BrokerModelListConstain { get; set; }
 
@@ -80,11 +78,8 @@ namespace SCR.Root.Models
                             agentsModel.FirstName = Convert.ToString(drAgents["FirstName"]);
                             agentsModel.OfficeId = Convert.ToInt32(drAgents["OfficeId"]);
                             agentsModel.MemberType = Convert.ToString(drAgents["MemberType"]);
-                            string strStatus = Convert.ToString(drAgents["Status"]);
-                            if (strStatus == "A")
-                            {
-                                agentsModel.Status = "Active";
-                            }
+                            agentsModel.LLRStatus = Convert.ToString(drAgents["LLRStatus"]);
+                            agentsModel.NRDSStatus = Convert.ToString(drAgents["NRDSStatus"]);
                             lstBrokerModel.Add(agentsModel);
                         }
                     }
@@ -125,31 +120,8 @@ namespace SCR.Root.Models
                             agentsModel.FirstName = Convert.ToString(drAgents["FirstName"]);
                             agentsModel.OfficeId = Convert.ToInt32(drAgents["OfficeId"]);
                             agentsModel.MemberType = Convert.ToString(drAgents["MemberType"]);
-                            string strStatus = Convert.ToString(drAgents["Status"]);
-                            if (strStatus == "A")
-                            {
-                                agentsModel.Status = "Active";
-                            }
-                            else if (strStatus == "I")
-                            {
-                                agentsModel.Status = "Inactive";
-                            }
-                            else if (strStatus == "T")
-                            {
-                                agentsModel.Status = "Terminated";
-                            }
-                            else if (strStatus == "P")
-                            {
-                                agentsModel.Status = "Provisional";
-                            }
-                            else if (strStatus == "X")
-                            {
-                                agentsModel.Status = "Lifetime Member";
-                            }
-                            else if (strStatus == "S")
-                            {
-                                agentsModel.Status = "Suspended";
-                            }
+                            agentsModel.LLRStatus = Convert.ToString(drAgents["LLRStatus"]);
+                            agentsModel.NRDSStatus = Convert.ToString(drAgents["NRDSStatus"]);
                             lstBrokerModel.Add(agentsModel);
                         }
                     }
@@ -191,31 +163,8 @@ namespace SCR.Root.Models
                             agentsModel.FirstName = Convert.ToString(drAgents["FirstName"]);
                             agentsModel.OfficeId = Convert.ToInt32(drAgents["OfficeId"]);
                             agentsModel.MemberType = Convert.ToString(drAgents["MemberType"]);
-                            string strStatus = Convert.ToString(drAgents["Status"]);
-                            if (strStatus == "A")
-                            {
-                                agentsModel.Status = "Active";
-                            }
-                            else if (strStatus == "I")
-                            {
-                                agentsModel.Status = "Inactive";
-                            }
-                            else if (strStatus == "T")
-                            {
-                                agentsModel.Status = "Terminated";
-                            }
-                            else if (strStatus == "P")
-                            {
-                                agentsModel.Status = "Provisional";
-                            }
-                            else if (strStatus == "X")
-                            {
-                                agentsModel.Status = "Lifetime Member";
-                            }
-                            else if (strStatus == "S")
-                            {
-                                agentsModel.Status = "Suspended";
-                            }
+                            agentsModel.LLRStatus = Convert.ToString(drAgents["LLRStatus"]);
+                            agentsModel.NRDSStatus = Convert.ToString(drAgents["NRDSStatus"]);
                             lstBrokerModel.Add(agentsModel);
                         }
                     }

@@ -164,7 +164,10 @@
         <div class="span12">
             <div class="head clearfix">
                 <div class="isw-grid"></div>
-                <ul class="buttons">                   
+                <ul class="buttons">        
+                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <span style="color:#fff;"><i>Search with respect to LLR status</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </li>           
                      <li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Expired" id="chkActive" title="Active" name="Active"/><span style="color:#fff;">Active Brokers</span></li>
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
@@ -189,6 +192,7 @@
                             <th class="headertablesorter">Office Id</th>
                             <th class="headertablesorter">Member Type</th>
                             <th class="headertablesorter">LLR Status</th>
+                            <th class="headertablesorter">NRDS Status</th>
                             <th class="headertablesorter">View</th>
                         </tr>
                     </thead>
@@ -209,8 +213,8 @@
                                 <td>@item.FirstName</td>
                                 <td>@item.OfficeId</td>
                                 <td>@item.MemberType</td>
-                                <td>@item.Status</td>
-
+                                <td>@item.LLRStatus</td>
+                                <td>@item.NRDSStatus</td>
                                 <td>
                                     <a href="@Url.Action("BrokerDetails", "Broker", new { MemberId = item.MemberId ,Status=Model.hdnStatus})" title="View Broker's Details">
                                         <img src="" class="icon-eye-open" />

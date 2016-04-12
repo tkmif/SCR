@@ -32,11 +32,8 @@ namespace SCR.Root.Controllers
             {
                 if (userSession.Exists)
                 {
-
-
                     if (Session["filter1"] != null)
                     {
-
                         filter1 = Session["filter1"].ToString();
                     }
                     if (filter1 != null && filter1 != "")
