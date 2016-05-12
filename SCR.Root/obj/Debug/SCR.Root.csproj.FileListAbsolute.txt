@@ -53,3 +53,31 @@ D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\bin\System.Web.WebPages.Raz
 D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\obj\Debug\SCR.Root.dll
 D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\obj\Debug\SCR.Root.pdb
 D:\TKM Projects\Projects\002_SCRealtors\SCR\SCR.Root\obj\Debug\SCR.Root.csprojResolveAssemblyReference.cache
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\SCR.Root.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\SCR.Root.pdb
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\Microsoft.Web.Infrastructure.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\Newtonsoft.Json.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Net.Http.Formatting.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Helpers.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Http.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Http.WebHost.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Mvc.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Razor.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.WebPages.Deployment.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.WebPages.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.WebPages.Razor.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\TkmDataAccess.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\Newtonsoft.Json.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Net.Http.Formatting.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Helpers.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Http.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Http.WebHost.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Mvc.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.Razor.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.WebPages.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.WebPages.Deployment.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.WebPages.Razor.xml
+D:\tkmprojects\TFS\SCR\SCR.Root\obj\Debug\SCR.Root.csprojResolveAssemblyReference.cache
+D:\tkmprojects\TFS\SCR\SCR.Root\obj\Debug\SCR.Root.dll
+D:\tkmprojects\TFS\SCR\SCR.Root\obj\Debug\SCR.Root.pdb

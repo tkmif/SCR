@@ -217,8 +217,13 @@
                                 int count = Convert.ToInt32(TempData["pagesize"]);
 
                                 for (var i = start; i < start+count; i++)
-                                   {   
-                            <tr>
+                                   
+                                   {
+                                       if (i == Model.MemberExpiryReportModelList.Count)
+                                       {
+                                           break;
+                                       }  
+                              <tr>
                                 <td>
                                   @Model.MemberExpiryReportModelList[i].MemberId
                                 </td>
@@ -237,7 +242,10 @@
                                     @Model.MemberExpiryReportModelList[i].Status
                                 </td>
                             </tr>
-                                }
+                                
+                            
+                                   }
+                                
                             }
                         }
                     </tbody>
