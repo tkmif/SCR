@@ -42,7 +42,7 @@ namespace SCR.Root.Controllers
                     {
 
                         filter1 = Session["filter1"].ToString();
-                        Session["filter1"] = null;
+                        //Session["filter1"] = null;
                     }
                     memberExpiryReportModel.hdnStatus = filter1;
                     constrian = getCondition(filter1, order);

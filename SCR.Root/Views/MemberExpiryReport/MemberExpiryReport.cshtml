@@ -34,6 +34,13 @@
             $("#chkActive").prop("checked", false);
             $("#chkExpired").parent().attr("class", "checked");
         }
+        
+        if (deptsArray == "Expired") {
+            $("#chkExpired").prop("checked", true);
+            $("#chkActive").prop("checked", false);
+            $("#chkExpired").parent().attr("class", "checked");
+        }
+        //need to check chkInActive is existing
         if (deptsArray == "InActive") {
             $("#chkInActive").prop("checked", true);
             $("#chkInActive").parent().attr("class", "checked");
