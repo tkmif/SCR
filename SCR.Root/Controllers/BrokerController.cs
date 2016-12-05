@@ -27,7 +27,7 @@ namespace SCR.Root.Controllers
             BrokerDAL BrokerDAL = new BrokerDAL();
             string constrian = string.Empty;
 
-            string filter1 = string.Empty;
+            string filter1 = "InActive+Active";
             try
             {
                 if (userSession.Exists)
@@ -45,14 +45,20 @@ namespace SCR.Root.Controllers
                             //constrian = getCondition(filter1);
                             var uSession = userSession.GetUser;
                             BrokerDetailModel.BrokerModelList = BrokerDAL.getBrokerWithDelinquentAgents(constrian, uSession.AssocID);
-                            TempData["BrokerList"] = BrokerDetailModel.BrokerModelList;
+                            var reducedBrokerList = BrokerDetailModel.BrokerModelList.Select(e => new { e.MemberId, e.OfficeId, e.MemberType, e.LastName, e.FirstName, e.Status, e.LLRStatus, e.NRDSStatus }).ToList();
+
+                            TempData["BrokerList"] = reducedBrokerList;
                             ViewData["ChkStatus"] = filter1;
+                            TempData["ReportCount"] = reducedBrokerList.Count.ToString();
                         }
                         else
                         {
                             constrian = getCondition(filter1);
                             BrokerDetailModel.BrokerModelList = BrokerDAL.getBrokerListConstrain(constrian);
-                            TempData["BrokerList"] = BrokerDetailModel.BrokerModelListConstain;
+                            var reducedBrokerList = BrokerDetailModel.BrokerModelList.Select(e => new { e.MemberId, e.OfficeId, e.MemberType, e.LastName, e.FirstName, e.Status, e.LLRStatus, e.NRDSStatus }).ToList();
+
+                            TempData["BrokerList"] = reducedBrokerList;
+                            TempData["ReportCount"] = reducedBrokerList.Count.ToString();
                         }
                         return View(BrokerDetailModel);
                     }
@@ -72,7 +78,9 @@ namespace SCR.Root.Controllers
                         ViewData["ChkStatus"] = filter1;
                         BrokerDetailModel.hdnStatus = filter1;
                         BrokerDetailModel.BrokerModelList = BrokerDAL.getBrokerList(uSession.AssocID);
-                        TempData["BrokerList"] = BrokerDetailModel.BrokerModelList;
+                        var reducedBrokerList = BrokerDetailModel.BrokerModelList.Select(e => new { e.MemberId, e.OfficeId, e.MemberType,e.LastName,e.FirstName,e.Status,e.LLRStatus,e.NRDSStatus }).ToList();
+                        TempData["BrokerList"] = reducedBrokerList;
+                        TempData["ReportCount"] = reducedBrokerList.Count.ToString();
                         return View(BrokerDetailModel);
 
                     }
@@ -190,9 +198,9 @@ namespace SCR.Root.Controllers
                                 }
                                 
                                 string strNRDSStatus = Convert.ToString(agentsModel.NRDSStatus);
-                                if (strNRDSStatus == "A")
+                                if (strNRDSStatus == "ACTIVE")
                                 {
-                                    agentsModel.NRDSStatus = "Active";
+                                    agentsModel.NRDSStatus = "ACTIVE";
                                 }
                                 else if (strNRDSStatus == "I")
                                 {
@@ -451,7 +459,7 @@ namespace SCR.Root.Controllers
                 {
                     Response.ClearContent();
                     Response.Buffer = true;
-                    Response.AddHeader("content-disposition", "attachment; filename=AgentsList.xls");
+                    Response.AddHeader("content-disposition", "attachment; filename=BrokerList.xls");
                     Response.ContentType = "application/ms-excel";
                     Response.Charset = "";
                     StringWriter sw = new StringWriter();
@@ -465,7 +473,7 @@ namespace SCR.Root.Controllers
                 else
                 {
                     TempData["error"] = "No records found.";
-                    TempData["errtitle"] = "Agents List";
+                    TempData["errtitle"] = "Broker List";
                     TempData["errType"] = "warning";
                     return RedirectToAction("Brokerlist");
                 }
@@ -534,11 +542,11 @@ namespace SCR.Root.Controllers
                         {
                             if (_condition == "")
                             {
-                                _condition += " [Status] IN ('I','T')  AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                                _condition += " [Status] IN ('I','T')  AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID;
                             }
                             else
                             {
-                                _condition = _condition + " AND " + "  [Status] IN ('I','T') AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                                _condition = _condition + " AND " + "  [Status] IN ('I','T') AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID;
                             }
                         }
                         else
@@ -559,22 +567,27 @@ namespace SCR.Root.Controllers
                         {
                             if (_condition == "")
                             {
-                                _condition += " [Status] IN ('A') AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                                //_condition += " [Status] IN ('A') AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID;
+                                _condition += "  LLR.[MemberStatusVal]='ACTIVE' AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID;
+                                
                             }
                             else
                             {
-                                _condition = _condition + " AND " + "  [Status]  IN ('A') AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                               // _condition = _condition + " AND " + "  [Status]  IN ('A') AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                                _condition = _condition + " AND " + "  LLR.[MemberStatusVal]='ACTIVE' AND L.[PrimaryAssociationID] = " + uSession.AssocID;
                             }
                         }
                         else
                         {
                             if (_condition == "")
                             {
-                                _condition += " [Status] IN ('A') ";
+                              //  _condition += " [Status] IN ('A') ";
+                                _condition += "LLR.[MemberStatusVal]='ACTIVE' ";
                             }
                             else
                             {
-                                _condition = _condition + " AND " + "  [Status]  IN ('A') ";
+                                //_condition = _condition + " AND " + "  [Status]  IN ('A') ";
+                                _condition = _condition + " AND " + " LLR.[MemberStatusVal]='ACTIVE' ";
                             }
                         }
                     }
@@ -607,26 +620,48 @@ namespace SCR.Root.Controllers
 
                     else if (filter1 == "InActive+Active")
                     {
+                        //if (uSession.AssocID != 0)
+                        //{
+                        //    if (_condition == "")
+                        //    {
+                        //        _condition += " [Status]  IN ('A', 'I') AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                        //    }
+                        //    else
+                        //    {
+                        //        _condition = _condition + " AND " + "  [Status]  IN ('A', 'I') AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    if (_condition == "")
+                        //    {
+                        //        _condition += " [Status]  IN ('A', 'I') ";
+                        //    }
+                        //    else
+                        //    {
+                        //        _condition = _condition + " AND " + "  [Status]  IN ('A', 'I') ";
+                        //    }
+                        //}
                         if (uSession.AssocID != 0)
                         {
                             if (_condition == "")
                             {
-                                _condition += " [Status]  IN ('A', 'I') AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                                _condition += "  LLR.[MemberStatusVal]='ACTIVE' AND [Status]  = 'I' AND L.[PrimaryAssociationID] = " + uSession.AssocID;
                             }
                             else
                             {
-                                _condition = _condition + " AND " + "  [Status]  IN ('A', 'I') AND L.[PrimaryAssociationID] = " + uSession.AssocID;
+                                _condition = _condition + " AND " + " LLR.[MemberStatusVal]='ACTIVE' AND [Status]  = 'I'  AND L.[PrimaryAssociationID] = " + uSession.AssocID;
                             }
                         }
                         else
                         {
                             if (_condition == "")
                             {
-                                _condition += " [Status]  IN ('A', 'I') ";
+                                _condition += " LLR.[MemberStatusVal]='ACTIVE' AND [Status]  = 'I'  ";
                             }
                             else
                             {
-                                _condition = _condition + " AND " + "  [Status]  IN ('A', 'I') ";
+                                _condition = _condition + " AND " + " LLR.[MemberStatusVal]='ACTIVE' AND [Status]  = 'I'  ";
                             }
                         }
                     }

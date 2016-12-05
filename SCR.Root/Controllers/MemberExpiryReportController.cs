@@ -45,11 +45,13 @@ namespace SCR.Root.Controllers
                         //Session["filter1"] = null;
                     }
                     memberExpiryReportModel.hdnStatus = filter1;
-                    constrian = getCondition(filter1, order);
+                    constrian = getCondition("Active", order);
 
                     memberExpiryReportModel.MemberExpiryReportModelList = memberExpiryReportDAL.getMemberExpiryReportList(constrian, 0);
-                   
-                    TempData["MemberExpiryReportModelList"] = memberExpiryReportModel.MemberExpiryReportModelList;
+                    var reducedMemberExpiryList = memberExpiryReportModel.MemberExpiryReportModelList.Select(e => new { e.MemberId, e.LastName, e.FirstName, e.MemberType, e.Status}).ToList();
+
+                    TempData["MemberExpiryReportModelList"] = reducedMemberExpiryList;
+                    TempData["ReportCount"] = reducedMemberExpiryList.Count.ToString();
                     if (memberExpiryReportModel.MemberExpiryReportModelList.Count == 0)
                     {
                         TempData["error"] = "No items match your search.";
@@ -97,6 +99,8 @@ namespace SCR.Root.Controllers
 
                      gv.DataBind();
 
+                       if (gv.Rows.Count > 0)
+                {
                      Response.ClearContent();
                      Response.Buffer = true;
                      Response.AddHeader("content-disposition", "attachment; filename=MemberExpiryReport.xls");
@@ -109,6 +113,14 @@ namespace SCR.Root.Controllers
                      Response.Flush();
                      Response.End();
                      return RedirectToAction("MemberExpiryReport");
+                }
+                       else
+                       {
+                           TempData["error"] = "No records found.";
+                           TempData["errtitle"] = "Member Expiry Report";
+                           TempData["errType"] = "warning";
+                           return RedirectToAction("MemberExpiryReport");
+                       }
                  }
                  else
                  {
@@ -212,22 +224,26 @@ namespace SCR.Root.Controllers
                         {
                             if (_condition == "")
                             {
-                                _condition += " [Status]  IN ('A','X','P') AND [PrimaryAssociationID] = " + uSession.AssocID + " Order by " + order + "";
+                                //_condition += " [Status]  IN ('A','X','P') AND [PrimaryAssociationID] = " + uSession.AssocID + " Order by " + order + "";
+                                _condition += " n.MemberStatusVal='ACTIVE' AND [PrimaryAssociationID] = " + uSession.AssocID + " Order by " + order + "";
                             }
                             else
                             {
-                                _condition = _condition + " AND " + "  [Status]  IN ('A','X','P') AND [PrimaryAssociationID] = " + uSession.AssocID + " Order by " + order + "";
+                               // _condition = _condition + " AND " + "  [Status]  IN ('A','X','P') AND [PrimaryAssociationID] = " + uSession.AssocID + " Order by " + order + "";
+                                _condition = _condition + " AND " + "  n.MemberStatusVal='ACTIVE' AND [PrimaryAssociationID] = " + uSession.AssocID + " Order by " + order + "";
                             }
                         }
                         else
                         {
                             if (_condition == "")
                             {
-                                _condition += " [Status]  IN ('A','X','P') Order by " + order + "";
+                               // _condition += " [Status]  IN ('A','X','P') Order by " + order + "";
+                                _condition += " n.MemberStatusVal='ACTIVE' Order by " + order + "";
                             }
                             else
                             {
-                                _condition = _condition + " AND " + "  [Status]  IN ('A','X','P') Order by " + order + "";
+                               // _condition = _condition + " AND " + "  [Status]  IN ('A','X','P') Order by " + order + "";
+                                _condition = _condition + " AND " + "  n.MemberStatusVal='ACTIVE' Order by " + order + "";
                             }
                         }
                     }

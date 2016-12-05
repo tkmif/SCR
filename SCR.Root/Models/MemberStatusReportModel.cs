@@ -52,7 +52,7 @@ namespace SCR.Root.Models
                     constrain = null;
                 }
                 dbManager.AddParameters(0, "@Constrain", constrain); /*WHERE*/
-                dsMemberStatusRpt = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "member_status_mismmatch_report_Select_Proc");
+                dsMemberStatusRpt = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].member_status_mismmatch_report_Select_Proc");
                 if (dsMemberStatusRpt.Tables.Count > 0)
                 {
                     if (dsMemberStatusRpt.Tables[0].Rows.Count > 0)
@@ -90,30 +90,31 @@ namespace SCR.Root.Models
                                 memberStatusReportModel.LLRStatus = "Suspended";
                             }
                             string strNRDSStatus = Convert.ToString(drloff["NRDSStatus"]);
-                            if (strNRDSStatus == "A")
-                            {
-                                memberStatusReportModel.NRDSStatus = "Active";
-                            }
-                            else if (strNRDSStatus == "I")
-                            {
-                                memberStatusReportModel.NRDSStatus = "Inactive";
-                            }
-                            else if (strNRDSStatus == "T")
-                            {
-                                memberStatusReportModel.NRDSStatus = "Terminated";
-                            }
-                            else if (strNRDSStatus == "P")
-                            {
-                                memberStatusReportModel.NRDSStatus = "Provisional";
-                            }
-                            else if (strNRDSStatus == "X")
-                            {
-                                memberStatusReportModel.NRDSStatus = "Lifetime Member";
-                            }
-                            else if (strNRDSStatus == "S")
-                            {
-                                memberStatusReportModel.NRDSStatus = "Suspended";
-                            }
+                            memberStatusReportModel.NRDSStatus = Convert.ToString(drloff["NRDSStatus"]);
+                            //if (strNRDSStatus == "ACTIVE")
+                            //{
+                            //    memberStatusReportModel.NRDSStatus = "Active";
+                            //}
+                            //else if (strNRDSStatus == "I")
+                            //{
+                            //    memberStatusReportModel.NRDSStatus = "Inactive";
+                            //}
+                            //else if (strNRDSStatus == "T")
+                            //{
+                            //    memberStatusReportModel.NRDSStatus = "Terminated";
+                            //}
+                            //else if (strNRDSStatus == "P")
+                            //{
+                            //    memberStatusReportModel.NRDSStatus = "Provisional";
+                            //}
+                            //else if (strNRDSStatus == "X")
+                            //{
+                            //    memberStatusReportModel.NRDSStatus = "Lifetime Member";
+                            //}
+                            //else if (strNRDSStatus == "S")
+                            //{
+                            //    memberStatusReportModel.NRDSStatus = "Suspended";
+                            //}
 
                             lstMemberStatusReportModel.Add(memberStatusReportModel);
                         }

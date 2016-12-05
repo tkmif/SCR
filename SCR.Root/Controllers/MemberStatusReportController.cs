@@ -53,22 +53,22 @@ namespace SCR.Root.Controllers
                         {
                             if (constrian == "")
                             {
-                                constrian = " LLR.[Status]='" + LLR + "'";
+                                constrian = " LLR.[MemberStatusVal]='" + LLR + "'";
                             }
                             else
                             {
-                                constrian += " AND LLR.[Status]='" + LLR + "'";
+                                constrian += " AND LLR.[MemberStatusVal]='" + LLR + "'";
                             }
                         }
                         if (NRDS != "" && NRDS != "Select") 
                         {
                             if (constrian == "")
                             {
-                                constrian = " NRDS.[MemberStatusVal]='" + NRDS + "'";
+                                constrian = " NRDS.[Status]='" + NRDS + "'";
                             }
                             else
                             {
-                                constrian += " and NRDS.[MemberStatusVal]='" + NRDS + "'";
+                                constrian += " and NRDS.[Status]='" + NRDS + "'";
                             }
                         }
                         ViewBag.LLR = LLR;
@@ -78,6 +78,7 @@ namespace SCR.Root.Controllers
                     memberStatusReportModel.MemberStatusReportModelList = memberStatusReportDAL.getMemberStatusReportList(constrian);
                     //List<MemberStatusReportModel> MemberExpiryR = memberStatusReportModel.MemberStatusReportModelList.Where(c => c.FirstName == "Steven" && c.LastName == "Crossland").ToList<MemberStatusReportModel>();
                     TempData["MemberStatusReportModelList"] = memberStatusReportModel.MemberStatusReportModelList;
+                    TempData["ReportCount"] = memberStatusReportModel.MemberStatusReportModelList.Count.ToString();
                     if (memberStatusReportModel.MemberStatusReportModelList.Count == 0)
                     {
                         TempData["error"] = "No items match your search.";
@@ -120,7 +121,7 @@ namespace SCR.Root.Controllers
 
                     Response.ClearContent();
                     Response.Buffer = true;
-                    Response.AddHeader("content-disposition", "attachment; filename=MemberStatusReport.xls");
+                    Response.AddHeader("content-disposition", "attachment; filename=DataMismatchReport.xls");
                     Response.ContentType = "application/ms-excel";
                     Response.Charset = "";
                     StringWriter sw = new StringWriter();
@@ -224,22 +225,22 @@ namespace SCR.Root.Controllers
                 {
                     if (_condition == "")
                     {
-                        _condition += " LLR.[Status] <> NRDS.[MemberStatusVal] AND LLR.[PrimaryAssociationID] = " + uSession.AssocID;
+                        _condition += " NRDS.[Status] <> LLR.[MemberStatusVal] AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID;
                     }
                     else
                     {
-                        _condition = _condition + " AND " + "  LLR.[Status] <> NRDS.[MemberStatusVal] AND LLR.[PrimaryAssociationID]= " + uSession.AssocID;
+                        _condition = _condition + " AND " + "  NRDS.[Status] <> LLR.[MemberStatusVal] AND NRDS.[PrimaryAssociationID]= " + uSession.AssocID;
                     }
                 }
                 else
                 {
                     if (_condition == "")
                     {
-                        _condition += " LLR.[Status] <> NRDS.[MemberStatusVal] ";
+                        _condition += " NRDS.[Status] <> LLR.[MemberStatusVal] ";
                     }
                     else
                     {
-                        _condition = _condition + " AND " + "  LLR.[Status] <> NRDS.[MemberStatusVal] ";
+                        _condition = _condition + " AND " + "  NRDS.[Status] <> LLR.[MemberStatusVal] ";
                     }
                 }
                 //    }

@@ -64,7 +64,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(5, "@OfficePhoneNo", localOfficeModel.OfficePhoneNo);
                 dbManager.AddParameters(6, "@LastUpdated", DateTime.Now);
                 dbManager.AddParameters(7, "@ReturnVal", 0, ParameterDirection.Output);
-                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "local_office_InsertUpdate_Proc");
+                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[db_owner].local_office_InsertUpdate_Proc");
                 returnVal = (int)dbManager.Parameters[7].Value;
 
                 /*Geethanjali on MAR 03 2015*/
@@ -112,7 +112,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(5, "@Email", localOfficeModel.Email);
                 dbManager.AddParameters(6, "@LastUpdated", DateTime.Now);
                 dbManager.AddParameters(7, "@ReturnVal", 0, ParameterDirection.Output);
-                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "login_InsertUpdate_Proc");
+                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[dbo].login_InsertUpdate_Proc");
                 returnVal = (int)dbManager.Parameters[7].Value;
             }
             catch (Exception ex)
@@ -143,7 +143,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(0, "@LoginId", loginId);
                 dbManager.AddParameters(1, "@LocalOfficeId", localOfficeId);               
                 dbManager.AddParameters(2, "@ReturnVal", 0, ParameterDirection.Output);
-                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "local_office_admin_InsertUpdate_Proc");
+                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[db_owner].local_office_admin_InsertUpdate_Proc");
                 returnVal = (int)dbManager.Parameters[2].Value;
             }
             catch (Exception ex)
@@ -177,7 +177,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@LocalOfficeId", localOfficeId);
                 dbManager.AddParameters(1, "@Constrain", null);
-                dsLocalOffice = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "local_office_Select_Proc");
+                dsLocalOffice = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].local_office_Select_Proc");
                 if (dsLocalOffice.Tables.Count > 0)
                 {
                     if (dsLocalOffice.Tables[0].Rows.Count > 0)
@@ -227,7 +227,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@LocalOfficeId", 0);
                 dbManager.AddParameters(1, "@Constrain", null);
-                dsLocalOffice = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "local_office_Select_Proc");
+                dsLocalOffice = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].local_office_Select_Proc");
                 if (dsLocalOffice.Tables.Count > 0)
                 {
                     if (dsLocalOffice.Tables[0].Rows.Count > 0)
@@ -280,7 +280,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@LocalOfficeId", localOfficeid);
                 dbManager.AddParameters(1, "@ReturnVal", 0, ParameterDirection.Output);
-                retval = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "local_office_Delete_Proc");
+                retval = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[dbo].local_office_Delete_Proc");
 
                 retval = (int)dbManager.Parameters[1].Value;
 

@@ -40,6 +40,7 @@
             else {
                 notify(Title, message);
             }
+          
         }
         else {
             var errors = '@TempData.Remove("error")';
@@ -64,6 +65,7 @@
             if (filePath == "")
             {
                 notify("Import Realtors", "Please select a file");
+                $("#divLoading").hide();
                 return false;
             }
 
@@ -141,8 +143,9 @@
         $.post(url, null,
                 function (data) {
                     $("#PID")[0].innerHTML = data;
-                    $("#divLoading").hide();
+                    
                 });
+        //$("#divLoading").hide();
     }
 </script>
 
@@ -161,9 +164,9 @@
             @if (Model.HddnTransactionTotal == 0 && Model.HddnTransmittalBatchNumber == 0)
             {
                 <div class="row-form clearfix" id="divUpload" runat="server">
-                    <div class="span3">LLR CSV File</div>
+                    <div class="span3">LLR CSV / NRDS File</div>
                     <div class="span9">
-                        <input type="file" name="fupdCSVUpload" id="fUpload" accept=".M00,.csv,.O00" />
+                        <input type="file" name="fupdCSVUpload" id="fUpload" accept=".M00,.csv,.O00,.zip" />
 
                     </div>
                     @*   <div class="span3"></div>

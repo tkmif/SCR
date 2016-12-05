@@ -69,7 +69,7 @@ namespace SCR.Root.Models
                 dbManager.Open();
                 dbManager.CreateParameters(1);
                 dbManager.AddParameters(0, "@LoginId", LoginId);
-                dsPrivilegedPages = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "role_page_access_Select_Proc");
+                dsPrivilegedPages = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].role_page_access_Select_Proc");
                 if (dsPrivilegedPages.Tables.Count > 0)
                 {
                     foreach (DataRow drPrivilegedPages in dsPrivilegedPages.Tables[0].Rows)

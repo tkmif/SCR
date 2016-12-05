@@ -52,7 +52,7 @@ namespace SCR.Root.Models
                 DataSet dsUserRoles = new DataSet();
                 dbManager.Open();
                 dbManager.CreateParameters(0);
-                dsUserRoles = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "login_roles_Select_Proc");
+                dsUserRoles = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].login_roles_Select_Proc");
                 if (dsUserRoles.Tables.Count > 0)
                 {
                     UserRoleModel userRolesModel = new UserRoleModel();
@@ -90,7 +90,7 @@ namespace SCR.Root.Models
                 DataSet dsBoard = new DataSet();
                 dbManager.Open();  
                 dbManager.CreateParameters(0);
-                dsBoard = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "local_board_Select_Proc");
+                dsBoard = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].local_board_Select_Proc");
                 if (dsBoard.Tables.Count > 0)
                 {
                     LocalBoardModel localBoardModel = new LocalBoardModel();
@@ -132,7 +132,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@LoginId", LoginId);
                 dbManager.AddParameters(1, "@Constrain", null);
-                dsUser = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "login_SelectForList_Proc");
+                dsUser = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].login_SelectForList_Proc");
                 if (dsUser.Tables.Count > 0)
                 {
                     if (dsUser.Tables[0].Rows.Count > 0)
@@ -179,7 +179,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(6, "@ReturnVal", 0, ParameterDirection.Output);
                 dbManager.AddParameters(7, "@AssocID", userModel.AssocID);
                 dbManager.AddParameters(8, "@Password", userModel.Password);
-                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "login_InsertUpdate_Proc");
+                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[dbo].login_InsertUpdate_Proc");
 
                 returnVal = (int)dbManager.Parameters[6].Value;
 
@@ -279,7 +279,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@LoginId", LoginId);
                 dbManager.AddParameters(1, "@ReturnVal", 0, ParameterDirection.Output);
-                retval = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "login_Delete_Proc");
+                retval = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[db_owner].login_Delete_Proc");
 
                 retval = (int)dbManager.Parameters[1].Value;
 
@@ -314,7 +314,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@LoginId", 0);
                 dbManager.AddParameters(1, "@Constrain", null);
-                dsUser = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "login_SelectForList_Proc");
+                dsUser = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].login_SelectForList_Proc");
                 if (dsUser.Tables.Count > 0)
                 {
                     if (dsUser.Tables[0].Rows.Count > 0)
@@ -359,7 +359,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@EmailIds", Email);
                 dbManager.AddParameters(1, "@UserPassword", "");
-                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "login_Select_Proc");
+                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].login_Select_Proc");
 
                 if (dsUserInfo.Tables[0].Rows.Count > 0)
                 {

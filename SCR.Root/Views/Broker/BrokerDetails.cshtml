@@ -225,7 +225,7 @@
                 </li>
                 <li>
                     <div class="title">
-                        @Html.Label("LLR Status")
+                        @Html.Label("NRDS Status")
                     </div>
                     <div class="text">
                         @Html.Label(Model.LLRStatus.ToString())
@@ -233,7 +233,7 @@
                 </li>
                  <li>
                     <div class="title">
-                        @Html.Label("NRDS Status")
+                        @Html.Label("LLR Status")
                     </div>
                     <div class="text">
                         @Html.Label(Model.NRDSStatus.ToString())
@@ -338,9 +338,9 @@
                     </ul>*@
                     <ul class="buttons">
                     <li style="padding-top:6px;">
-                        <span style="color:#fff;margin-right:5px;">LLR Status</span><select id="LLRStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;"><option value="Select">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
+                        <span style="color:#fff;margin-right:5px;">LLR Status</span><select id="LLRStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;"><option value="Select" selected="selected">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
                     <li style="padding-top:6px;">
-                        <span style="color:#fff;margin-right:5px;">NRDS Status</span><select id="NRDSStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;"><option value="Select">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
+                        <span style="color:#fff;margin-right:5px;">NRDS Status</span><select id="NRDSStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;" ><option value="Select" selected="selected" >Select</option><option value="ACTIVE">Active</option>@*<option value="I">Inactive</option>*@</select></li>
                     <li><a href="#" id="btnSearch" class="isw-zoom" title="Search" onclick="Search('@Model.MemberId');"></a></li>
                     </ul>
                    

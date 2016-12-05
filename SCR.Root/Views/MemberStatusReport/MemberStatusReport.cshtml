@@ -22,14 +22,14 @@
         if (NRDSval != "") {
             $('#NRDSStatusFilter').val(NRDSval);
         }
-       
+
         $('#btnSearch').click(function () {
             Search();
         });
     });
 
     function Search(BrokerID) {
-       
+
         var LLRStatusFilter = $('#LLRStatusFilter option:selected').val();
         var NRDSStatusFilter = $('#NRDSStatusFilter option:selected').val();
         // LLRStatusFilter, NRDSStatusFilter,Inactive, Active
@@ -122,27 +122,33 @@
 
 @using (Html.BeginForm("MemberStatusReport", "MemberStatusReport", FormMethod.Post, new { @class = "form-horizontal", @id = "validation" }))
 { 
-<input type="hidden" id="hdnLLR" value="@ViewBag.LLR" />
+    <input type="hidden" id="hdnLLR" value="@ViewBag.LLR" />
     <input type="hidden" id="hdnNRDS" value="@ViewBag.NRDS" />
-<div class="row-fluid">
+    <div class="row-fluid">
 
         <div class="span12">
             <div class="head clearfix">
                 <div class="isw-grid"></div>
-              @*  <ul class="buttons">
-                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
+                  <ul class="buttons">
+                    @*<li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Active" name="Active" id="chkMemberStatus" /><span style="color:#fff;">Member Status</span>
-                    <li><a href="#" id="btnSearch" class="isw-zoom"></a></li>
+                    <li><a href="#" id="btnSearch" class="isw-zoom"></a></li>*@
                     <li><a href="~/MemberStatusReport/Export" class="isw-download"></a></li>
 
-                </ul>*@
+                </ul>
                 <ul class="buttons">
-                    <li style="padding-top:6px;">
-                        <span style="color:#fff;margin-right:5px;">LLR Status</span><select id="LLRStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;"><option value="Select">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
-                    <li style="padding-top:6px;">
-                        <span style="color:#fff;margin-right:5px;">NRDS Status</span><select id="NRDSStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;"><option value="Select">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
+                    <li style="padding-top: 6px;">
+                        <span style="color: #fff; margin-right: 5px;">NRDS Status</span><select id="NRDSStatusFilter" style="width: 100px; margin-bottom: 0; margin-right: 5px;"><option value="Select">Select</option>
+                            <option value="A">Active</option>
+                            <option value="I">Inactive</option>
+                        </select></li>
+                    <li style="padding-top: 6px;">
+                        <span style="color: #fff; margin-right: 5px;">LLR Status</span><select id="LLRStatusFilter" style="width: 100px; margin-bottom: 0; margin-right: 5px;"><option value="Select">Select</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="APPROVED">Approved</option>
+                            <option value="ACTIVE IN RENEWAL">Active In Renewal</option>@*<option value="I">Inactive</option>*@</select></li>
                     <li><a href="#" id="btnSearch" class="isw-zoom" title="Search" onclick="Search('@Model.MemberId');"></a></li>
-                    </ul>
+                </ul>
             </div>
             <div class="block-fluid">
                 <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
@@ -151,71 +157,75 @@
                             <th class="headertablesorter">Member Id</th>
                             <th class="headertablesorter">Last Name</th>
                             <th class="headertablesorter">First Name</th>
-                            <th class="headertablesorter">LLR Status</th>
                             <th class="headertablesorter">NRDS Status</th>
+                            <th class="headertablesorter">LLR Status</th>
                         </tr>
                     </thead>
 
-                       
-                        <tbody>
-                            @if (Model.MemberStatusReportModelList != null)
+
+                    <tbody>
+                        @if (Model.MemberStatusReportModelList != null)
+                        {
+                            if (Model.MemberStatusReportModelList.Count > 0)
                             {
-                                if (Model.MemberStatusReportModelList.Count > 0)
+                                foreach (var item in Model.MemberStatusReportModelList)
                                 {
-                                    foreach (var item in Model.MemberStatusReportModelList)
-                                    {
                  
    
-                                <tr style="width: 20px; height: 50px">
-                                   @* <td>
+                            <tr style="width: 20px; height: 50px">
+                                @* <td>
                                         @item.MemberId
                                     </td>*@
-                                    <td>
+                                <td>
                                     <a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = item.MemberId })">
-                                                @item.MemberId
-                                            </a>
-                                    </td>
-                                    <td>
-                                        @item.LastName
+                                        @item.MemberId
+                                    </a>
+                                </td>
+                                <td>
+                                    @item.LastName
 
-                                    </td>
-                                    <td>
-                                        @item.FirstName
+                                </td>
+                                <td>
+                                    @item.FirstName
 
-                                    </td>
-                                    <td>
-                                         @item.LLRStatus
-                                    </td>
-                                    <td>
-                                        @item.NRDSStatus
-                                    </td>
-                                </tr>
-                                    }
+                                </td>
+                                <td>
+                                    @item.LLRStatus
+                                </td>
+                                <td>
+                                    @item.NRDSStatus
+                                </td>
+                            </tr>
                                 }
                             }
-                        </tbody>
-                    </table>
+                        }
+                    </tbody>
+                </table>
 
-                    <div id="pager" style="position: none; padding-top: 5px;">
-                        <form>
-                            <img src="@Url.Content("~/img/first.png")" class="first" />
-                            <img src="@Url.Content("~/img/prev.png")" class="prev" />
-                            <input type="text" class="pagedisplay" style="width: 50px; height: 30px;" readonly />
-                            <img src="@Url.Content("~/img/next.png")" class="next" />
-                            <img src="@Url.Content("~/img/last.png")" class="last" />
-                            <select class="pagesize" style="width: 55px; height: 30px;">
-                                <option selected="selected" value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="40">40</option>
-                            </select>
-                        </form>
-                    </div>
-
+                <div id="pager" style="position: none; padding-top: 5px;">
+                    <form>
+                        <img src="@Url.Content("~/img/first.png")" class="first" />
+                        <img src="@Url.Content("~/img/prev.png")" class="prev" />
+                        <input type="text" class="pagedisplay" style="width: 50px; height: 30px;" readonly />
+                        <img src="@Url.Content("~/img/next.png")" class="next" />
+                        <img src="@Url.Content("~/img/last.png")" class="last" />
+                        <select class="pagesize" style="width: 55px; height: 30px;">
+                            <option selected="selected" value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                        </select>
+                    </form>
                 </div>
+
+
+            </div>
+           <div style="padding-left: 65%; font-size: 25px; font-size: 1.4vw;">
+                <b><span>TOTAL NO. OF RECORDS &nbsp : &nbsp </span><span>@TempData["ReportCount"].ToString()</span></b>
             </div>
         </div>
+    </div>
 
-    @*</div>*@
+@*</div>*@
 }

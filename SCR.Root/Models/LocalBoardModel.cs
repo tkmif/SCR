@@ -57,7 +57,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(4, "@State", localBoardModel.State);
                 dbManager.AddParameters(5, "@Phone", localBoardModel.Phone);
                 dbManager.AddParameters(6, "@ReturnVal", 0, ParameterDirection.Output);
-                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "local_board_InsertUpdate_Proc");
+                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[db_owner].local_board_InsertUpdate_Proc");
                 returnVal = (int)dbManager.Parameters[6].Value;
             }
             catch (Exception ex)
@@ -88,7 +88,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@AssecId", localBoardid);
                 dbManager.AddParameters(1, "@ReturnVal", 0, ParameterDirection.Output);
-                retval = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "local_boards_Delete_Proc");
+                retval = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[dbo].local_boards_Delete_Proc");
 
                 retval = (int)dbManager.Parameters[1].Value;
 
@@ -122,7 +122,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@AssocID", 0);
                 dbManager.AddParameters(1, "@Constrain", null);
-                dsLocalBoard = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "local_Board_Select_Proc");
+                dsLocalBoard = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].local_Board_Select_Proc");
                 if (dsLocalBoard.Tables.Count > 0)
                 {
                     if (dsLocalBoard.Tables[0].Rows.Count > 0)
@@ -178,7 +178,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@AssocId", localBoardId);
                 dbManager.AddParameters(1, "@Constrain", null);
-                dsLocalBoard = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "local_board_Select_Proc");
+                dsLocalBoard = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].local_board_Select_Proc");
                 if (dsLocalBoard.Tables.Count > 0)
                 {
                     if (dsLocalBoard.Tables[0].Rows.Count > 0)
@@ -244,7 +244,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(4, "@State", localBoardModel.State);
                 dbManager.AddParameters(5, "@Phone", localBoardModel.Phone);
                 dbManager.AddParameters(6, "@ReturnVal", 0, ParameterDirection.Output);
-                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "local_board_Update_Proc");
+                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[db_owner].local_board_Update_Proc");
                 returnVal = (int)dbManager.Parameters[6].Value;
             }
             catch (Exception ex)

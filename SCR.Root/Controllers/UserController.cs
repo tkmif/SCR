@@ -153,7 +153,8 @@ namespace SCR.Root.Controllers
         {
             UserModel userModel = new UserModel();
             UserDAL userDAL = new UserDAL();
-          
+            List<UserModel> lstUserModel = new List<UserModel>();
+            var UserModelList1 = lstUserModel;
             UserSession userSession = new UserSession();
             try
             {
@@ -168,7 +169,7 @@ namespace SCR.Root.Controllers
                          
                     }
 
-                    var UserModelList1 = userDAL.getAllUsersList();
+                     UserModelList1 = userDAL.getAllUsersList();
                     return View(UserModelList1);
                    // return RedirectToAction("List", "User");
                 }
@@ -179,7 +180,7 @@ namespace SCR.Root.Controllers
                 GC.Collect();
             }
 
-            return View(userModel);
+            return View(UserModelList1);
         }
 
     }

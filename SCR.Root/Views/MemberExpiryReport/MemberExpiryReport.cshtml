@@ -193,11 +193,11 @@
             <div class="head clearfix">
                 <div class="isw-grid" title="Member Expiry Report"></div>
                 <ul class="buttons">
-                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
-                        <input type="checkbox" value="Expired" name="Expired" id="chkExpired" title="Expired Members" /><span style="color:#fff;">Expired Members</span></li>
-                    <li style="padding-top:6px;border-left: 1px solid #335A85;">
-                        <input type="checkbox" value="Active" name="Active" id="chkActive" title="Active Members"/><span style="color:#fff">Active Members</span></li>
-                    <li><a href="#" id="btnSearch" class="isw-zoom" title="Search"></a></li>
+                    @*<li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Expired" name="Expired" id="chkExpired" title="Expired Members" /><span style="color:#fff;">Expired Members</span></li>*@
+                    @*<li style="padding-top:6px;border-left: 1px solid #335A85;">
+                        <input type="checkbox" value="Active" name="Active" id="chkActive" title="Active Members" checked="checked" /><span style="color:#fff">Active Members</span></li>*@
+                    @*<li><a href="#" id="btnSearch" class="isw-zoom" title="Search"></a></li>*@
                     <li><a href="~/MemberExpiryReport/Export" class="isw-download" title="Export to Excel"></a></li>
 
                 </ul>
@@ -246,7 +246,7 @@
                                     @Model.MemberExpiryReportModelList[i].MemberType
                                 </td>
                                 <td>
-                                    @Model.MemberExpiryReportModelList[i].Status
+                                    @Model.MemberExpiryReportModelList[i].MemberStatusVal
                                 </td>
                             </tr>
                                 
@@ -278,6 +278,9 @@
 
             </div>
         </div>
+        <div style="padding-left: 65%; font-size: 25px; font-size: 1.4vw;">
+                <b><span>TOTAL NO. OF RECORDS &nbsp : &nbsp </span><span>@TempData["ReportCount"].ToString()</span></b>
+            </div>
     </div>@*
 
     </div>*@

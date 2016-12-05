@@ -81,3 +81,31 @@ D:\tkmprojects\TFS\SCR\SCR.Root\bin\System.Web.WebPages.Razor.xml
 D:\tkmprojects\TFS\SCR\SCR.Root\obj\Debug\SCR.Root.csprojResolveAssemblyReference.cache
 D:\tkmprojects\TFS\SCR\SCR.Root\obj\Debug\SCR.Root.dll
 D:\tkmprojects\TFS\SCR\SCR.Root\obj\Debug\SCR.Root.pdb
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\SCR.Root.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\SCR.Root.pdb
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\Microsoft.Web.Infrastructure.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\Newtonsoft.Json.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Net.Http.Formatting.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Helpers.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Http.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Http.WebHost.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Mvc.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Razor.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.WebPages.Deployment.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.WebPages.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.WebPages.Razor.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\TkmDataAccess.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\Newtonsoft.Json.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Net.Http.Formatting.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Helpers.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Http.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Http.WebHost.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Mvc.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.Razor.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.WebPages.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.WebPages.Deployment.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\bin\System.Web.WebPages.Razor.xml
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\obj\Debug\SCR.Root.csprojResolveAssemblyReference.cache
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\obj\Debug\SCR.Root.dll
+E:\TKM Projects\SCR\DEV\New TFS\SCR.Root\obj\Debug\SCR.Root.pdb

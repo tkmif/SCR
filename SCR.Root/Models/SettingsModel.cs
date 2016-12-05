@@ -48,7 +48,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(0, "@LoginId", LoginUser);
                 dbManager.AddParameters(1, "@Password", settingsModel.NewPassword);
                 dbManager.AddParameters(2, "@LastUpdated", System.DateTime.Now);
-                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "login_PasswordUpdate_Proc");
+                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[dbo].login_PasswordUpdate_Proc");
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace SCR.Root.Models
                 dbManager.Open();
                 dbManager.CreateParameters(1);
                 dbManager.AddParameters(0, "@LoginId", LoginUser);
-                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "login_SelectPassword_Proc");
+                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[dbo].login_SelectPassword_Proc");
                 if (dsUserInfo.Tables[0].Rows.Count > 0)
                 {
                     result = Convert.ToString(dsUserInfo.Tables[0].Rows[0]["Password"]);

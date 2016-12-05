@@ -65,7 +65,7 @@ namespace SCR.Root.Models
                 dbManager.Open();
                 dbManager.CreateParameters(1);
                 dbManager.AddParameters(0, "@PrimaryAssociatioId", AssociationId);
-                dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "Broker__Select_Proc");
+                dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].Broker__Select_Proc");
                 if (dsBrokerList.Tables.Count > 0)
                 {
                     if (dsBrokerList.Tables[0].Rows.Count > 0)
@@ -107,7 +107,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(1);
                 dbManager.AddParameters(0, "@Constrain", " AND " + constrain);
 
-                dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "Active__Broker__Select_Proc");
+                dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].Active__Broker__Select_Proc");
                 if (dsBrokerList.Tables.Count > 0)
                 {
                     if (dsBrokerList.Tables[0].Rows.Count > 0)
@@ -150,7 +150,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@Constrain", " AND " + constrain);
                 dbManager.AddParameters(1, "@PrimaryAssociationId", AssociationId.ToString());
-                dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "Active_Brokers_with_Delinquent_Agents");
+                dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].Active_Brokers_with_Delinquent_Agents");
                 if (dsBrokerList.Tables.Count > 0)
                 {
                     if (dsBrokerList.Tables[0].Rows.Count > 0)
@@ -192,7 +192,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(1);
                 dbManager.AddParameters(0, "@AgentId", agentid);
 
-                dsBrokerdetails = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "agents_details_Select_Proc");
+                dsBrokerdetails = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].agents_details_Select_Proc");
                 if (dsBrokerdetails.Tables.Count > 0)
                 {
                     if (dsBrokerdetails.Tables[0].Rows.Count > 0)

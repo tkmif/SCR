@@ -70,7 +70,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@EmailIds", Email);
                 dbManager.AddParameters(1, "@UserPassword", Password);
-                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "login_Select_Proc");
+                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].login_Select_Proc");
                 if (dsUserInfo.Tables.Count > 0)
                 {
                     if (dsUserInfo.Tables[0].Rows.Count > 0)
@@ -119,7 +119,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@EmailIds", email);
                 dbManager.AddParameters(1, "@UserPassword", "");
-                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "login_Select_Proc");
+                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].login_Select_Proc");
 
                 if (dsUserInfo.Tables[0].Rows.Count > 0)
                 {
@@ -164,7 +164,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(1, "@Key", loginModel.Key);
                 dbManager.AddParameters(2, "@ExpiredOn", loginModel.ExpiredOn);
                 dbManager.AddParameters(3, "@ReturnVal", 0, ParameterDirection.Output);
-                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "login_UpdatePassword_Proc");
+                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[dbo].login_UpdatePassword_Proc");
 
                 returnVal = (int)dbManager.Parameters[3].Value;
 
@@ -275,7 +275,7 @@ namespace SCR.Root.Models
                 dbManager.Open();
                 dbManager.CreateParameters(1);
                 dbManager.AddParameters(0, "@key", key);
-                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "temp_forgot_password_SelectForKeyCheck_Proc");
+                dsUserInfo = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].temp_forgot_password_SelectForKeyCheck_Proc");
                 if (dsUserInfo.Tables.Count > 0)
                 {
                     if (dsUserInfo.Tables[0].Rows.Count > 0)
@@ -319,7 +319,7 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(0, "@Email", loginModel.EmailId);
                 dbManager.AddParameters(1, "@Password", loginModel.NewPassword);
                 dbManager.AddParameters(2, "@ReturnVal", 0, ParameterDirection.Output);
-                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "temp_forgot_password_Update_Proc");
+                returnVal = dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "[dbo].temp_forgot_password_Update_Proc");
 
                 returnVal = (int)dbManager.Parameters[2].Value;
 
@@ -365,7 +365,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(1);
                 dbManager.AddParameters(0, "@EmailIds", Email);
                 //dbManager.AddParameters(1, "@Constrain", null);
-                dsUser = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "menu_list_Select_Proc");
+                dsUser = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].menu_list_Select_Proc");
                 if (dsUser.Tables.Count > 0)
                 {
                     if (dsUser.Tables[0].Rows.Count > 0)

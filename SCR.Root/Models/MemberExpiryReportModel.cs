@@ -22,7 +22,7 @@ namespace SCR.Root.Models
         public string MemberType { get; set; }
         public string Status { get; set; }
         public string hdnStatus { get; set; }
-
+        public string MemberStatusVal { get; set; }
         public List<MemberExpiryReportModel> MemberExpiryReportModelList { get; set; }
     }
 
@@ -55,7 +55,7 @@ namespace SCR.Root.Models
                 }                
                 dbManager.AddParameters(0, "@Constrain", constrain);
                 dbManager.AddParameters(1, "@MemberId", memberId);
-                dsMemberExpiryRpt = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "member_expiry_report_Select_Proc");
+                dsMemberExpiryRpt = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].member_expiry_report_Select_Proc");
                 if (dsMemberExpiryRpt.Tables.Count > 0)
                 {
                     if (dsMemberExpiryRpt.Tables[0].Rows.Count > 0)
@@ -67,6 +67,7 @@ namespace SCR.Root.Models
                             memberExpiryReportModel.MemberType = Convert.ToString(drloff["MemberType"]);
                             memberExpiryReportModel.LastName = Convert.ToString(drloff["LastName"]);
                             memberExpiryReportModel.FirstName = Convert.ToString(drloff["FirstName"]);
+                            memberExpiryReportModel.MemberStatusVal = Convert.ToString(drloff[8]);
                             /*'A', 'I', 'T', 'P', 'X', S' is "- Active, Inactive, Terminated, Provisional, and S is suspended*/
                             string strStatus=Convert.ToString(drloff["Status"]);
                             if (strStatus == "A")

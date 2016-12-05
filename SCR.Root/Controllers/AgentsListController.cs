@@ -91,6 +91,7 @@ namespace SCR.Root.Controllers
 
                     agentsModel.AgentsModelList = agentsDAL.getAgentsList(broker_Id, office_Id, condition);
                     TempData["AgentsList"] = agentsModel.AgentsModelList;
+                    TempData["ReportCount"] = agentsModel.AgentsModelList.Count.ToString();
 
                     //  TempData["count"] = Convert.ToString(agentsModel.AgentsModelList.Count);
                     TempData["start"] = start;

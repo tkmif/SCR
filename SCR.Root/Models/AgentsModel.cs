@@ -81,7 +81,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(1);
                 dbManager.AddParameters(0, "@AgentId", agentid);
 
-                dsAgentsList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "agents_details_Select_Proc");
+                dsAgentsList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].agents_details_Select_Proc");
                 agentsDtailsModel.dt = dsAgentsList.Tables[0];
                 if (dsAgentsList.Tables.Count > 0)
                 {
@@ -160,8 +160,8 @@ namespace SCR.Root.Models
                 dbManager.AddParameters(0, "@BrokerId", brokerId);
                 dbManager.AddParameters(1, "@OfficeId", officeId);
                 dbManager.AddParameters(2, "@condition", condition);
-                
-                dsAgentsList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "agents_lists_Select_Proc");
+
+                dsAgentsList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].agents_lists_Select_Proc");
                 if (dsAgentsList.Tables.Count > 0)
                 {
                     if (dsAgentsList.Tables[0].Rows.Count > 0)
@@ -223,7 +223,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@SearchTerm", term);
                 dbManager.AddParameters(1, "@type", type);
-                dsOffice = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "office_details_Select_Proc");
+                dsOffice = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].office_details_Select_Proc");
                 if (dsOffice.Tables.Count > 0)
                 {
                     if (dsOffice.Tables[0].Rows.Count > 0)
@@ -269,7 +269,7 @@ namespace SCR.Root.Models
                 dbManager.CreateParameters(2);
                 dbManager.AddParameters(0, "@SearchTerm", term);
                 dbManager.AddParameters(1, "@type", type);
-                dsOffice = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "broker_Select_Proc");
+                dsOffice = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "[db_owner].broker_Select_Proc");
                 if (dsOffice.Tables.Count > 0)
                 {
                     if (dsOffice.Tables[0].Rows.Count > 0)

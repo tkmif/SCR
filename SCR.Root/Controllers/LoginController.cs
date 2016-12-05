@@ -109,8 +109,8 @@ namespace SCR.Root.Controllers
                 {
                     TempData["error"] = "This Email is not registered";
                     TempData["errtitle"] = "Login";
-                    //return RedirectToAction("Users", "Login");
-                    return View();
+                    return RedirectToAction("Users", "Login");
+                  //  return View();
                 }
             }
             else
