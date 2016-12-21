@@ -41,6 +41,7 @@
 
     }
     function print() {
+       
         var mywindowold = window.open('', 'Broker Details');
         mywindowold.close();
         var mywindow = window.open('', 'Broker Details', 'height=800,width=600');
@@ -57,6 +58,7 @@
         mywindow.document.write('</body></html>');
         //window.print();
         //window.close();
+        e.preventDefault();
     }
 
 
@@ -228,7 +230,7 @@
                         @Html.Label("NRDS Status")
                     </div>
                     <div class="text">
-                        @Html.Label(Model.LLRStatus.ToString())
+                        @Html.Label(Model.NRDSStatus.ToString())
                     </div>
                 </li>
                  <li>
@@ -236,7 +238,7 @@
                         @Html.Label("LLR Status")
                     </div>
                     <div class="text">
-                        @Html.Label(Model.NRDSStatus.ToString())
+                        @Html.Label(Model.LLRStatus.ToString())
                     </div>
                 </li>
                 <li>
@@ -338,12 +340,17 @@
                     </ul>*@
                     <ul class="buttons">
                     <li style="padding-top:6px;">
-                        <span style="color:#fff;margin-right:5px;">LLR Status</span><select id="LLRStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;"><option value="Select" selected="selected">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
+                        <span style="color:#fff;margin-right:5px;">NRDS Status</span><select id="LLRStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;"><option value="Select" selected="selected">Select</option><option value="A">Active</option><option value="I">Inactive</option></select></li>
                     <li style="padding-top:6px;">
-                        <span style="color:#fff;margin-right:5px;">NRDS Status</span><select id="NRDSStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;" ><option value="Select" selected="selected" >Select</option><option value="ACTIVE">Active</option>@*<option value="I">Inactive</option>*@</select></li>
+                        <span style="color:#fff;margin-right:5px;">LLR Status</span><select id="NRDSStatusFilter" style="width: 100px;margin-bottom:0;margin-right:5px;" ><option value="Select" selected="selected" >Select</option>
+                              <option value="ACTIVE">Active</option>
+                            <option value="APPROVED">Approved</option>
+                            <option value="ACTIVE IN RENEWAL">Active In Renewal</option>@*<option value="I">Inactive</option>*@</select></li>
                     <li><a href="#" id="btnSearch" class="isw-zoom" title="Search" onclick="Search('@Model.MemberId');"></a></li>
+                         @*<li>  <a href="~/Broker/ExportDetails" class="isw-download" title="Export to Excel" ></a></li>*@
                     </ul>
-                   
+                
+                     
                 </div>
                 <div class="block-fluid">
                     <table cellpadding="0" cellspacing="0" width="100%" class="table tablesorter">
@@ -417,6 +424,7 @@
     <div class="span9">
         <br />
         <input type="button" id="btnPrint" value="Print" class=" btn btn_prnt" />
+         <button type="button" class="btn_cancel btn image-button" onclick="location.href='@Url.Action("ExportDetails", "Broker")'" >Export</button>
        @* <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="history.go(-1);" />*@
         <button type="button" class="btn_cancel btn image-button" onclick="location.href='@Url.Action("BrokerList", "Broker")'" >Cancel</button>
         @Html.Hidden("hdnPrintHtmlContent", Model.PrintHtmlContent.ToString())

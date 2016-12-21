@@ -13,6 +13,37 @@
         .tablesorterPager({ container: $("#pager"), size: $(".pagesize option:selected").val() });
     });
     $(document).ready(function () {
+        debugger;
+        var LLRval = $('#hdnLLR').val();
+        var NRDSval = $('#hdnNRDS').val();
+        var Delinqval = $('#hdndelinq').val();
+        // Delinqval
+        //if (LLRval = 'A') { LLRval = 'Active' }
+        //if (LLRval = 'I') { LLRval = 'Inactive' }
+        //if (NRDSval = 'A') { NRDSval = 'Active' }
+        //if (NRDSval = 'I') { NRDSval = 'Inactive' }
+        if (Delinqval == 'Delinquent')
+        {
+            $("#chkDelinquent").prop("checked", true);
+            $('#uniform-chkDelinquent span').addClass("checked");
+            $("#NRDSStatusFilter").prop('disabled', true);
+            $("#LLRStatusFilter").prop('disabled', true);
+        }
+        else {
+            $("#chkDelinquent").prop("checked", false);
+            $('#uniform-chkDelinquent span').removeAttr("class", "fL");
+            $("#NRDSStatusFilter").prop('disabled', false);
+            $("#LLRStatusFilter").prop('disabled', false);
+        }
+        if (LLRval != "") {
+            $('#LLRStatusFilter').val(LLRval);// $('#uniform-chkDelinquent span').addClass("fL");
+        }
+        if (NRDSval != "") {
+            $('#NRDSStatusFilter').val(NRDSval); 
+        }
+
+
+
         var deptsArray = $('#hdnStatusId').val();
         $("#chkActive").prop("checked", false);
         $("#chkInActive").click(function () {
@@ -34,12 +65,23 @@
 
         $("#chkDelinquent").click(function () {
             if (this.checked) {
-
+                //debugger;
+                $('#LLRStatusFilter').val('ACTIVE');
+                $('#NRDSStatusFilter').val('A');
+                $("#NRDSStatusFilter").prop('disabled', true);
+                $("#LLRStatusFilter").prop('disabled', true);
                 $('#uniform-chkDelinquent span').addClass("checked");
-                $("#chkInActive:checked").prop("checked", false);
-                $("#chkActive:checked").prop("checked", false);
-                $('#uniform-chkInActive span').removeAttr("class", "fL");
-                $('#uniform-chkActive span').removeAttr("class", "fL");
+                //$('#uniform-chkDelinquent span').addClass("checked");
+                //$("#chkInActive:checked").prop("checked", false);
+                //$("#chkActive:checked").prop("checked", false);
+                //$('#uniform-chkInActive span').removeAttr("class", "fL");
+                //$('#uniform-chkActive span').removeAttr("class", "fL");
+            }
+            else {
+                $("#LLRStatusFilter").prop('disabled', false);
+                $("#NRDSStatusFilter").prop('disabled', false);
+
+
             }
         });
         Notifybox();
@@ -78,6 +120,32 @@
 
         //$("#chkActive").prop("checked", false);
         //$("#chkDelinquent").prop("checked", true);
+        function Search(BrokerID) {
+            debugger;
+            var LLRStatusFilter = $('#LLRStatusFilter option:selected').val();
+            var NRDSStatusFilter = $('#NRDSStatusFilter option:selected').val();
+
+            var chk = $('#chkDelinquent').prop('checked');
+
+            var deq ;
+
+            if (chk == true) {
+
+                deq = $('#chkDelinquent').val();//  Delinquent
+            }
+            else { deq = '';}
+            // LLRStatusFilter, NRDSStatusFilter,Inactive, Active
+            $.ajax
+              ({
+                  type: "GET",
+                  url: '/Broker/DataFilter',
+                  data: { 'LLRStatusFilter': LLRStatusFilter, 'NRDSStatusFilter': NRDSStatusFilter, 'deq': deq },
+                  success: function (response) {
+                      debugger;
+                      window.location.href = response;
+                  }
+              });
+        }
     });
     function Notifybox() {
 
@@ -116,67 +184,81 @@
             return true;
         }
     }
-    function Search() {
-        debugger;
-        var filterval = "";
-        if ($('#chkInActive').is(":checked")) {
-            filterval = "InActive";
-        }
-        else if ($('#chkActive').is(":checked")) {
-            filterval = "Active";
-        }
-        else if ($('#chkDelinquent').is(":checked")) {
-            filterval = "Delinquent";
-        }
-        else if ($('#chkActive').is(":checked")) {
-            if ($('#chkInActive').is(":checked")) {
-                filterval = "InActive+Active";
-            }
-        }
-        else if ($('#chkInActive').is(":checked")) {
-            if ($('#chkActive').is(":checked")) {
-                filterval = "InActive+Active";
-            }
-        }
-        else if (!$('#chkInActive').is(":checked")) {
-            if (!$('#chkActive').is(":checked")) {
-                filterval = "NOInActive+NOActive";
-            }
-        }
-        else {
-            filterval = "";
-        }
-        //if (filterval != "") {
-        $.ajax
-       ({
-           type: "GET",
-           url: '/Broker/ReportFilter',
-           data: { 'value1': filterval },
-           success: function (response) {
-               window.location.href = response;
-           }
-       });
-        //}
-        //else {
-        //    notify("Broker List", "Please enter at least one item for searching.");
-        //}
-    }
+    //function Search() {
+    //    debugger;
+    //    var filterval = "";
+    //    if ($('#chkInActive').is(":checked")) {
+    //        filterval = "InActive";
+    //    }
+    //    else if ($('#chkActive').is(":checked")) {
+    //        filterval = "Active";
+    //    }
+    //    else if ($('#chkDelinquent').is(":checked")) {
+    //        filterval = "Delinquent";
+    //    }
+    //    else if ($('#chkActive').is(":checked")) {
+    //        if ($('#chkInActive').is(":checked")) {
+    //            filterval = "InActive+Active";
+    //        }
+    //    }
+    //    else if ($('#chkInActive').is(":checked")) {
+    //        if ($('#chkActive').is(":checked")) {
+    //            filterval = "InActive+Active";
+    //        }
+    //    }
+    //    else if (!$('#chkInActive').is(":checked")) {
+    //        if (!$('#chkActive').is(":checked")) {
+    //            filterval = "NOInActive+NOActive";
+    //        }
+    //    }
+    //    else {
+    //        filterval = "";
+    //    }
+    //    //if (filterval != "") {
+    //    $.ajax
+    //   ({
+    //       type: "GET",
+    //       url: '/Broker/ReportFilter',
+    //       data: { 'value1': filterval },
+    //       success: function (response) {
+    //           window.location.href = response;
+    //       }
+    //   });
+    //    //}
+    //    //else {
+    //    //    notify("Broker List", "Please enter at least one item for searching.");
+    //    //}
+    //}
 </script>
 @using (Html.BeginForm())
 { 
        @Html.HiddenFor(model => Model.hdnStatus, new { @id = "hdnStatusId" })
+    <input type="hidden" id="hdnLLR" value="@ViewBag.LLR" />
+    <input type="hidden" id="hdnNRDS" value="@ViewBag.NRDS" />
+    <input type="hidden" id="hdndelinq" value="@ViewBag.deq" />
     <div class="row-fluid">  
         <div class="span12">
             <div class="head clearfix">
                 <div class="isw-grid"></div>
                 <ul class="buttons">        
                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
-                        <span style="color:#fff;"><i>Search with respect to LLR status</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        @*<span style="color:#fff;"><i>Search with respect to LLR status</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>*@
                     </li>           
                      <li style="padding-top:6px;border-left: 1px solid #335A85;">
-                        <input type="checkbox" value="Expired" id="chkActive" title="Active" name="Active" /><span style="color:#fff;">Active Brokers</span></li>
+                        @*<input type="checkbox" value="Expired" id="chkActive" title="Active" name="Active" /><span style="color:#fff;">Active Brokers</span></li>*@
                     @*<li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Active" id="chkInActive" title="InActive" name="InActive"/><span style="color:#fff">InActive Brokers</span></li>*@
+
+                          <li style="padding-top: 6px;">
+                        <span style="color: #fff; margin-right: 5px;">NRDS Status</span><select id="NRDSStatusFilter" style="width: 100px; margin-bottom: 0; margin-right: 5px;"><option value="Select">Select</option>
+                            <option value="A">Active</option>
+                            <option value="I">Inactive</option>
+                        </select></li>
+                    <li style="padding-top: 6px;">
+                        <span style="color: #fff; margin-right: 5px;">LLR Status</span><select id="LLRStatusFilter" style="width: 100px; margin-bottom: 0; margin-right: 5px;"><option value="Select">Select</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="APPROVED">Approved</option>
+                            <option value="ACTIVE IN RENEWAL">Active In Renewal</option>@*<option value="I">Inactive</option>*@</select></li>
                      <li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Delinquent" id="chkDelinquent" title="Brokers with Delinquent Agents" name="Delinquent"/><span style="color:#fff;">Brokers with Delinquent Agents</span></li>
                     <li><a href="#" id="btnSearch" class="isw-zoom" title="Search"></a></li>
@@ -221,7 +303,7 @@
                                 <td>@item.LLRStatus</td>
                                 <td>@item.NRDSStatus</td>
                                 <td>
-                                    <a href="@Url.Action("BrokerDetails", "Broker", new { MemberId = item.MemberId ,Status=Model.hdnStatus})" title="View Broker's Details">
+                                    <a href="@Url.Action("BrokerDetails", "Broker", new { MemberId = item.MemberId, Status = Model.hdnStatus })" title="View Broker's Details">
                                         <img src="" class="icon-eye-open" />
                                     </a>
                                 </td>

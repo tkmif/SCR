@@ -138,6 +138,7 @@
 <script type="text/javascript" >
 
     function JavascriptFunction() {
+        debugger;
         var url = '@Url.Action("", "")';
         $("#divLoading").show();
         $.post(url, null,
@@ -160,12 +161,13 @@
          @Html.Hidden("Hddn_BoolIsMemberFile", Model.HddnBoolIsMemberFile )
        
        <div>
-        <div class="block-fluid without-head span9">
+        <div class="block-fluid without-head span9" >
             @if (Model.HddnTransactionTotal == 0 && Model.HddnTransmittalBatchNumber == 0)
             {
-                <div class="row-form clearfix" id="divUpload" runat="server">
-                    <div class="span3">LLR CSV / NRDS File</div>
-                    <div class="span9">
+                <div style="width:100%;">
+                <div class="row-form clearfix" id="divUpload" runat="server" style="width:40%; float:left;">
+                    <div class="span12">LLR CSV (ZIP FILE) </div>
+                    <div class="span12" style="margin-left: 0;">
                         <input type="file" name="fupdCSVUpload" id="fUpload" accept=".M00,.csv,.O00,.zip" />
 
                     </div>
@@ -177,8 +179,36 @@
                         <div class="pbar"></div>
                     </div>
                 </div>*@
-
+                    <button id="btnUpload" class="btn" onclick="JavascriptFunction()" runat="server">
+                    Upload
+                 <i> <img src="~/img/Upload_icon.png" class="pull-left imagepadding" /></i>
+                </button>
+                      <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../SyncRealtors/Sync'" />  
                 </div>
+
+                     <div class="row-form clearfix" id="divUpload1" runat="server"  style="width:40%;float:right;">
+                    <div class="span12"> NRDS File (ACTIVE AGENT FILE)</div><br />
+                    <div class="span12" style="margin-left:0;">
+                        <input type="file" name="fupdCSVUpload1" id="fUpload1" accept=".zip,.xls" />
+
+                    </div>
+                    @*   <div class="span3"></div>
+                  <div class="span9" id="progbar" style="display:none;">
+                    <div id="progressbar-2">
+                        <div class="elapsed"></div>
+                        <div class="percent"></div>
+                        <div class="pbar"></div>
+                    </div>
+                </div>*@
+<button id="btnUpload1" class="btn" onclick="JavascriptFunction()" runat="server">
+                    Upload
+                 <i> <img src="~/img/Upload_icon.png" class="pull-left imagepadding" /></i>
+                </button>
+                           <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../SyncRealtors/Sync'" />  
+                </div>
+                    </div>
+                
+                
             }
             else
             {
@@ -213,13 +243,10 @@
                 }
             } *@   
             
-             <button id="btnUpload" class="btn" onclick="JavascriptFunction()" runat="server">
-                    Upload
-                 <i> <img src="~/img/Upload_icon.png" class="pull-left imagepadding" /></i>
-                </button>
+             
             
                    
-            <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../SyncRealtors/Sync'" />               
+                       
         </div>
             <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
                   top: 0px; width: 100%; height: 100%; background-color: none; z-index: 30001;

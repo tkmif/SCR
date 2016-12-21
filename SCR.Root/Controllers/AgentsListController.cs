@@ -59,7 +59,7 @@ namespace SCR.Root.Controllers
                         var uSession = userSession.GetUser;
                         if (uSession.AssocID != 0)
                         {
-                            condition = " AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by  " + order;
+                            condition = " AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + " order by  " + order;
                         }
                     }
 
@@ -415,22 +415,22 @@ namespace SCR.Root.Controllers
                     {
                         if (value1 != null && name != null)
                         {
-                            Session["condition"] = " AND L.[OfficeId]=" + value1 + " and O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + " ";
+                            Session["condition"] = " AND NRDS.[OfficeId]=" + value1 + " and O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%' AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + " ";
                         }
                         else if (name != null && value1 == null)
                         {
-                            Session["condition"] = " AND O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
+                            Session["condition"] = " AND O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%' AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
                         }
                         else
                         {
-                            Session["condition"] = "AND L.[OfficeId]=" + value1 + "  AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
+                            Session["condition"] = "AND NRDS.[OfficeId]=" + value1 + "  AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
                         }
                     }
                     else
                     {
                         if (value1 != null && name != null)
                         {
-                            Session["condition"] = " AND L.[OfficeId]=" + value1 + " and O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%'  order by " + order + " ";
+                            Session["condition"] = " AND NRDS.[OfficeId]=" + value1 + " and O.OfficeBusinessName like '%" + name.TrimEnd().TrimStart() + "%'  order by " + order + " ";
                         }
                         else if (name != null && value1 == null)
                         {
@@ -438,7 +438,7 @@ namespace SCR.Root.Controllers
                         }
                         else
                         {
-                            Session["condition"] = "AND L.[OfficeId]=" + value1 + " order by " + order + "";
+                            Session["condition"] = "AND NRDS.[OfficeId]=" + value1 + " order by " + order + "";
                         }
                     }
                 }
@@ -449,23 +449,23 @@ namespace SCR.Root.Controllers
                     {
                         if (value1 != null && name != null && lname != null)
                         {
-                            Session["condition"] = " AND L.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [office_details] WHERE [OfficeContactDR]= " + value1 + " ) and L1.[FirstName] like '%" + name.TrimStart().TrimEnd() + "%' And L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
+                            Session["condition"] = " AND NRDS.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [db_owner].[office_details] WHERE [OfficeContactDR]= " + value1 + " ) and L1.[FirstName] like '%" + name.TrimStart().TrimEnd() + "%' And L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%' AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
                         }
                         else if (name != null && lname != null && value1 == null)
                         {
-                            Session["condition"] = "  and L1.[FirstName] like '%" + name.TrimStart().TrimEnd() + "%' And L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "  ";
+                            Session["condition"] = "  and L1.[FirstName] like '%" + name.TrimStart().TrimEnd() + "%' And L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%' AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "  ";
                         }
                         else if (name != null && lname == null && value1 == null)
                         {
-                            Session["condition"] = " AND  L1.[FirstName]   like '%" + name.TrimStart().TrimEnd() + "%' AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
+                            Session["condition"] = " AND  L1.[FirstName]   like '%" + name.TrimStart().TrimEnd() + "%' AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + "";
                         }
                         else if (name == null && lname != null && value1 == null)
                         {
-                            Session["condition"] = " AND L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%'AND L.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + " ";
+                            Session["condition"] = " AND L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%'AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + " order by " + order + " ";
                         }
                         else
                         {
-                            Session["condition"] = "AND L.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [office_details] WHERE [OfficeContactDR]= " + value1 + " ) AND L.[PrimaryAssociationID] = " + uSession.AssocID + "  order by " + order + "";
+                            Session["condition"] = "AND NRDS.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [db_owner].[office_details] WHERE [OfficeContactDR]= " + value1 + " ) AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + "  order by " + order + "";
                         }
                     }
                     else
@@ -473,7 +473,7 @@ namespace SCR.Root.Controllers
 
                         if (value1 != null && name != null && lname != null)
                         {
-                            Session["condition"] = " AND L.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [office_details] WHERE [OfficeContactDR]= " + value1 + " ) and L1.[FirstName] like '%" + name.TrimStart().TrimEnd() + "%' And L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%' order by " + order + "";
+                            Session["condition"] = " AND NRDS.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [db_owner].[office_details] WHERE [OfficeContactDR]= " + value1 + " ) and L1.[FirstName] like '%" + name.TrimStart().TrimEnd() + "%' And L1.[LastName] like '%" + lname.TrimStart().TrimEnd() + "%' order by " + order + "";
 
                         }
                         else if (name != null && lname != null && value1 == null)
@@ -494,7 +494,7 @@ namespace SCR.Root.Controllers
                         else
                         {
 
-                            Session["condition"] = "AND L.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [office_details] WHERE [OfficeContactDR]= " + value1 + " )  order by " + order + "";
+                            Session["condition"] = "AND NRDS.[OfficeId] IN (SELECT DISTINCT [OfficeId] FROM [db_owner].[office_details] WHERE [OfficeContactDR]= " + value1 + " )  order by " + order + "";
                         }
                     }
                 }
@@ -505,24 +505,24 @@ namespace SCR.Root.Controllers
                     string qry = "";
                     if (memberid != null)
                     {
-                        qry += " and L.[MemberId] like '%" + memberid.TrimEnd().TrimStart() + "%'";
+                        qry += " and NRDS.[MemberId] like '%" + memberid.TrimEnd().TrimStart() + "%'";
                     }
                     if (agentfname != null)
                     {
-                        qry += " and L.[FirstName] like '%" + agentfname.TrimEnd().TrimStart() + "%'";
+                        qry += " and NRDS.[FirstName] like '%" + agentfname.TrimEnd().TrimStart() + "%'";
                     }
                     if (agentLname != null)
                     {
-                        qry += " and L.[LastName] like '%" + agentLname.TrimEnd().TrimStart() + "%'";
+                        qry += " and NRDS.[LastName] like '%" + agentLname.TrimEnd().TrimStart() + "%'";
                     }
                     if (membertype != null)
                     {
-                        qry += " and L.[MemberType] = '" + membertype.TrimEnd().TrimStart() + "'";
+                        qry += " and NRDS.[MemberType] = '" + membertype.TrimEnd().TrimStart() + "'";
                     }
 
                     if (uSession.AssocID != 0)
                     {
-                        qry += "  AND L.[PrimaryAssociationID] = " + uSession.AssocID + "  order by " + order + "";
+                        qry += "  AND NRDS.[PrimaryAssociationID] = " + uSession.AssocID + "  order by " + order + "";
                         Session["condition"] = qry;
                     }
                     else

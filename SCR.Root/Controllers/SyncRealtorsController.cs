@@ -43,7 +43,7 @@ namespace SCR.Root.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult Sync(SyncRealtorsModel objSyncRealtorsModel, HttpPostedFileBase fupdCSVUpload)
+        public ActionResult Sync(SyncRealtorsModel objSyncRealtorsModel, HttpPostedFileBase fupdCSVUpload, HttpPostedFileBase fupdCSVUpload1)
         {
 
             UserSession userSession = new UserSession();
@@ -56,6 +56,7 @@ namespace SCR.Root.Controllers
                     string strfilePath = string.Empty;
                     string strfileLength = string.Empty;
                     string ext = string.Empty;
+                   
 
                     #region File save
                     //check to make sure a file is selected
@@ -103,6 +104,7 @@ namespace SCR.Root.Controllers
                                     //    fupdCSVUpload.SaveAs(strRarfilepath);
                                     //}
                                   //  else
+                                 
                                 if (filename.ToUpper().Contains(".ZIP"))
 
                                     {
@@ -153,6 +155,84 @@ namespace SCR.Root.Controllers
                             }
                         }*/
                         #endregion Read data from CSV file
+
+                   
+                    }
+
+                    else  if (fupdCSVUpload1 != null)
+                    {
+                        //create the path to save the file to
+                        string filename = fupdCSVUpload1.FileName;
+
+
+                        if (filename.Length != 0)
+                        {
+                            ext = Path.GetExtension(filename);
+
+
+                            if (ext.ToLower() == ".xls")//ext.ToLower() == ".rar" ||
+                            {
+
+
+                                if (!Directory.Exists(strDirpath))
+                                {
+                                    Directory.CreateDirectory(strDirpath);
+                                }
+
+                                strfilePath = Path.Combine(strDirpath, fupdCSVUpload1.FileName);
+                               
+                                    //if (filename.ToUpper().Contains("O00"))
+                                    //{
+                                    //    boolIsMemberFile = false;
+                                    //    objSyncRealtorsModel.HddnBoolIsMemberFile = 0;
+
+                                    //}
+                                    //else if (filename.ToUpper().Contains("M00"))
+                                    //{
+                                    //    boolIsMemberFile = true;
+                                    //    objSyncRealtorsModel.HddnBoolIsMemberFile = 1;
+                                    //}
+
+                                   // strfileType = fupdCSVUpload.ContentType;
+                                   // strfileLength = Convert.ToString(fupdCSVUpload.ContentLength);
+                                
+
+                                //save the file to our local path
+                                    //if (filename.ToUpper().Contains(".RAR"))
+                                    //{
+                                    //    fupdCSVUpload.SaveAs(strRarfilepath);
+                                    //}
+                                  //  else
+                                string path_act = strDirpath + filename;
+                                if (filename.ToUpper().Contains(".XLS"))
+
+                                    {
+                                        fupdCSVUpload1.SaveAs(path_act);
+                                    }
+
+                                TempData["error"] = "File uploaded successfully.";
+                                TempData["errtitle"] = "Sync Realtors";
+                                TempData["errType"] = "success";
+                                return View(objSyncRealtorsModel);
+                            }
+                            else
+                            {
+                                TempData["error"] = "Allowed only files with .zip extention.";
+                                TempData["errtitle"] = "Sync Realtors";
+                                TempData["errType"] = "warning";
+                                return View(objSyncRealtorsModel);
+                            }
+                        }
+                        else
+                        {
+                            TempData["error"] = "Please upload file.";
+                            TempData["errtitle"] = "Sync Realtors";
+                            TempData["errType"] = "warning";
+                            return View(objSyncRealtorsModel);
+                        }
+
+                   
+
 
                    
                     }

@@ -96,6 +96,50 @@ namespace SCR.Root.Models
             return lstBrokerModel;
         }
 
+        public List<BrokerModel> getBrokerListConstrain(string type,string constrain)
+        {
+            IDBManager dbManager = new DBManager(base.GetProvider(), ConfigurationManager.AppSettings["DbConnection"].ToString());
+            List<BrokerModel> lstBrokerModel = new List<BrokerModel>();
+            try
+            {
+                DataSet dsBrokerList = new DataSet();
+                dbManager.Open();
+                dbManager.CreateParameters(2);
+                dbManager.AddParameters(0, "@type", type);
+                dbManager.AddParameters(1, "@Constrain", constrain);
+
+                dsBrokerList = dbManager.ExecuteDataSet(CommandType.StoredProcedure, "Broker__Select_Proc_new");
+                if (dsBrokerList.Tables.Count > 0)
+                {
+                    if (dsBrokerList.Tables[0].Rows.Count > 0)
+                    {
+                        foreach (DataRow drAgents in dsBrokerList.Tables[0].Rows)
+                        {
+                            BrokerModel agentsModel = new BrokerModel();
+                            agentsModel.MemberId = Convert.ToInt32(drAgents["MemberId"]);
+                            agentsModel.LastName = Convert.ToString(drAgents["LastName"]);
+                            agentsModel.FirstName = Convert.ToString(drAgents["FirstName"]);
+                            agentsModel.OfficeId = Convert.ToInt32(drAgents["OfficeId"]);
+                            agentsModel.MemberType = Convert.ToString(drAgents["MemberType"]);
+                            agentsModel.LLRStatus = Convert.ToString(drAgents["LLRStatus"]);
+                            agentsModel.NRDSStatus = Convert.ToString(drAgents["NRDSStatus"]);
+                            lstBrokerModel.Add(agentsModel);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                dbManager.Dispose();
+            }
+            return lstBrokerModel;
+        }
+
         public List<BrokerModel> getBrokerListConstrain(string constrain)
         {
             IDBManager dbManager = new DBManager(base.GetProvider(), ConfigurationManager.AppSettings["DbConnection"].ToString());
