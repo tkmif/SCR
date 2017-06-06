@@ -403,4 +403,22 @@ namespace SCR.Root.Models
             return lstUserRolePagePrivilegeModel;
         }
     }
+
+    
+
+    public class validate
+    {
+        public int check()
+        {
+            DateTime trailstart = Convert.ToDateTime("05-24-2017");
+
+            DateTime currentdate =  DateTime.Now;
+            System.TimeSpan diff = currentdate.Subtract(trailstart);
+            if (diff.Days > 90)
+                return 1;
+
+            return 0;
+        }
+
+    }
 }

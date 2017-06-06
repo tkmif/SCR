@@ -392,13 +392,13 @@ namespace SCR.Root.Controllers
             return View(brokerDetailModel);
         }
         [HttpGet]
-        public FileStreamResult ExportDetails()
+        public ActionResult ExportDetails()
         {
             string url;
             BrokerDetailsModel brokerDetailModel = new BrokerDetailsModel();
              UserSession userSession = new UserSession();
             GridView gv = new GridView();
-            url = "~/Broker/BrokerDetails?MemberId=" + Session["brokerid"].ToString() + "&Status=" + Session["querystring"].ToString();
+            url = "~/Broker/BrokerDetails?MemberId=" + Session["brokerid"].ToString();// +"&Status=" + Session["querystring"].ToString();
             //TempData["brokerid"] = TempData["brokerid"].ToString();
             //Session["querystring"] = TempData["querystring"].ToString();
             
@@ -520,12 +520,13 @@ namespace SCR.Root.Controllers
                         i++;
                     }
 
-
+                     byte[] arr2;
                     string path = Server.MapPath("~/Files/exceltemp/");
                     string file = path + "Brokerdetails_" + DateTime.Now.ToString("ddMMyyyyhhmmss") + ".xls";
                     xlApp.DisplayAlerts = false;
                     xlWorkBook.SaveAs(file, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                   //  xlWorkBook.Save();
+                 
                     xlWorkBook.Close(true, misValue, misValue);
                     xlApp.Quit();
 
@@ -538,23 +539,38 @@ namespace SCR.Root.Controllers
                     var cd = new System.Net.Mime.ContentDisposition { FileName = "Brokerdetails_" + brokerDetailModel.LastName + ".xls", Inline = false };
                     byte[] arr = System.IO.File.ReadAllBytes(file);
 
-                    Response.ClearContent();
-                    Response.Buffer = true;
-                    Response.AddHeader("content-disposition", "attachment; filename=Brokerdetails_" + brokerDetailModel.LastName + ".xls");
-                    Response.ContentType = "application/ms-excel";
+                   // Response.ClearContent();
+                   // Response.Buffer = true;
+                   // Response.AddHeader("content-disposition", "attachment; filename=Brokerdetails_" + brokerDetailModel.LastName + ".xls");
+                   // Response.ContentType = "application/ms-excel";
                  
-                   // Response.AddHeader("content-disposition", cd.ToString());
-                    Response.Buffer = true;
-                    Response.Clear();
-                    Response.BinaryWrite(arr);
-                    Response.End();
+                   //// Response.AddHeader("content-disposition", cd.ToString());
+                   // Response.Buffer = true;
+                   //// Response.Clear();
+                   // Response.BinaryWrite(arr);
+                   //// var bytes = ms.ToArray();
+                   // Response.OutputStream.Write(arr, 0, arr.Length);
+                   // Response.Flush();
+                   // Response.End();
+
+                    //Response.ClearContent();
+                    //Response.Buffer = true;
+                    //Response.AddHeader("content-disposition", "attachment; filename=Brokerdetails_" + brokerDetailModel.LastName + ".xls");
+                    //Response.ContentType = "application/ms-excel";
+                    //Response.Charset = "";
+                    //StringWriter sw = new StringWriter();
+                    //HtmlTextWriter htw = new HtmlTextWriter(sw);
+                    //gv.RenderControl(htw);
+                    //Response.BinaryWrite(arr);
+                    //Response.Flush();
+                    //Response.End();
                     if (System.IO.File.Exists(file))
                     {
                         System.IO.File.Delete(file);
                     }
                    // return new FileStreamResult(Response.OutputStream, Response.ContentType);
-
-                  
+                    return File(arr, System.Net.Mime.MediaTypeNames.Application.Octet, "Brokerdetails_" + brokerDetailModel.LastName + ".xls");
+                   // return new FileContentResult(arr, "application/ms-excel");
                 }
                 catch (Exception ex)
                 {

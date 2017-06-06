@@ -115,6 +115,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TurboActivate.cs" />
     <Content Include="App_Code\Enumerator.cs" />
     <Content Include="App_Code\CSVFileReader.cs" />
     <Content Include="App_Code\Email.cs" />
