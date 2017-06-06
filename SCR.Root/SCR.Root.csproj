@@ -127,6 +127,7 @@
     </Reference>
     <Reference Include="TkmDataAccess">
       <HintPath>Refs\TkmDataAccess.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
