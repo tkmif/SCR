@@ -236,12 +236,15 @@ namespace SCR.Root.Models
 
                     body += "\n";
                     body += "\nSCR Realtors\n";
-                    msg.Body = body;
-                    msg.From = new MailAddress(System.Configuration.ConfigurationManager.AppSettings["FromAddress"].ToString());
-                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-                    client.Credentials = cred;
-                    client.EnableSsl = true;
-                    client.Send(msg);
+                    //msg.Body = body;
+                    //msg.From = new MailAddress(System.Configuration.ConfigurationManager.AppSettings["FromAddress"].ToString());
+                    //SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                    //client.Credentials = cred;
+                    //client.EnableSsl = true;
+                    //client.Send(msg);
+
+                 UserDAL obj= new UserDAL();
+                    obj.SendMail(loginModel.EmailIdForgot,body);
                 }
                 else
                 {
