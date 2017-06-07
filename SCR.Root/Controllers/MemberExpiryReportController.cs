@@ -48,7 +48,7 @@ namespace SCR.Root.Controllers
                     constrian = getCondition("Active", order);
 
                     memberExpiryReportModel.MemberExpiryReportModelList = memberExpiryReportDAL.getMemberExpiryReportList(constrian, 0);
-                    var reducedMemberExpiryList = memberExpiryReportModel.MemberExpiryReportModelList.Select(e => new { e.MemberId, e.LastName, e.FirstName, e.MemberType, e.Status}).ToList();
+                    var reducedMemberExpiryList = memberExpiryReportModel.MemberExpiryReportModelList.Select(e => new { e.MemberId, e.LastName, e.FirstName, e.MemberType, e.MemberStatusVal }).ToList();
 
                     TempData["MemberExpiryReportModelList"] = reducedMemberExpiryList;
                     TempData["ReportCount"] = reducedMemberExpiryList.Count.ToString();

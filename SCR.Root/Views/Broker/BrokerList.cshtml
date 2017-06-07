@@ -248,18 +248,20 @@
                         @*<input type="checkbox" value="Expired" id="chkActive" title="Active" name="Active" /><span style="color:#fff;">Active Brokers</span></li>*@
                     @*<li style="padding-top:6px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Active" id="chkInActive" title="InActive" name="InActive"/><span style="color:#fff">InActive Brokers</span></li>*@
-
                           <li style="padding-top: 6px;">
                         <span style="color: #fff; margin-right: 5px;">NRDS Status</span><select id="NRDSStatusFilter" style="width: 100px; margin-bottom: 0; margin-right: 5px;"><option value="Select">Select</option>
                             <option value="A">Active</option>
                             <option value="I">Inactive</option>
                         </select></li>
+                         
                     <li style="padding-top: 6px;">
                         <span style="color: #fff; margin-right: 5px;">LLR Status</span><select id="LLRStatusFilter" style="width: 100px; margin-bottom: 0; margin-right: 5px;"><option value="Select">Select</option>
                             <option value="ACTIVE">Active</option>
                             <option value="APPROVED">Approved</option>
                             <option value="ACTIVE IN RENEWAL">Active In Renewal</option>@*<option value="I">Inactive</option>*@</select></li>
-                     <li style="padding-top:6px;border-left: 1px solid #335A85;">
+
+                    
+                     <li style="padding-top:10px;border-left: 1px solid #335A85;">
                         <input type="checkbox" value="Delinquent" id="chkDelinquent" title="Brokers with Delinquent Agents" name="Delinquent"/><span style="color:#fff;">Brokers with Delinquent Agents</span></li>
                     <li><a href="#" id="btnSearch" class="isw-zoom" title="Search"></a></li>
                    
@@ -278,8 +280,9 @@
                             <th class="headertablesorter">First Name</th>
                             <th class="headertablesorter">Office Id</th>
                             <th class="headertablesorter">Member Type</th>
-                            <th class="headertablesorter">LLR Status</th>
                             <th class="headertablesorter">NRDS Status</th>
+                            <th class="headertablesorter">LLR Status</th>
+                            
                             <th class="headertablesorter">View</th>
                         </tr>
                     </thead>
@@ -300,8 +303,9 @@
                                 <td>@item.FirstName</td>
                                 <td>@item.OfficeId</td>
                                 <td>@item.MemberType</td>
+                                    <td>@item.NRDSStatus</td>
                                 <td>@item.LLRStatus</td>
-                                <td>@item.NRDSStatus</td>
+                            
                                 <td>
                                     <a href="@Url.Action("BrokerDetails", "Broker", new { MemberId = item.MemberId, Status = Model.hdnStatus })" title="View Broker's Details">
                                         <img src="" class="icon-eye-open" />

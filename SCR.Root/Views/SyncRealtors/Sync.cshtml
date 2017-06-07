@@ -168,7 +168,7 @@
                 <div class="row-form clearfix" id="divUpload" runat="server" style="width:40%; float:left;">
                     <div class="span12">LLR CSV (ZIP FILE) </div>
                     <div class="span12" style="margin-left: 0;">
-                        <input type="file" name="fupdCSVUpload" id="fUpload" accept=".M00,.csv,.O00,.zip" />
+                        <input type="file" name="fupdCSVUpload" id="fUpload" accept=".M00,.csv,.O00,.zip" title="Click to select file" />
 
                     </div>
                     @*   <div class="span3"></div>
@@ -179,17 +179,17 @@
                         <div class="pbar"></div>
                     </div>
                 </div>*@
-                    <button id="btnUpload" class="btn" onclick="JavascriptFunction()" runat="server">
+                    <button id="btnUpload" class="btn" onclick="JavascriptFunction()" runat="server" title="Upload">
                     Upload
                  <i> <img src="~/img/Upload_icon.png" class="pull-left imagepadding" /></i>
                 </button>
-                      <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../SyncRealtors/Sync'" />  
+                      <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../SyncRealtors/Sync'" title="Cancel" />  
                 </div>
 
                      <div class="row-form clearfix" id="divUpload1" runat="server"  style="width:40%;float:right;">
                     <div class="span12"> NRDS File (ACTIVE AGENT FILE)</div><br />
                     <div class="span12" style="margin-left:0;">
-                        <input type="file" name="fupdCSVUpload1" id="fUpload1" accept=".zip,.xls" />
+                        <input type="file" name="fupdCSVUpload1" id="fUpload1" accept=".zip,.xls" title="Click to select file" />
 
                     </div>
                     @*   <div class="span3"></div>
@@ -200,11 +200,11 @@
                         <div class="pbar"></div>
                     </div>
                 </div>*@
-<button id="btnUpload1" class="btn" onclick="JavascriptFunction()" runat="server">
+<button id="btnUpload1" class="btn" onclick="JavascriptFunction()" runat="server" title="Upload">
                     Upload
                  <i> <img src="~/img/Upload_icon.png" class="pull-left imagepadding" /></i>
                 </button>
-                           <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../SyncRealtors/Sync'" />  
+                           <input type="button" id="btnCancel" value="Cancel" class="btn_cancel btn image-button" onclick="window.location = '../SyncRealtors/Sync'" title="Cancel" />  
                 </div>
                     </div>
                 

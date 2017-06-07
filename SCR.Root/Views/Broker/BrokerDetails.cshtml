@@ -362,9 +362,9 @@
 
                                 <th class="headertablesorter">Office Id</th>
                                 <th class="headertablesorter">Member Type</th>
-
-                                 <th class="headertablesorter">LLR Status</th>
                                  <th class="headertablesorter">NRDS Status</th>
+                                 <th class="headertablesorter">LLR Status</th>
+                                
                                 <th class="headertablesorter">View</th>
 
 
@@ -385,8 +385,9 @@
 
                                     <td>@item.OfficeId</td>
                                     <td>@item.MemberType</td>
-                                     <td>@item.LLRStatus</td>
                                      <td>@item.NRDSStatus</td>
+                                     <td>@item.LLRStatus</td>
+                                    
                                     <td title="View Broker's Details">
                                         <a href="@Url.Action("AgentDetails", "AgentsList", new { MemberId = item.MemberId })">
                                             <img src="" class="icon-eye-open" />

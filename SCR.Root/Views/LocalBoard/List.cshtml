@@ -130,10 +130,16 @@
                               <td>
                                 @item.Phone
                             </td>                        
-                            <td style="padding-left:30px;">@Html.ActionLink("Edit", "Add", new { id = item.AssocID }, new { @class="isb-edit",@style="text-indent: -9999px;"})</td>
-                            <td style="padding-left:30px;">
+                            <td style="padding-left:30px;">@Html.ActionLink("Edit", "Add", new { id = item.AssocID }, new { @class="isb-edit",@style="text-indent: -9999px;", @title="Edit"})</td>
+                          @*  <td style="padding-left:30px;">
                                 @Html.ActionLink("Delete", "List", new { id = item.AssocID },
             new { onclick = "return ShowConfirm('Are you sure you wish to delete this item?','Local Office','/../LocalBoard/List/" + item.AssocID + "');" , @class = "isb-delete",@style="text-indent: -9999px;"  })
+
+                            </td>*@
+
+                              <td style="padding-left:30px;" >
+                                @Html.ActionLink("Delete", "List", new { id = item.AssocID },
+            new { onclick = "return confirm('Are you sure you wish to delete this item?');" , @class = "isb-delete",@style="text-indent: -9999px;",@title="Delete"  })
 
                             </td>
                         </tr>

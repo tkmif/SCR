@@ -227,8 +227,8 @@ namespace SCR.Root.Models
 
 
 
-                        body += mail_url + "Login/ChangePassword/" + loginModel.Key + "\n";
-                        body += ".\n";
+                        body += mail_url + "Login/ChangePassword/" + loginModel.Key + " . \n";
+                        body += "\n";
                         // body += ".\n";
                         //body += "Your  Username is: " + loginModel.EmailIdForgot + "\n";
                         //body += "Your temporary Password is: " + loginModel.Password + "\n";

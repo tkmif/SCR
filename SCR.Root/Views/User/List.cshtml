@@ -124,14 +124,22 @@
                                 <td nowrap style="padding-left: 30px;">
                                     @if (item.RoleId != 1)
                                     {
-                                        @Html.ActionLink("Edit", "Add", new { id = item.LoginId }, new { @class = "isb-edit", @style = "text-indent: -9999px;" })
+                                        @Html.ActionLink("Edit", "Add", new { id = item.LoginId }, new { @class = "isb-edit", @style = "text-indent: -9999px;",@title="Edit" })
                                     }
                                 </td>
-                                <td nowrap style="padding-left: 30px;">
+                               @* <td nowrap style="padding-left: 30px;">
                                     @if (item.RoleId != 1)
                                     {
                                         @Html.ActionLink("Delete", "List", new { id = item.LoginId },
             new { onclick = "return ShowConfirm('Are you sure you wish to delete this item?','Local Office','/../LocalBoard/List/" + item.LoginId + "');", @class = "isb-delete", @style = "text-indent: -9999px;" })
+                                    }
+                                </td>*@
+
+                                   <td nowrap style="padding-left: 30px;">
+                                    @if (item.RoleId != 1)
+                                    {
+                                        @Html.ActionLink("Delete", "List", new { id = item.LoginId },
+            new { onclick = "return confirm('Are you sure you wish to delete this item?');", @class = "isb-delete", @style = "text-indent: -9999px;",@title="Delete" })
                                     }
                                 </td>
                             </tr>
