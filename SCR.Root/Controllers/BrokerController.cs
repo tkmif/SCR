@@ -677,7 +677,7 @@ namespace SCR.Root.Controllers
 
                     
                     ICell cell = row0.CreateCell(0);
-                    String columnName = "Agent Details";
+                    String columnName = "Broker Details";
                     cell.SetCellValue(columnName);
                     cell = row1.CreateCell(0);
                     columnName = "Member Id";
