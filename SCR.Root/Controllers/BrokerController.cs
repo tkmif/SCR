@@ -787,7 +787,7 @@ namespace SCR.Root.Controllers
                     row7.Cells[4].CellStyle = hStyle;
                     row7.Cells[5].CellStyle = hStyle;
                     row7.Cells[6].CellStyle = hStyle;
-                    int i = 7;
+                    int i = 8;
                     foreach (AgentsModel agentsModel in brokerDetailModel.AgentsModelList)
                     {
                         IRow row = xlWorkSheet.CreateRow(i);
