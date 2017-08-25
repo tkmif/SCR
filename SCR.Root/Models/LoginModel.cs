@@ -417,7 +417,7 @@ namespace SCR.Root.Models
 
             DateTime currentdate =  DateTime.Now;
             System.TimeSpan diff = currentdate.Subtract(trailstart);
-            if (diff.Days > 90)
+            if (diff.Days > 120)
                 return 1;
 
             return 0;
